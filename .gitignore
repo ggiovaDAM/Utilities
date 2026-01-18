@@ -36,3 +36,11 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Extras
+/src/main/java/Main.java
+/.idea/vcs.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/misc.xml
+/.idea/encodings.xml
+/.idea/.gitignore
