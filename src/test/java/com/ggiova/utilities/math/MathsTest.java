@@ -11,6 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Test class for {@link Maths}
  */
+@Nested
+@DisplayName("Maths Tests")
 public class MathsTest {
     @Nested
     @DisplayName("isDoubleWholeNumber()")
@@ -117,11 +119,11 @@ public class MathsTest {
     }
     
     @Nested
-    @DisplayName("isEven()")
+    @DisplayName("Is Even?")
     class IsEvenTests {
         @Nested
-        @DisplayName("integerTests()")
-        class IntTests {
+        @DisplayName("Integer")
+        class IntegerTests {
             @Test
             void number_0() {
                 assertTrue(Maths.isEven(0));
@@ -169,7 +171,7 @@ public class MathsTest {
         }
         
         @Nested
-        @DisplayName("longTests()")
+        @DisplayName("Long")
         class LongTests {
             @Test
             void number_0() {
@@ -218,7 +220,7 @@ public class MathsTest {
         }
         
         @Nested
-        @DisplayName("doubleTests()")
+        @DisplayName("Double")
         class DoubleTests {
             @Test
             void number_0() {
@@ -288,6 +290,182 @@ public class MathsTest {
             @Test
             void number_nan() {
                 assertFalse(Maths.isEven(Double.NaN));
+            }
+        }
+    }
+    
+    @Nested
+    @DisplayName("Is Odd?")
+    class IsOddTests {
+        @Nested
+        @DisplayName("Integer")
+        class IntegerTests {
+            @Test
+            void number_0() {
+                assertFalse(Maths.isOdd(0));
+            }
+            
+            @Test
+            void number_1() {
+                assertTrue(Maths.isOdd(1));
+            }
+            
+            @Test
+            void number_n1() {
+                assertTrue(Maths.isOdd(-1));
+            }
+            
+            @Test
+            void number_2() {
+                assertFalse(Maths.isOdd(2));
+            }
+            
+            @Test
+            void number_n2() {
+                assertFalse(Maths.isOdd(-2));
+            }
+            
+            @Test
+            void number_1_000_000() {
+                assertFalse(Maths.isOdd(1_000_000));
+            }
+            
+            @Test
+            void number_1_000_001() {
+                assertTrue(Maths.isOdd(1_000_001));
+            }
+            
+            @Test
+            void number_max_value() {
+                assertTrue(Maths.isOdd(Integer.MAX_VALUE));
+            }
+            
+            @Test
+            void number_min_value() {
+                assertFalse(Maths.isOdd(Integer.MIN_VALUE));
+            }
+        }
+        
+        @Nested
+        @DisplayName("Long")
+        class LongTests {
+            @Test
+            void number_0() {
+                assertFalse(Maths.isOdd(0L));
+            }
+            
+            @Test
+            void number_1() {
+                assertTrue(Maths.isOdd(1L));
+            }
+            
+            @Test
+            void number_n1() {
+                assertTrue(Maths.isOdd(-1L));
+            }
+            
+            @Test
+            void number_2() {
+                assertFalse(Maths.isOdd(2L));
+            }
+            
+            @Test
+            void number_n2() {
+                assertFalse(Maths.isOdd(-2L));
+            }
+            
+            @Test
+            void number_1_000_000() {
+                assertFalse(Maths.isOdd(1_000_000L));
+            }
+            
+            @Test
+            void number_1_000_001() {
+                assertTrue(Maths.isOdd(1_000_001L));
+            }
+            
+            @Test
+            void number_max_value() {
+                assertTrue(Maths.isOdd(Long.MAX_VALUE));
+            }
+            
+            @Test
+            void number_min_value() {
+                assertFalse(Maths.isOdd(Long.MIN_VALUE));
+            }
+        }
+        
+        @Nested
+        @DisplayName("Double")
+        class DoubleTests {
+            @Test
+            void number_0() {
+                assertFalse(Maths.isOdd(0.0d));
+            }
+            
+            @Test
+            void number_1() {
+                assertTrue(Maths.isOdd(1.0d));
+            }
+            
+            @Test
+            void number_n1() {
+                assertTrue(Maths.isOdd(-1.0d));
+            }
+            
+            @Test
+            void number_2() {
+                assertFalse(Maths.isOdd(2.0d));
+            }
+            
+            @Test
+            void number_n2() {
+                assertFalse(Maths.isOdd(-2.0d));
+            }
+            
+            @Test
+            void number_0_d_5() {
+                assertFalse(Maths.isOdd(0.5d));
+            }
+            
+            @Test
+            void number_n0_d_5() {
+                assertFalse(Maths.isOdd(-0.5d));
+            }
+            
+            @Test
+            void number_4_503_599_627_370_496() {
+                assertFalse(Maths.isOdd(Doubles.LOSS_DECIMAL_PRECISION));
+            }
+            
+            @Test
+            void number_4_503_599_627_370_497() {
+                assertTrue(Maths.isOdd(Doubles.LOSS_DECIMAL_PRECISION + 1));
+            }
+            
+            @Test
+            void number_9_007_199_254_740_992() {
+                assertFalse(Maths.isOdd(Doubles.LOSS_DECIMAL_PRECISION * 2));
+            }
+            
+            @Test
+            void number_9_007_199_254_740_993() {
+                assertFalse(Maths.isOdd(Doubles.LOSS_DECIMAL_PRECISION * 2 + 1));
+            }
+            
+            @Test
+            void number_positive_infinity() {
+                assertFalse(Maths.isOdd(Double.POSITIVE_INFINITY));
+            }
+            
+            @Test
+            void number_negative_infinity() {
+                assertFalse(Maths.isOdd(Double.NEGATIVE_INFINITY));
+            }
+            
+            @Test
+            void number_nan() {
+                assertFalse(Maths.isOdd(Double.NaN));
             }
         }
     }

@@ -4,11 +4,9 @@ import com.ggiova.utilities.primitives.Doubles;
 
 /**
  * Utility class providing mathematical operations and predicates for primitive types.
- * <p>
- * This class offers functionality that extends beyond the standard {@link Math} class, with a focus on bit-level
+ * <br> This class offers functionality that extends beyond the standard {@link Math} class, with a focus on bit-level
  * operations, floating-point precision handling, and numeric type classification.
- * <p>
- * All methods in this class are static and the class cannot be instantiated.
+ * <br> All methods in this class are static and the class cannot be instantiated.
  *
  * @see Math
  * @see com.ggiova.utilities.primitives.Doubles
@@ -71,8 +69,8 @@ public final class Maths {
     // -------------------------------------- EVEN-NESS ----------------------------------------------------------------
     
     /**
-     * Returns {@code true} if {@code number} is even &amp; {@code false} if {@code number} is odd. A number is even if it
-     * can be expressed as {@code number = 2×k, k ∈ ℤ}.
+     * Returns {@code true} if {@code number} is even &amp; {@code false} if {@code number} is odd. A number is even if
+     * it can be expressed as {@code number = 2×k, k ∈ ℤ}.
      * <br>Binary-wise, the least-significant digit indicates if a number is even or odd. So, if it is {@code 0} then
      * it's even and if it is {@code 1} then is odd.
      *
@@ -86,8 +84,8 @@ public final class Maths {
     }
     
     /**
-     * Returns {@code true} if {@code number} is even &amp; {@code false} if {@code number} is odd. A number is even if it
-     * can be expressed as {@code number = 2×k, k ∈ ℤ}.
+     * Returns {@code true} if {@code number} is even &amp; {@code false} if {@code number} is odd. A number is even if
+     * it can be expressed as {@code number = 2×k, k ∈ ℤ}.
      * <br>Binary-wise, the least-significant digit indicates if a number is even or odd. So, if it is {@code 0} then
      * it's even and if it is {@code 1} then is odd.
      *
@@ -169,5 +167,105 @@ public final class Maths {
                 yield (unsignedBits & mask) == 0L;
             }
         };
+    }
+    
+    
+    // -------------------------------------- ODD-NESS -----------------------------------------------------------------
+    
+    /**
+     * Returns {@code true} if {@code number} is odd &amp; {@code false} if {@code number} is even. A number is odd if
+     * it can be expressed as {@code number = 2×k+1, k ∈ ℤ}.
+     * <br>Binary-wise, the least-significant digit indicates if a number is even or odd. So, if it is {@code 0} then
+     * it's even and if it is {@code 1} then is odd.
+     *
+     * @param number Number that will be checked.
+     * @return {@code true} if {@code number} is odd &amp; {@code false} if {@code number} is even.
+     */
+    public static boolean isOdd(final int number) {
+        // Checks if the least-significant bit is a one or a one. All odd numbers have a one as their least-significant
+        // bit.
+        return (number & 0b1) == 0b1;
+    }
+    
+    /**
+     * Returns {@code true} if {@code number} is odd &amp; {@code false} if {@code number} is even. A number is odd if
+     * it can be expressed as {@code number = 2×k+1, k ∈ ℤ}.
+     * <br>Binary-wise, the least-significant digit indicates if a number is even or odd. So, if it is {@code 0} then
+     * it's even and if it is {@code 1} then is odd.
+     *
+     * @param number Number that will be checked.
+     * @return {@code true} if {@code number} is odd &amp; {@code false} if {@code number} is even.
+     */
+    public static boolean isOdd(final long number) {
+        // Checks if the least-significant bit is a one or a one. All odd numbers have a one as their least-significant
+        // bit.
+        return (number & 0b1L) == 0b1L;
+    }
+    
+    /**
+     * Returns {@code true} if {@code number} is odd &amp; {@code false} if {@code number} is even. A number is odd if
+     * it can be expressed as {@code number = 2×k+1, k ∈ ℤ}.
+     * <br>Since {@code double}s can still represent whole numbers there are a few edge-cases to contemplate:
+     * <ul>
+     *     <li>If {@code number} is {@link Double#NaN NaN}, returns {@code false}.</li>
+     *     <li>If {@code number} is infinite, either {@link Double#POSITIVE_INFINITY positive} or
+     *     {@link Double#NEGATIVE_INFINITY negative} it returns {@code false}.</li>
+     *     <li>If {@code number} is a decimal number, then it returns {@code false}.</li>
+     *     <li>If the absolute value of {@code number} is more than or equal to <i>2<sup>53</sup></i> or
+     *     {@code 9_007_199_254_740_992.0} then it returns {@code false} since, due to loss of precision, all numbers above
+     *     it will be multiples of two, and therefore, not odd.</li>
+     * </ul>
+     * While for {@code int} and {@code long}, a number that is even is not odd and a number that is odd is
+     * not even, for {@code double} it does not always happen. Since {@code double} can have {@link Double#NaN NaN},
+     * infinities, and decimals, a number can sometimes be neither even nor odd.
+     * <br>As stated before, all numbers bigger than or equal to <i>2<sup>53</sup></i> will always be even, this is due
+     * to the length of the mantissa. The mantissa of a {@code double} can only store 52 bits, meaning that if a
+     * {@code double} stores a number with an
+     * {@link Doubles#LOSS_DECIMAL_PRECISION exponent (base 2) of 52}, then, the least-significant bit of
+     * the mantissa will store the unit bit (a one). This implies that if a number is twice <i>2<sup>52</sup></i>
+     * (exponent of 52+1), then it is always going to be even, since there are no unit bits.
+     *
+     * @param number Number that will be checked.
+     * @return {@code true} if {@code number} is odd &amp; {@code false} otherwise.
+     * @see Doubles#LOSS_DECIMAL_PRECISION
+     */
+    public static boolean isOdd(final double number) {
+        // Takes the number's bits removing the sign.
+        long unsignedBits = Double.doubleToLongBits(number) & ~Doubles.SIGN_MASK;
+        // If zero, return true is not needed.
+        // if (unsignedBits == 0L) return true;
+        // If bigger than exponent mask return false. This rules out NaNs and Infinities.
+        if (unsignedBits >= Doubles.EXPONENT_MASK) return false;
+        // If the number is bigger than 2 * LOSS_DECIMAL_PRECISION then it's always even.
+        // Since exponents add, we can use LOSS_DECIMAL_PRECISION_MASK (52) and add TINY_EXPONENT (1)
+        if (unsignedBits >= Doubles.LOSS_DECIMAL_PRECISION_MASK + Doubles.TINY_EXPONENT) return false;
+        // Gets the exponent and removes the bias.
+        int exp = (int) (unsignedBits >>> Doubles.MANTISSA_LENGTH) - Doubles.EXPONENT_BIAS;
+        // If the number is smaller than 1, return false.
+        if (exp < 0) return false;
+        // Mask for the binary decimals (mantissa) to check whether it has more decimals past the limit or not. Also
+        // used to check if the number itself is odd or even.
+        long mask = 1L << Doubles.MANTISSA_LENGTH - exp;
+        // If unsignedBits & -mask [simplified from ~(mask - 1)] equals unsignedBits, it means that there are no bits
+        // after the unit value.
+        // Example 15 & 15.1:
+        // 15   --> 0b0_10000000010_1110000000000000000000000000000000000000000000000000L
+        // The exponent is 3, so we need to check after the next three bits if there are any one's.
+        // In this case there aren't, so 15's bits masked are equals 15's bits.
+        // 15.1 --> 0b0_10000000010_1110001100110011001100110011001100110011001100110011L
+        // The exponent is also 3, so we need to check after the next three bits if there are any one's.
+        // There are, so this number is not an integer, because 15.1's bits masked are not equal 15.1's bits.
+        if ((unsignedBits & -mask) != unsignedBits) return false;
+        // If the bit in the mantissa is 0, then it is even.
+        // Example 15 & 14:
+        // 15   --> 0b0_10000000010_1110000000000000000000000000000000000000000000000000L
+        // The exponent is 3, so we need to check the third bit.
+        // It is a one (1), so 15 is odd.
+        // 14   --> 0b0_10000000010_1100000000000000000000000000000000000000000000000000L
+        // The exponent is also 3, so we need to check the third bit.
+        // It is a zero (0), so 14 is even.
+        // PS: This test unsets all the bits before where the exponent aims, maintaining only the one bit it is
+        // checking.
+        return (unsignedBits & mask) != 0L;
     }
 }
