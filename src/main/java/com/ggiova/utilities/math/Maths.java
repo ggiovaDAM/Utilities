@@ -68,6 +68,38 @@ public final class Maths {
         };
     }
     
+    // -------------------------------------- EVEN-NESS ----------------------------------------------------------------
+    
+    /**
+     * Returns {@code true} if {@code number} is even &amp; {@code false} if {@code number} is odd. A number is even if it
+     * can be expressed as {@code number = 2×k, k ∈ ℤ}.
+     * <br>Binary-wise, the least-significant digit indicates if a number is even or odd. So, if it is {@code 0} then
+     * it's even and if it is {@code 1} then is odd.
+     *
+     * @param number Number that will be checked.
+     * @return {@code true} if {@code number} is even &amp; {@code false} if {@code number} is odd.
+     */
+    public static boolean isEven(final int number) {
+        // Checks if the least-significant bit is a one or a zero. All even numbers have a zero as their
+        // least-significant bit.
+        return (number & 0b1) == 0b0;
+    }
+    
+    /**
+     * Returns {@code true} if {@code number} is even &amp; {@code false} if {@code number} is odd. A number is even if it
+     * can be expressed as {@code number = 2×k, k ∈ ℤ}.
+     * <br>Binary-wise, the least-significant digit indicates if a number is even or odd. So, if it is {@code 0} then
+     * it's even and if it is {@code 1} then is odd.
+     *
+     * @param number Number that will be checked.
+     * @return {@code true} if {@code number} is even &amp; {@code false} if {@code number} is odd.
+     */
+    public static boolean isEven(final long number) {
+        // Checks if the least-significant bit is a one or a zero. All even numbers have a zero as their
+        // least-significant bit.
+        return (number & 0b1L) == 0b0L;
+    }
+    
     /**
      * Returns {@code true} if {@code number} is even &amp; {@code false} if {@code number} is odd. A number is even if
      * it can be expressed as {@code number = 2×k, k ∈ ℤ}.
@@ -94,7 +126,6 @@ public final class Maths {
      * @param number Number that will be checked.
      * @return {@code true} if {@code number} is even &amp; {@code false} otherwise.
      * @see Doubles#LOSS_DECIMAL_PRECISION
-     * @since 1.1.0
      */
     public static boolean isEven(final double number) {
         // Takes the number's bits removing the sign.

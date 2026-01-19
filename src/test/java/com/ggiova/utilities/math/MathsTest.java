@@ -117,76 +117,178 @@ public class MathsTest {
     }
     
     @Nested
-    @DisplayName("isDoubleNumberEven()")
-    class IsDoubleNumberEvenTest {
-        @Test
-        void double_even_number_0() {
-            assertTrue(Maths.isEven(0.0d));
+    @DisplayName("isEven()")
+    class IsEvenTests {
+        @Nested
+        @DisplayName("integerTests()")
+        class IntTests {
+            @Test
+            void number_0() {
+                assertTrue(Maths.isEven(0));
+            }
+            
+            @Test
+            void number_1() {
+                assertFalse(Maths.isEven(1));
+            }
+            
+            @Test
+            void number_n1() {
+                assertFalse(Maths.isEven(-1));
+            }
+            
+            @Test
+            void number_2() {
+                assertTrue(Maths.isEven(2));
+            }
+            
+            @Test
+            void number_n2() {
+                assertTrue(Maths.isEven(-2));
+            }
+            
+            @Test
+            void number_1_000_000() {
+                assertTrue(Maths.isEven(1_000_000));
+            }
+            
+            @Test
+            void number_1_000_001() {
+                assertFalse(Maths.isEven(1_000_001));
+            }
+            
+            @Test
+            void number_max_value() {
+                assertFalse(Maths.isEven(Integer.MAX_VALUE));
+            }
+            
+            @Test
+            void number_min_value() {
+                assertTrue(Maths.isEven(Integer.MIN_VALUE));
+            }
         }
         
-        @Test
-        void double_even_number_1() {
-            assertFalse(Maths.isEven(1.0d));
+        @Nested
+        @DisplayName("longTests()")
+        class LongTests {
+            @Test
+            void number_0() {
+                assertTrue(Maths.isEven(0L));
+            }
+            
+            @Test
+            void number_1() {
+                assertFalse(Maths.isEven(1L));
+            }
+            
+            @Test
+            void number_n1() {
+                assertFalse(Maths.isEven(-1L));
+            }
+            
+            @Test
+            void number_2() {
+                assertTrue(Maths.isEven(2L));
+            }
+            
+            @Test
+            void number_n2() {
+                assertTrue(Maths.isEven(-2L));
+            }
+            
+            @Test
+            void number_1_000_000() {
+                assertTrue(Maths.isEven(1_000_000L));
+            }
+            
+            @Test
+            void number_1_000_001() {
+                assertFalse(Maths.isEven(1_000_001L));
+            }
+            
+            @Test
+            void number_max_value() {
+                assertFalse(Maths.isEven(Long.MAX_VALUE));
+            }
+            
+            @Test
+            void number_min_value() {
+                assertTrue(Maths.isEven(Long.MIN_VALUE));
+            }
         }
         
-        @Test
-        void double_even_number_n1() {
-            assertFalse(Maths.isEven(-1.0d));
-        }
-        
-        @Test
-        void double_even_number_2() {
-            assertTrue(Maths.isEven(2.0d));
-        }
-        
-        @Test
-        void double_even_number_n2() {
-            assertTrue(Maths.isEven(-2.0d));
-        }
-        
-        @Test
-        void double_even_number_0_d_5() {
-            assertFalse(Maths.isEven(0.5d));
-        }
-        
-        @Test
-        void double_even_number_n0_d_5() {
-            assertFalse(Maths.isEven(-0.5d));
-        }
-        
-        @Test
-        void double_even_number_4_503_599_627_370_496() {
-            assertTrue(Maths.isEven(Doubles.LOSS_DECIMAL_PRECISION));
-        }
-        
-        @Test
-        void double_even_number_4_503_599_627_370_497() {
-            assertFalse(Maths.isEven(Doubles.LOSS_DECIMAL_PRECISION + 1));
-        }
-        
-        @Test
-        void double_even_number_9_007_199_254_740_992() {
-            assertTrue(Maths.isEven(Doubles.LOSS_DECIMAL_PRECISION * 2));
-        }
-        
-        @Test
-        void double_even_number_9_007_199_254_740_993() {
-            assertTrue(Maths.isEven(Doubles.LOSS_DECIMAL_PRECISION * 2 + 1));
-        }
-        
-        @Test
-        void double_even_number_positive_infinity() {
-            assertFalse(Maths.isEven(Double.POSITIVE_INFINITY));
-        }
-        
-        @Test
-        void double_even_number_negative_infinity() {
-            assertFalse(Maths.isEven(Double.NEGATIVE_INFINITY));
-        }
-        
-        @Test
-        void double_even_number_nan() {
-            assertFalse(Maths.isEven(Double.NaN));
+        @Nested
+        @DisplayName("doubleTests()")
+        class DoubleTests {
+            @Test
+            void number_0() {
+                assertTrue(Maths.isEven(0.0d));
+            }
+            
+            @Test
+            void number_1() {
+                assertFalse(Maths.isEven(1.0d));
+            }
+            
+            @Test
+            void number_n1() {
+                assertFalse(Maths.isEven(-1.0d));
+            }
+            
+            @Test
+            void number_2() {
+                assertTrue(Maths.isEven(2.0d));
+            }
+            
+            @Test
+            void number_n2() {
+                assertTrue(Maths.isEven(-2.0d));
+            }
+            
+            @Test
+            void number_0_d_5() {
+                assertFalse(Maths.isEven(0.5d));
+            }
+            
+            @Test
+            void number_n0_d_5() {
+                assertFalse(Maths.isEven(-0.5d));
+            }
+            
+            @Test
+            void number_4_503_599_627_370_496() {
+                assertTrue(Maths.isEven(Doubles.LOSS_DECIMAL_PRECISION));
+            }
+            
+            @Test
+            void number_4_503_599_627_370_497() {
+                assertFalse(Maths.isEven(Doubles.LOSS_DECIMAL_PRECISION + 1));
+            }
+            
+            @Test
+            void number_9_007_199_254_740_992() {
+                assertTrue(Maths.isEven(Doubles.LOSS_DECIMAL_PRECISION * 2));
+            }
+            
+            @Test
+            void number_9_007_199_254_740_993() {
+                assertTrue(Maths.isEven(Doubles.LOSS_DECIMAL_PRECISION * 2 + 1));
+            }
+            
+            @Test
+            void number_positive_infinity() {
+                assertFalse(Maths.isEven(Double.POSITIVE_INFINITY));
+            }
+            
+            @Test
+            void number_negative_infinity() {
+                assertFalse(Maths.isEven(Double.NEGATIVE_INFINITY));
+            }
+            
+            @Test
+            void number_nan() {
+                assertFalse(Maths.isEven(Double.NaN));
+            }
         }
     }
 }
