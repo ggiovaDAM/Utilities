@@ -4,9 +4,11 @@ import com.ggiova.utilities.primitives.Doubles;
 
 /**
  * Utility class providing mathematical operations and predicates for primitive types.
- * <br> This class offers functionality that extends beyond the standard {@link Math} class, with a focus on bit-level
+ * <br>
+ * This class offers functionality that extends beyond the standard {@link Math} class, with a focus on bit-level
  * operations, floating-point precision handling, and numeric type classification.
- * <br> All methods in this class are static and the class cannot be instantiated.
+ * <br>
+ * All methods in this class are static and the class cannot be instantiated.
  *
  * @see Math
  * @see com.ggiova.utilities.primitives.Doubles
@@ -267,5 +269,143 @@ public final class Maths {
         // PS: This test unsets all the bits before where the exponent aims, maintaining only the one bit it is
         // checking.
         return (unsignedBits & mask) != 0L;
+    }
+    
+    //  ----------------------------------- FRACTIONS ------------------------------------------------------------------
+    /**
+     * Calculates the
+     * <a href="https://en.wikipedia.org/wiki/Least_common_multiple" target="_blank">least common multiple</a> of
+     * {@code a} &amp; {@code b}. That is, the smallest positive integer that is divisible by both {@code a} &amp;
+     * {@code b}. If either {@code a} or {@code b} are equal to {@code 0}, then the resulting number is {@code 0}.
+     * <br>
+     * All the results will be bound by: {@code [0; 2_147_483_647]}
+     *
+     * @param a First parameter.
+     * @param b Second Parameter.
+     * @return The least common multiple of {@code a} &amp; {@code b}.
+     * @throws ArithmeticException If the result overflows into the negatives.
+     * @see <a href="https://en.wikipedia.org/wiki/Least_common_multiple" target="_blank">Least Common Multiple</a>
+     */
+    public static int lcm(final int a, final int b) throws ArithmeticException {
+        if (a == 0 || b == 0) return 0;
+        int aAbs = Math.abs(a);
+        int bAbs = Math.abs(b);
+        if (aAbs        == bAbs) return aAbs;
+        if (aAbs % bAbs ==    0) return aAbs;
+        if (bAbs % aAbs ==    0) return bAbs;
+        int result = aAbs * bAbs / gcdLoop(aAbs, bAbs);
+        if (result < 1)
+            throw new ArithmeticException("LCM overflow");
+        return result;
+    }
+    
+    /**
+     * Calculates the
+     * <a href="https://en.wikipedia.org/wiki/Least_common_multiple" target="_blank">least common multiple</a> of
+     * {@code a} &amp; {@code b}. That is, the smallest positive integer that is divisible by both {@code a} &amp;
+     * {@code b}. If either {@code a} or {@code b} are equal to {@code 0}, then the resulting number is {@code 0}.
+     * <br>
+     * All the results will be bound by: {@code [0; 9_223_372_036_854_775_807L]}
+     *
+     * @param a First parameter.
+     * @param b Second Parameter.
+     * @return The least common multiple of {@code a} &amp; {@code b}.
+     * @throws ArithmeticException If the result overflows into the negatives.
+     * @see <a href="https://en.wikipedia.org/wiki/Least_common_multiple" target="_blank">Least Common Multiple</a>
+     */
+    public static long lcm(final long a, final long b) throws ArithmeticException {
+        if (a == 0L || b == 0L) return 0L;
+        long aAbs = Math.abs(a);
+        long bAbs = Math.abs(b);
+        if (aAbs        == bAbs) return aAbs;
+        if (aAbs % bAbs ==   0L) return aAbs;
+        if (bAbs % aAbs ==   0L) return bAbs;
+        long result = aAbs * bAbs / gcdLoop(aAbs, bAbs);
+        if (result < 1L)
+            throw new ArithmeticException("LCM overflow");
+        return result;
+    }
+    
+    /**
+     * Calculates the
+     * <a href="https://en.wikipedia.org/wiki/Greatest_common_divisor" target="_blank">greatest common divisor</a> of
+     * {@code a} &amp; {@code b}. That is, the largest positive integer that is divides both of the integers {@code a}
+     * &amp; {@code b}. If either {@code a} or {@code b} are equal to {@code 0}, then the resulting number is the other one.
+     * <br>
+     * All the results will be bound by: {@code [1; 2_147_483_647]}
+     *
+     * @param a First parameter.
+     * @param b Second Parameter.
+     * @return The greatest common divisor of {@code a} &amp; {@code b}.
+     * @see <a href="https://en.wikipedia.org/wiki/Greatest_common_divisor" target="_blank">Greatest Common Divisor</a>
+     */
+    public static int gcd(final int a, final int b) {
+        if (a == 0 && b == 0) return 1;
+        int aAbs = Math.abs(a);
+        int bAbs = Math.abs(b);
+        if (aAbs        ==    0) return bAbs;
+        if (bAbs        ==    0) return aAbs;
+        if (aAbs        == bAbs) return aAbs;
+        if (aAbs % bAbs ==    0) return bAbs;
+        if (bAbs % aAbs ==    0) return aAbs;
+        return gcdLoop(aAbs, bAbs);
+    }
+    
+    /**
+     * Calculates the
+     * <a href="https://en.wikipedia.org/wiki/Greatest_common_divisor" target="_blank">greatest common divisor</a> of
+     * {@code a} &amp; {@code b}. That is, the largest positive integer that is divides both of the integers {@code a}
+     * &amp; {@code b}. If either {@code a} or {@code b} are equal to {@code 0}, then the resulting number is the other
+     * one.
+     * <br>
+     * All the results will be bound by: {@code [1; 9_223_372_036_854_775_807L]}
+     *
+     * @param a First parameter.
+     * @param b Second Parameter.
+     * @return The greatest common divisor of {@code a} &amp; {@code b}.
+     * @see <a href="https://en.wikipedia.org/wiki/Greatest_common_divisor" target="_blank">Greatest Common Divisor</a>
+     */
+    public static long gcd(final long a, final long b) {
+        if (a == 0L && b == 0L) return 1L;
+        long aAbs = Math.abs(a);
+        long bAbs = Math.abs(b);
+        if (aAbs        ==   0L) return bAbs;
+        if (bAbs        ==   0L) return aAbs;
+        if (aAbs        == bAbs) return aAbs;
+        if (aAbs % bAbs ==   0L) return bAbs;
+        if (bAbs % aAbs ==   0L) return aAbs;
+        return gcdLoop(aAbs, bAbs);
+    }
+    
+    /**
+     * Calculates the greatest common divisor of {@code a} &amp; {@code b} using Euclid's Algorithm.
+     *
+     * @param a First parameter.
+     * @param b Second Parameter.
+     * @return The greatest common divisor of {@code a} &amp; {@code b}.
+     * @see <a href="https://en.wikipedia.org/wiki/Greatest_common_divisor#Euclid's_algorithm" target="_blank">Euclid's Algorithm</a>
+     */
+    private static int gcdLoop(int a, int b) {
+        while (a != 0 && b != 0) {
+            if (a < b) b = b % a;
+            else       a = a % b;
+        }
+        return a == 0 ? b : a;
+    }
+    
+    /**
+     * Calculates the greatest common divisor of {@code a} &amp; {@code b} using Euclid's Algorithm.
+     *
+     * @param a First parameter.
+     * @param b Second Parameter.
+     * @return The greatest common divisor of {@code a} &amp; {@code b}.
+     * @see <a href="https://en.wikipedia.org/wiki/Greatest_common_divisor#Euclid's_algorithm" target="_blank">Euclid's Algorithm</a>
+     */
+    private static long gcdLoop(long a, long b) {
+        while (a != 0L && b != 0L) {
+            if (a < b) b = b % a;
+            else       a = a % b;
+        }
+        return a == 0L ? b : a;
     }
 }

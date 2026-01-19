@@ -5,8 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test class for {@link Maths}
@@ -480,6 +479,190 @@ public class MathsTest {
             @Test
             void number_nan() {
                 assertFalse(Maths.isOdd(Double.NaN));
+            }
+        }
+    }
+    
+    @Nested
+    @DisplayName("Least Common Multiple (LCM)")
+    class LCMTests {
+        @Nested
+        @DisplayName("Integer")
+        class IntegerTests {
+            @Test
+            void number_0_any() {
+                assertEquals(0, Maths.lcm(0, 123));
+            }
+            
+            @Test
+            void number_any_0() {
+                assertEquals(0, Maths.lcm(123, 0));
+            }
+            
+            @Test
+            void number_4_6() {
+                assertEquals(12, Maths.lcm(4, 6));
+            }
+            
+            @Test
+            void number_6_4() {
+                assertEquals(12, Maths.lcm(6, 4));
+            }
+            
+            @Test
+            void number_10_10() {
+                assertEquals(10, Maths.lcm(10, 10));
+            }
+            
+            @Test
+            void number_n9_4() {
+                assertEquals(36, Maths.lcm(-9, 4));
+            }
+            
+            @Test
+            void number_1_any() {
+                assertEquals(123, Maths.lcm(1, 123));
+            }
+            
+            @Test
+            void number_2_integer_max() {
+                assertThrows(ArithmeticException.class, () -> Maths.lcm(2, Integer.MAX_VALUE));
+            }
+        }
+        
+        @Nested
+        @DisplayName("Long")
+        class LongTests {
+            @Test
+            void number_0_any() {
+                assertEquals(0L, Maths.lcm(0L, 123L));
+            }
+            
+            @Test
+            void number_any_0() {
+                assertEquals(0L, Maths.lcm(123L, 0L));
+            }
+            
+            @Test
+            void number_4_6() {
+                assertEquals(12L, Maths.lcm(4L, 6L));
+            }
+            
+            @Test
+            void number_6_4() {
+                assertEquals(12L, Maths.lcm(6L, 4L));
+            }
+            
+            @Test
+            void number_10_10() {
+                assertEquals(10L, Maths.lcm(10L, 10L));
+            }
+            
+            @Test
+            void number_n9_4() {
+                assertEquals(36L, Maths.lcm(-9L, 4L));
+            }
+            
+            @Test
+            void number_1_any() {
+                assertEquals(123L, Maths.lcm(1L, 123L));
+            }
+            
+            @Test
+            void number_2_integer_max() {
+                assertThrows(ArithmeticException.class, () -> Maths.lcm(2L, Long.MAX_VALUE));
+            }
+        }
+    }
+    
+    @Nested
+    @DisplayName("Greatest Common Divisor (GCD)")
+    class GCDTests {
+        @Nested
+        @DisplayName("Integer")
+        class IntegerTests {
+            @Test
+            void number_0_any() {
+                assertEquals(123, Maths.gcd(0, 123));
+            }
+            
+            @Test
+            void number_any_0() {
+                assertEquals(123, Maths.gcd(123, 0));
+            }
+            
+            @Test
+            void number_48_18() {
+                assertEquals(6, Maths.gcd(48, 18));
+            }
+            
+            @Test
+            void number_18_48() {
+                assertEquals(6, Maths.gcd(18, 48));
+            }
+            
+            @Test
+            void number_10_10() {
+                assertEquals(10, Maths.gcd(10, 10));
+            }
+            
+            @Test
+            void number_n9_4() {
+                assertEquals(6, Maths.gcd(-18, 6));
+            }
+            
+            @Test
+            void number_1_any() {
+                assertEquals(1, Maths.gcd(1, 123));
+            }
+            
+            @Test
+            void number_2_max_value_minus_one() {
+                assertEquals(2, Maths.gcd(2, Integer.MAX_VALUE - 1));
+            }
+        }
+        
+        @Nested
+        @DisplayName("Long")
+        class LongTests {
+            @Test
+            void number_0_any() {
+                assertEquals(123L, Maths.gcd(0L, 123L));
+            }
+            
+            @Test
+            void number_any_0() {
+                assertEquals(123L, Maths.gcd(123L, 0L));
+            }
+            
+            @Test
+            void number_48_18() {
+                assertEquals(6L, Maths.gcd(48L, 18L));
+            }
+            
+            @Test
+            void number_18_48() {
+                assertEquals(6L, Maths.gcd(18L, 48L));
+            }
+            
+            @Test
+            void number_10_10() {
+                assertEquals(10L, Maths.gcd(10L, 10L));
+            }
+            
+            @Test
+            void number_n9_4() {
+                assertEquals(6L, Maths.gcd(-18L, 6L));
+            }
+            
+            @Test
+            void number_1_any() {
+                assertEquals(1L, Maths.gcd(1L, 123L));
+            }
+            
+            @Test
+            void number_2_max_value_minus_one() {
+                assertEquals(2L, Maths.gcd(2L, Long.MAX_VALUE - 1));
             }
         }
     }
