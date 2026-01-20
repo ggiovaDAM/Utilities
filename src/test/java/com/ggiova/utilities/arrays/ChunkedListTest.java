@@ -1,6 +1,11 @@
 package com.ggiova.utilities.arrays;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import java.util.NoSuchElementException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -136,4 +141,26 @@ public class ChunkedListTest {
         assertEquals(11, integerChunkedList.get(10));
     }
     
+    
+    @Nested
+    @DisplayName("Getters")
+    class GetTests {
+        @Nested
+        @DisplayName("First")
+        class GetFirstTests {
+            @Test
+            void get_first() {
+                String firstElement = "First element";
+                ChunkedList<String> stringChunkedList = new ChunkedList<>();
+                stringChunkedList.add(firstElement);
+                assertEquals(firstElement, stringChunkedList.getFirst());
+            }
+            
+            @Test
+            void get_first_exception() {
+                ChunkedList<String> stringChunkedList = new ChunkedList<>();
+                assertThrows(NoSuchElementException.class, stringChunkedList::getFirst);
+            }
+        }
+    }
 }

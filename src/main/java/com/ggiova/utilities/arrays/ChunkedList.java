@@ -1,5 +1,7 @@
 package com.ggiova.utilities.arrays;
 
+import java.util.NoSuchElementException;
+
 /**
  * A Linked List that contains equally sized arrays of 16 spaces each. Hybrid between an {@code ArrayList<E>} and a
  * {@code LinkedList<E>}.
@@ -128,6 +130,18 @@ public final class ChunkedList<E> {
         final int subIndex = index % CHUNK_SIZE;
         
         return getUnchecked(chunk, subIndex);
+    }
+    
+    /**
+     * Returns the first element of the first chunk.
+     *
+     * @return The first element of the first chunk.
+     * @throws NoSuchElementException If the ChunkedList is empty.
+     */
+    @SuppressWarnings("unchecked")
+    public E getFirst() throws NoSuchElementException {
+        if (this.length == 0) throw new NoSuchElementException();
+        return (E) this.first.item[0];
     }
     
     /**
