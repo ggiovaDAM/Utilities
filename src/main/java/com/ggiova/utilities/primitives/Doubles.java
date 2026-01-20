@@ -1,7 +1,15 @@
 package com.ggiova.utilities.primitives;
 
 /**
+ * Utility class for the primitive {@code double}.
+ * <br>
+ * The constants introduced are a supplement to the constants in {@link Double}. They are intended to be utilized with
+ * functions that convert from one primitive type to another such as {@link Double#doubleToLongBits(double)} &amp;
+ * {@link Double#longBitsToDouble(long)}.
+ * <br>
+ * Contains methods to better read the bits of {@code double}s.
  *
+ * @see Double
  */
 public final class Doubles {
     /**
@@ -64,7 +72,7 @@ public final class Doubles {
     
     /**
      * Mask for the {@code double}'s exponent bits that represents the highest exponent for a number without turning
-     * into {@link Double#POSITIVE_INFINITY infinity} nor {@link Double#NaN NaN}. <u><b>Not</b> to be confused</u> with
+     * into {@link Double#POSITIVE_INFINITY Infinity} nor {@link Double#NaN NaN}. <u><b>Not</b> to be confused</u> with
      * {@link Doubles#EXPONENT_MASK}.
      */
     public static final long MAX_EXPONENT_MASK = EXPONENT_MASK - TINY_EXPONENT;
@@ -106,7 +114,7 @@ public final class Doubles {
     
     /**
      * Closest floating-point approximation of the square root of the upper limit of {@link Double#MAX_VALUE}.
-     * Note that this value squared will not be equal to {@link Double#MAX_VALUE} due to loss in precision.
+     * Note that this value squared will not be equal to {@link Double#MAX_VALUE} due to precision loss.
      */
     public static final double SQUARE_ROOT_MAX_VALUE = Math.sqrt(Double.MAX_VALUE);
     
@@ -146,7 +154,7 @@ public final class Doubles {
         final int FIRST_UNDERSCORE  = SIGN_LENGTH + BINARY_SHIFT;
         final int SECOND_UNDERSCORE = FIRST_UNDERSCORE + EXPONENT_LENGTH + 1; // +1 for the first underscore shifting
         
-        long lb = Double.doubleToLongBits(num);
+        long bits = Double.doubleToLongBits(num);
         
         char[] arr = new char[LENGTH];
         arr[        0] = '0';
@@ -155,9 +163,9 @@ public final class Doubles {
         for (int ii = MAX_INDEX - LONG_L_EXTRA; ii >= BINARY_SHIFT; ii--) {
             if (ii == FIRST_UNDERSCORE || ii == SECOND_UNDERSCORE) arr[ii] = '_';
             else {
-                if ((lb & 1L) == 0L) arr[ii] = '0';
-                else                 arr[ii] = '1';
-                lb >>>= 1;
+                if ((bits & 1L) == 0L) arr[ii] = '0';
+                else                   arr[ii] = '1';
+                bits >>>= 1;
             }
         }
         return String.valueOf(arr);
@@ -181,7 +189,7 @@ public final class Doubles {
         final int FIRST_UNDERSCORE  = SIGN_LENGTH + BINARY_SHIFT;
         final int SECOND_UNDERSCORE = FIRST_UNDERSCORE + EXPONENT_LENGTH + 1; // +1 for the first underscore shifting
         
-        long lb = Double.doubleToRawLongBits(num);
+        long bits = Double.doubleToRawLongBits(num);
         
         char[] arr = new char[LENGTH];
         arr[        0] = '0';
@@ -190,9 +198,9 @@ public final class Doubles {
         for (int ii = MAX_INDEX - LONG_L_EXTRA; ii >= BINARY_SHIFT; ii--) {
             if (ii == FIRST_UNDERSCORE || ii == SECOND_UNDERSCORE) arr[ii] = '_';
             else {
-                if ((lb & 1L) == 0L) arr[ii] = '0';
-                else                 arr[ii] = '1';
-                lb >>>= 1;
+                if ((bits & 1L) == 0L) arr[ii] = '0';
+                else                   arr[ii] = '1';
+                bits >>>= 1;
             }
         }
         return String.valueOf(arr);
@@ -253,7 +261,7 @@ public final class Doubles {
         final long MASK              = 15L;
         
         final char[] digits = {'0', '1', '2', '3', '4', '5', '6', '7',
-                '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+                               '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
         final char[] arr    = new char[LENGTH];
         
         long bits = Double.doubleToRawLongBits(num);
