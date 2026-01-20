@@ -1,6 +1,7 @@
 package com.ggiova.utilities.math;
 
 import com.ggiova.utilities.primitives.Doubles;
+import com.ggiova.utilities.primitives.Floats;
 
 /**
  * Utility class providing mathematical operations and predicates for primitive types.
@@ -12,8 +13,62 @@ import com.ggiova.utilities.primitives.Doubles;
  *
  * @see Math
  * @see com.ggiova.utilities.primitives.Doubles
+ * @see com.ggiova.utilities.primitives.Floats
  */
 public final class Maths {
+    // -------------------------------------- WHOLE NUMBER -------------------------------------------------------------
+    
+    /**
+     * Determines if {@code number} is a whole number. A whole number (Z) is a number in the set {@code N ∪ {0} ∪ -N}
+     * or, more simply, any number in the set: {@code {…, -3, -2, -1, 0, 1, 2, 3, …}}.
+     * <br>
+     * Since {@code float}s have a wide range of number representation, some especial cases pop up:
+     * <ul>
+     *     <li>If {@code number} is {@link Float#NaN NaN}, returns {@code false}.</li>
+     *     <li>If {@code number} is infinite, either {@link Float#POSITIVE_INFINITY positive} or
+     *     {@link Float#NEGATIVE_INFINITY negative} it returns {@code false}.</li>
+     *     <li>If the absolute value of {@code number} is more than or equal to <i>2<sup>23</sup></i> or
+     *     <i>8_388_608.0</i> then it returns {@code true} since, due to loss of precision, all numbers above
+     *     it will be whole numbers.</li>
+     * </ul>
+     * As stated before, all numbers bigger than or equal to <i>2<sup>23</sup></i> will always be whole numbers, this is
+     * due to the length of the mantissa. The mantissa of a {@code float} can only store 23 bits, meaning that if a
+     * {@code float} stores a number with an {@link Floats#LOSS_DECIMAL_PRECISION exponent (base 2) of 23}, then,
+     * the least-significant bit of the mantissa will store the unit bit (a one). This implies that there is no space
+     * for decimals.
+     *
+     * @param number Value that will be checked.
+     * @return {@code true} if {@code number} is an integer, {@code false} otherwise.
+     * @see <a href="https://en.wikipedia.org/wiki/Integer" target="_blank">Integer Wikipedia Page</a>
+     */
+    public static boolean isWholeNumber(final float number) {
+        // Takes the number's bits removing the sign.
+        int unsignedBits = Float.floatToIntBits(number) & ~Floats.SIGN_MASK;
+        // If zero, return true.
+        if (unsignedBits == 0) return true;
+        // If bigger than exponent mask return false. This rules out NaNs and Infinities.
+        if (unsignedBits >= Floats.EXPONENT_MASK) return false;
+        // If the number is bigger than or equal to LOSS_DECIMAL_PRECISION then it's always a whole number.
+        if (unsignedBits >= Floats.LOSS_DECIMAL_PRECISION_MASK) return true;
+        // Gets the exponent and removes the bias.
+        int exp = (unsignedBits >>> Floats.MANTISSA_LENGTH) - Floats.EXPONENT_BIAS;
+        // If the number is smaller than 1, return false.
+        if (exp < 0) return false;
+        // Mask for the binary decimals (mantissa) to check whether it has more decimals past the limit or not. Also
+        // used to check if the number itself is odd or even.
+        int mask = 1 << Floats.MANTISSA_LENGTH - exp;
+        // If unsignedBits & -mask [simplified from ~(mask - 1)] equals unsignedBits, it means that there are no bits
+        // after the unit value.
+        // Example 15 & 15.1:
+        // 15   --> 0_10000000010_1110000000000000000000000000000000000000000000000000
+        // The exponent is 3, so we need to check after the next three bits if there are any one's.
+        // In this case there aren't, so 15's bits masked equals 15's bits.
+        // 15.1 --> 0_10000000010_1110001100110011001100110011001100110011001100110011
+        // The exponent is also 3, so we need to check after the next three bits if there are any one's.
+        // There are, so this number is not an integer, because 15.1's bits masked are not equal 15.1's bits.
+        return (unsignedBits & -mask) == unsignedBits;
+    }
+    
     /**
      * Determines if {@code number} is a whole number. A whole number (Z) is a number in the set {@code N ∪ {0} ∪ -N}
      * or, more simply, any number in the set: {@code {…, -3, -2, -1, 0, 1, 2, 3, …}}.
@@ -94,6 +149,74 @@ public final class Maths {
         // Checks if the least-significant bit is a one or a zero. All even numbers have a zero as their
         // least-significant bit.
         return (number & 0b1L) == 0b0L;
+    }
+    
+    /**
+     * Returns {@code true} if {@code number} is even &amp; {@code false} if {@code number} is odd. A number is even if it
+     * can be expressed as {@code number = 2×k, k ∈ ℤ}.
+     * <br>
+     * Since {@code float}s can still represent whole numbers there are a few edge-cases to contemplate:
+     * <ul>
+     *     <li>If {@code number} is {@link Float#NaN NaN}, returns {@code false}.</li>
+     *     <li>If {@code number} is infinite, either {@link Float#POSITIVE_INFINITY positive} or
+     *     {@link Float#NEGATIVE_INFINITY negative} it returns {@code false}.</li>
+     *     <li>If {@code number} is a decimal number, then it returns {@code false}.</li>
+     *     <li>If the absolute value of {@code number} is more than or equal to <i>2<sup>24</sup></i> or
+     *     {@code 16_777_216.0} then it returns {@code true} since, due to loss of precision, all numbers above it will
+     *     be multiples of two, and therefore, even.</li>
+     * </ul>
+     * While for {@code int} and {@code long}, a number that is even is not odd and a number that is odd is not even,
+     * for {@code float} it does not always happen. Since {@code float} can have {@link Float#NaN NaN}, infinities, and
+     * decimals, a number can sometimes be neither even nor odd.
+     * <br>
+     * As stated before, all numbers bigger than or equal to <i>2<sup>24</sup></i> will always be even, this is due to
+     * the length of the mantissa. The mantissa of a {@code float} can only store 23 bits, meaning that if a
+     * {@code float} stores a number with an {@link Floats#LOSS_DECIMAL_PRECISION exponent (base 2) of 23}, then, the
+     * least-significant bit of the mantissa will store the unit bit (a one). This implies that if a number is twice
+     * <i>2<sup>23</sup></i> (exponent of 23+1), then it is always going to be even, since there are no unit bits.
+     *
+     * @param number Number that will be checked.
+     * @return {@code true} if {@code number} is even &amp; {@code false} otherwise.
+     * @see Floats#LOSS_DECIMAL_PRECISION
+     */
+    public static boolean isEven(final float number) {
+        // Takes the number's bits removing the sign.
+        int unsignedBits = Float.floatToIntBits(number) & ~Floats.SIGN_MASK;
+        // If zero, return true.
+        if (unsignedBits == 0) return true;
+        // If bigger than exponent mask return false. This rules out NaNs and Infinities.
+        if (unsignedBits >= Floats.EXPONENT_MASK) return false;
+        // If the number is bigger than 2 * LOSS_DECIMAL_PRECISION then it's always even.
+        // Since exponents add, we can use LOSS_DECIMAL_PRECISION_MASK (23) and add TINY_EXPONENT (1)
+        if (unsignedBits >= Floats.LOSS_DECIMAL_PRECISION_MASK + Floats.TINY_EXPONENT) return true;
+        // Gets the exponent and removes the bias.
+        int exp = (unsignedBits >>> Floats.MANTISSA_LENGTH) - Floats.EXPONENT_BIAS;
+        // If the number is smaller than 1, return false.
+        if (exp < 0) return false;
+        // Mask for the binary decimals (mantissa) to check whether it has more decimals past the limit or not. Also
+        // used to check if the number itself is odd or even.
+        int mask = 1 << Floats.MANTISSA_LENGTH - exp;
+        // If unsignedBits & -mask [simplified from ~(mask - 1)] equals unsignedBits, it means that there are no bits
+        // after the unit value.
+        // Example 15 & 15.1:
+        // 15   --> 0_10000010_11100000000000000000000
+        // The exponent is 3, so we need to check after the next three bits if there are any one's.
+        // In this case there aren't, so 15's bits masked are equals 15's bits.
+        // 15.1 --> 0_10000010_11100011001100110011010
+        // The exponent is also 3, so we need to check after the next three bits if there are any one's.
+        // There are, so this number is not an integer, because 15.1's bits masked are not equal 15.1's bits.
+        if ((unsignedBits & -mask) != unsignedBits) return false;
+        // If the bit in the mantissa is 0, then it is even.
+        // Example 15 & 14:
+        // 15   --> 0_10000010_11100000000000000000000
+        // The exponent is 3, so we need to check the third bit.
+        // It is a one (1), so 15 is odd.
+        // 14   --> 0_10000010_11000000000000000000000
+        // The exponent is also 3, so we need to check the third bit.
+        // It is a zero (0), so 14 is even.
+        // PS: This test unsets all the bits before where the exponent aims, maintaining only the one bit it is
+        // checking.
+        return (unsignedBits & mask) == 0;
     }
     
     /**
@@ -194,6 +317,74 @@ public final class Maths {
         // Checks if the least-significant bit is a one or a one. All odd numbers have a one as their least-significant
         // bit.
         return (number & 0b1L) == 0b1L;
+    }
+    
+    /**
+     * Returns {@code true} if {@code number} is odd &amp; {@code false} if {@code number} is even. A number is odd if
+     * it can be expressed as {@code number = 2×k+1, k ∈ ℤ}.
+     * <br>
+     * Since {@code float}s can still represent whole numbers there are a few edge-cases to contemplate:
+     * <ul>
+     *     <li>If {@code number} is {@link Float#NaN NaN}, returns {@code false}.</li>
+     *     <li>If {@code number} is infinite, either {@link Float#POSITIVE_INFINITY positive} or
+     *     {@link Float#NEGATIVE_INFINITY negative} it returns {@code false}.</li>
+     *     <li>If {@code number} is a decimal number, then it returns {@code false}.</li>
+     *     <li>If the absolute value of {@code number} is more than or equal to <i>2<sup>24</sup></i> or
+     *     {@code 16_777_216.0} then it returns {@code false} since, due to loss of precision, all numbers above it will
+     *     be multiples of two, and therefore, not odd.</li>
+     * </ul>
+     * While for {@code int} and {@code long}, a number that is even is not odd and a number that is odd is not even,
+     * for {@code float} it does not always happen. Since {@code float} can have {@link Float#NaN NaN}, infinities, and
+     * decimals, a number can sometimes be neither even nor odd.
+     * <br>
+     * As stated before, all numbers bigger than or equal to <i>2<sup>24</sup></i> will always be even, this is due to
+     * the length of the mantissa. The mantissa of a {@code float} can only store 23 bits, meaning that if a
+     * {@code float} stores a number with an {@link Floats#LOSS_DECIMAL_PRECISION exponent (base 2) of 23}, then, the
+     * least-significant bit of the mantissa will store the unit bit (a one). This implies that if a number is twice
+     * <i>2<sup>23</sup></i> (exponent of 23+1), then it is always going to be even, since there are no unit bits.
+     *
+     * @param number Number that will be checked.
+     * @return {@code true} if {@code number} is odd &amp; {@code false} otherwise.
+     * @see Floats#LOSS_DECIMAL_PRECISION
+     */
+    public static boolean isOdd(final float number) {
+        // Takes the number's bits removing the sign.
+        int unsignedBits = Float.floatToIntBits(number) & ~Floats.SIGN_MASK;
+        // If zero, return false is not needed.
+        // if (unsignedBits == 0) return false;
+        // If bigger than exponent mask return false. This rules out NaNs and Infinities.
+        if (unsignedBits >= Floats.EXPONENT_MASK) return false;
+        // If the number is bigger than 2 * LOSS_DECIMAL_PRECISION then it's always even.
+        // Since exponents add, we can use LOSS_DECIMAL_PRECISION_MASK (23) and add TINY_EXPONENT (1)
+        if (unsignedBits >= Floats.LOSS_DECIMAL_PRECISION_MASK + Floats.TINY_EXPONENT) return false;
+        // Gets the exponent and removes the bias.
+        int exp = (unsignedBits >>> Floats.MANTISSA_LENGTH) - Floats.EXPONENT_BIAS;
+        // If the number is smaller than 1, return false.
+        if (exp < 0) return false;
+        // Mask for the binary decimals (mantissa) to check whether it has more decimals past the limit or not. Also
+        // used to check if the number itself is odd or even.
+        int mask = 1 << Floats.MANTISSA_LENGTH - exp;
+        // If unsignedBits & -mask [simplified from ~(mask - 1)] equals unsignedBits, it means that there are no bits
+        // after the unit value.
+        // Example 15 & 15.1:
+        // 15   --> 0_10000010_11100000000000000000000
+        // The exponent is 3, so we need to check after the next three bits if there are any one's.
+        // In this case there aren't, so 15's bits masked are equals 15's bits.
+        // 15.1 --> 0_10000010_11100011001100110011010
+        // The exponent is also 3, so we need to check after the next three bits if there are any one's.
+        // There are, so this number is not an integer, because 15.1's bits masked are not equal 15.1's bits.
+        if ((unsignedBits & -mask) != unsignedBits) return false;
+        // If the bit in the mantissa is 0, then it is even.
+        // Example 15 & 14:
+        // 15   --> 0_10000010_11100000000000000000000
+        // The exponent is 3, so we need to check the third bit.
+        // It is a one (1), so 15 is odd.
+        // 14   --> 0_10000010_11000000000000000000000
+        // The exponent is also 3, so we need to check the third bit.
+        // It is a zero (0), so 14 is even.
+        // PS: This test unsets all the bits before where the exponent aims, maintaining only the one bit it is
+        // checking.
+        return (unsignedBits & mask) != 0;
     }
     
     /**

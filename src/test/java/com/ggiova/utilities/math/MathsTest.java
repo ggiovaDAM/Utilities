@@ -1,6 +1,7 @@
 package com.ggiova.utilities.math;
 
 import com.ggiova.utilities.primitives.Doubles;
+import com.ggiova.utilities.primitives.Floats;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,126 @@ public class MathsTest {
     @Nested
     @DisplayName("Is Whole?")
     class IsWholeTest {
+        @Nested
+        @DisplayName("Float")
+        class FloatTest {
+            @Test
+            void number_0() {
+                final float NUMBER = 0.0f;
+                assertTrue(Maths.isWholeNumber(NUMBER));
+            }
+            
+            @Test
+            void number_1() {
+                final float NUMBER = 1.0f;
+                assertTrue(Maths.isWholeNumber(NUMBER));
+            }
+            
+            @Test
+            void number_n1() {
+                final float NUMBER = -1.0f;
+                assertTrue(Maths.isWholeNumber(NUMBER));
+            }
+            
+            @Test
+            void number_2() {
+                final float NUMBER = 2.0f;
+                assertTrue(Maths.isWholeNumber(NUMBER));
+            }
+            
+            @Test
+            void number_0_d_5() {
+                final float NUMBER = 0.5f;
+                assertFalse(Maths.isWholeNumber(NUMBER));
+            }
+            
+            @Test
+            void number_n0_d_5() {
+                final float NUMBER = -0.5f;
+                assertFalse(Maths.isWholeNumber(NUMBER));
+            }
+            
+            @Test
+            void number_1_d_5() {
+                final float NUMBER = 1.5f;
+                assertFalse(Maths.isWholeNumber(NUMBER));
+            }
+            
+            @Test
+            void number_4_503_599_627_370_496() {
+                assertTrue(Maths.isWholeNumber(Floats.LOSS_DECIMAL_PRECISION));
+            }
+            
+            @Test
+            void number_4_503_599_627_370_496_d_5() {
+                final float NUMBER = Floats.LOSS_DECIMAL_PRECISION + 0.5f;
+                assertTrue(Maths.isWholeNumber(NUMBER));
+            }
+            
+            @Test
+            void number_2_251_799_813_685_248() {
+                final float NUMBER = Floats.LOSS_DECIMAL_PRECISION / 2.0f;
+                assertTrue(Maths.isWholeNumber(NUMBER));
+            }
+            
+            @Test
+            void number_2_251_799_813_685_248_d_5() {
+                final float NUMBER = Floats.LOSS_DECIMAL_PRECISION / 2.0f + 0.5f;
+                assertFalse(Maths.isWholeNumber(NUMBER));
+            }
+            
+            @Test
+            void number_infinity() {
+                assertFalse(Maths.isWholeNumber(Float.POSITIVE_INFINITY));
+            }
+            
+            @Test
+            void number_negative_infinity() {
+                assertFalse(Maths.isWholeNumber(Float.NEGATIVE_INFINITY));
+            }
+            
+            @Test
+            void number_nan() {
+                assertFalse(Maths.isWholeNumber(Float.NaN));
+            }
+            
+            @Test
+            void number_large_negative() {
+                final float NUMBER = -1_000_000.0f;
+                assertTrue(Maths.isWholeNumber(NUMBER));
+            }
+            
+            @Test
+            void number_large_negative_decimal() {
+                final float NUMBER = -1_000_000.1f;
+                assertFalse(Maths.isWholeNumber(NUMBER));
+            }
+            
+            @Test
+            void number_small_decimal() {
+                final float NUMBER = 0.1f;
+                assertFalse(Maths.isWholeNumber(NUMBER));
+            }
+            
+            @Test
+            void number_very_small_decimal() {
+                final float NUMBER = 0.0001f;
+                assertFalse(Maths.isWholeNumber(NUMBER));
+            }
+            
+            @Test
+            void number_negative_zero() {
+                final float NUMBER = -0.0f;
+                assertTrue(Maths.isWholeNumber(NUMBER));
+            }
+            
+            @Test
+            void number_just_below_precision_loss() {
+                final float NUMBER = Floats.LOSS_DECIMAL_PRECISION - 1.0f;
+                assertTrue(Maths.isWholeNumber(NUMBER));
+            }
+        }
+        
         @Nested
         @DisplayName("Double")
         class DoubleTest {
@@ -223,6 +344,96 @@ public class MathsTest {
         }
         
         @Nested
+        @DisplayName("Float")
+        class FloatTests {
+            @Test
+            void number_0() {
+                final float NUMBER = 0.0f;
+                assertTrue(Maths.isEven(NUMBER));
+            }
+            
+            @Test
+            void number_n0() {
+                final float NUMBER = -0.0f;
+                assertTrue(Maths.isEven(NUMBER));
+            }
+            
+            @Test
+            void number_1() {
+                final float NUMBER = 1.0f;
+                assertFalse(Maths.isEven(NUMBER));
+            }
+            
+            @Test
+            void number_n1() {
+                final float NUMBER = -1.0f;
+                assertFalse(Maths.isEven(NUMBER));
+            }
+            
+            @Test
+            void number_2() {
+                final float NUMBER = 2.0f;
+                assertTrue(Maths.isEven(NUMBER));
+            }
+            
+            @Test
+            void number_n2() {
+                final float NUMBER = -2.0f;
+                assertTrue(Maths.isEven(NUMBER));
+            }
+            
+            @Test
+            void number_0_d_5() {
+                final float NUMBER = 0.5f;
+                assertFalse(Maths.isEven(NUMBER));
+            }
+            
+            @Test
+            void number_n0_d_5() {
+                final float NUMBER = -0.5f;
+                assertFalse(Maths.isEven(NUMBER));
+            }
+            
+            @Test
+            void number_4_503_599_627_370_496() {
+                assertTrue(Maths.isEven(Floats.LOSS_DECIMAL_PRECISION));
+            }
+            
+            @Test
+            void number_4_503_599_627_370_497() {
+                final float NUMBER = Floats.LOSS_DECIMAL_PRECISION + 1.0f;
+                assertFalse(Maths.isEven(NUMBER));
+            }
+            
+            @Test
+            void number_9_007_199_254_740_992() {
+                final float NUMBER = Floats.LOSS_DECIMAL_PRECISION * 2;
+                assertTrue(Maths.isEven(NUMBER));
+            }
+            
+            @Test
+            void number_9_007_199_254_740_993() {
+                final float NUMBER = Floats.LOSS_DECIMAL_PRECISION * 2 + 1;
+                assertTrue(Maths.isEven(NUMBER));
+            }
+            
+            @Test
+            void number_positive_infinity() {
+                assertFalse(Maths.isEven(Float.POSITIVE_INFINITY));
+            }
+            
+            @Test
+            void number_negative_infinity() {
+                assertFalse(Maths.isEven(Float.NEGATIVE_INFINITY));
+            }
+            
+            @Test
+            void number_nan() {
+                assertFalse(Maths.isEven(Float.NaN));
+            }
+        }
+        
+        @Nested
         @DisplayName("Double")
         class DoubleTests {
             @Test
@@ -400,6 +611,96 @@ public class MathsTest {
             @Test
             void number_min_value() {
                 assertFalse(Maths.isOdd(Long.MIN_VALUE));
+            }
+        }
+        
+        @Nested
+        @DisplayName("Float")
+        class FloatTests {
+            @Test
+            void number_0() {
+                final float NUMBER = 0.0f;
+                assertFalse(Maths.isOdd(NUMBER));
+            }
+            
+            @Test
+            void number_n0() {
+                final float NUMBER = -0.0f;
+                assertFalse(Maths.isOdd(NUMBER));
+            }
+            
+            @Test
+            void number_1() {
+                final float NUMBER = 1.0f;
+                assertTrue(Maths.isOdd(NUMBER));
+            }
+            
+            @Test
+            void number_n1() {
+                final float NUMBER = -1.0f;
+                assertTrue(Maths.isOdd(NUMBER));
+            }
+            
+            @Test
+            void number_2() {
+                final float NUMBER = 2.0f;
+                assertFalse(Maths.isOdd(NUMBER));
+            }
+            
+            @Test
+            void number_n2() {
+                final float NUMBER = -2.0f;
+                assertFalse(Maths.isOdd(NUMBER));
+            }
+            
+            @Test
+            void number_0_d_5() {
+                final float NUMBER = 0.5f;
+                assertFalse(Maths.isOdd(NUMBER));
+            }
+            
+            @Test
+            void number_n0_d_5() {
+                final float NUMBER = -0.5f;
+                assertFalse(Maths.isOdd(NUMBER));
+            }
+            
+            @Test
+            void number_4_503_599_627_370_496() {
+                assertFalse(Maths.isOdd(Floats.LOSS_DECIMAL_PRECISION));
+            }
+            
+            @Test
+            void number_4_503_599_627_370_497() {
+                final float NUMBER = Floats.LOSS_DECIMAL_PRECISION + 1;
+                assertTrue(Maths.isOdd(NUMBER));
+            }
+            
+            @Test
+            void number_9_007_199_254_740_992() {
+                final float NUMBER = Floats.LOSS_DECIMAL_PRECISION * 2;
+                assertFalse(Maths.isOdd(NUMBER));
+            }
+            
+            @Test
+            void number_9_007_199_254_740_993() {
+                final float NUMBER = Floats.LOSS_DECIMAL_PRECISION * 2 + 1;
+                assertFalse(Maths.isOdd(NUMBER));
+            }
+            
+            @Test
+            void number_positive_infinity() {
+                assertFalse(Maths.isOdd(Float.POSITIVE_INFINITY));
+            }
+            
+            @Test
+            void number_negative_infinity() {
+                assertFalse(Maths.isOdd(Float.NEGATIVE_INFINITY));
+            }
+            
+            @Test
+            void number_nan() {
+                assertFalse(Maths.isOdd(Float.NaN));
             }
         }
         
