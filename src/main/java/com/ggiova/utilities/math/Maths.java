@@ -39,33 +39,29 @@ public final class Maths {
     public static boolean isWholeNumber(final double number) {
         // Takes the number's bits removing the sign.
         final long unsignedBits = Double.doubleToLongBits(number) & ~Doubles.SIGN_MASK;
-        return switch (unsignedBits) {
-            // If zero, return true.
-            case 0L -> true;
-            // If bigger than exponent mask return false. This rules out NaNs and Infinities.
-            case long l when l >= Doubles.EXPONENT_MASK -> false;
-            // If the number is bigger than or equal to LOSS_DECIMAL_PRECISION then it's always a whole number.
-            case long l when l >= Doubles.LOSS_DECIMAL_PRECISION_MASK -> true;
-            default -> {
-                // Gets the exponent and removes the bias.
-                int exp = (int) (unsignedBits >>> Doubles.MANTISSA_LENGTH) - Doubles.EXPONENT_BIAS;
-                // If the number is smaller than 1, return false.
-                if (exp < 0) yield false;
-                // Mask for the binary decimals (mantissa) to check whether it has more decimals past the limit or not. Also
-                // used to check if the number itself is odd or even.
-                long mask = 1L << Doubles.MANTISSA_LENGTH - exp;
-                // If unsignedBits & -mask [simplified from ~(mask - 1)] equals unsignedBits, it means that there are no bits
-                // after the unit value.
-                // Example 15 & 15.1:
-                // 15   --> 0b0_10000000010_1110000000000000000000000000000000000000000000000000L
-                // The exponent is 3, so we need to check after the next three bits if there are any one's.
-                // In this case there aren't, so 15's bits masked equals 15's bits.
-                // 15.1 --> 0b0_10000000010_1110001100110011001100110011001100110011001100110011L
-                // The exponent is also 3, so we need to check after the next three bits if there are any one's.
-                // There are, so this number is not an integer, because 15.1's bits masked are not equal 15.1's bits.
-                yield (unsignedBits & -mask) == unsignedBits;
-            }
-        };
+        // If zero, return true.
+        if (unsignedBits == 0L) return true;
+        // If bigger than exponent mask return false. This rules out NaNs and Infinities.
+        if (unsignedBits >= Doubles.EXPONENT_MASK) return false;
+        // If the number is bigger than or equal to LOSS_DECIMAL_PRECISION then it's always a whole number.
+        if (unsignedBits >= Doubles.LOSS_DECIMAL_PRECISION_MASK) return true;
+        // Gets the exponent and removes the bias.
+        int exp = (int) (unsignedBits >>> Doubles.MANTISSA_LENGTH) - Doubles.EXPONENT_BIAS;
+        // If the number is smaller than 1, return false.
+        if (exp < 0) return false;
+        // Mask for the binary decimals (mantissa) to check whether it has more decimals past the limit or not. Also
+        // used to check if the number itself is odd or even.
+        long mask = 1L << Doubles.MANTISSA_LENGTH - exp;
+        // If unsignedBits & -mask [simplified from ~(mask - 1)] equals unsignedBits, it means that there are no bits
+        // after the unit value.
+        // Example 15 & 15.1:
+        // 15   --> 0b0_10000000010_1110000000000000000000000000000000000000000000000000L
+        // The exponent is 3, so we need to check after the next three bits if there are any one's.
+        // In this case there aren't, so 15's bits masked equals 15's bits.
+        // 15.1 --> 0b0_10000000010_1110001100110011001100110011001100110011001100110011L
+        // The exponent is also 3, so we need to check after the next three bits if there are any one's.
+        // There are, so this number is not an integer, because 15.1's bits masked are not equal 15.1's bits.
+        return  (unsignedBits & -mask) == unsignedBits;
     }
     
     // -------------------------------------- EVEN-NESS ----------------------------------------------------------------
@@ -130,45 +126,41 @@ public final class Maths {
     public static boolean isEven(final double number) {
         // Takes the number's bits removing the sign.
         long unsignedBits = Double.doubleToLongBits(number) & ~Doubles.SIGN_MASK;
-        return switch (unsignedBits) {
-            // If zero, return true.
-            case 0L -> true;
-            // If bigger than exponent mask return false. This rules out NaNs and Infinities.
-            case long l when l >= Doubles.EXPONENT_MASK -> false;
-            // If the number is bigger than 2 * LOSS_DECIMAL_PRECISION then it's always even.
-            // Since exponents add, we can use LOSS_DECIMAL_PRECISION_MASK (52) and add TINY_EXPONENT (1)
-            case long l when l >= Doubles.LOSS_DECIMAL_PRECISION_MASK + Doubles.TINY_EXPONENT -> true;
-            default -> {
-                // Gets the exponent and removes the bias.
-                int exp = (int) (unsignedBits >>> Doubles.MANTISSA_LENGTH) - Doubles.EXPONENT_BIAS;
-                // If the number is smaller than 1, return false.
-                if (exp < 0) yield false;
-                // Mask for the binary decimals (mantissa) to check whether it has more decimals past the limit or not. Also
-                // used to check if the number itself is odd or even.
-                long mask = 1L << Doubles.MANTISSA_LENGTH - exp;
-                // If unsignedBits & -mask [simplified from ~(mask - 1)] equals unsignedBits, it means that there are no bits
-                // after the unit value.
-                // Example 15 & 15.1:
-                // 15   --> 0b0_10000000010_1110000000000000000000000000000000000000000000000000L
-                // The exponent is 3, so we need to check after the next three bits if there are any one's.
-                // In this case there aren't, so 15's bits masked are equals 15's bits.
-                // 15.1 --> 0b0_10000000010_1110001100110011001100110011001100110011001100110011L
-                // The exponent is also 3, so we need to check after the next three bits if there are any one's.
-                // There are, so this number is not an integer, because 15.1's bits masked are not equal 15.1's bits.
-                if ((unsignedBits & -mask) != unsignedBits) yield false;
-                // If the bit in the mantissa is 0, then it is even.
-                // Example 15 & 14:
-                // 15   --> 0b0_10000000010_1110000000000000000000000000000000000000000000000000L
-                // The exponent is 3, so we need to check the third bit.
-                // It is a one (1), so 15 is odd.
-                // 14   --> 0b0_10000000010_1100000000000000000000000000000000000000000000000000L
-                // The exponent is also 3, so we need to check the third bit.
-                // It is a zero (0), so 14 is even.
-                // PS: This test unsets all the bits before where the exponent aims, maintaining only the one bit it is
-                // checking.
-                yield (unsignedBits & mask) == 0L;
-            }
-        };
+        // If zero, return true.
+        if (unsignedBits == 0L) return true;
+        // If bigger than exponent mask return false. This rules out NaNs and Infinities.
+        if (unsignedBits >= Doubles.EXPONENT_MASK) return false;
+        // If the number is bigger than 2 * LOSS_DECIMAL_PRECISION then it's always even.
+        // Since exponents add, we can use LOSS_DECIMAL_PRECISION_MASK (52) and add TINY_EXPONENT (1)
+        if (unsignedBits >= Doubles.LOSS_DECIMAL_PRECISION_MASK + Doubles.TINY_EXPONENT) return true;
+        // Gets the exponent and removes the bias.
+        int exp = (int) (unsignedBits >>> Doubles.MANTISSA_LENGTH) - Doubles.EXPONENT_BIAS;
+        // If the number is smaller than 1, return false.
+        if (exp < 0) return false;
+        // Mask for the binary decimals (mantissa) to check whether it has more decimals past the limit or not. Also
+        // used to check if the number itself is odd or even.
+        long mask = 1L << Doubles.MANTISSA_LENGTH - exp;
+        // If unsignedBits & -mask [simplified from ~(mask - 1)] equals unsignedBits, it means that there are no bits
+        // after the unit value.
+        // Example 15 & 15.1:
+        // 15   --> 0b0_10000000010_1110000000000000000000000000000000000000000000000000L
+        // The exponent is 3, so we need to check after the next three bits if there are any one's.
+        // In this case there aren't, so 15's bits masked are equals 15's bits.
+        // 15.1 --> 0b0_10000000010_1110001100110011001100110011001100110011001100110011L
+        // The exponent is also 3, so we need to check after the next three bits if there are any one's.
+        // There are, so this number is not an integer, because 15.1's bits masked are not equal 15.1's bits.
+        if ((unsignedBits & -mask) != unsignedBits) return false;
+        // If the bit in the mantissa is 0, then it is even.
+        // Example 15 & 14:
+        // 15   --> 0b0_10000000010_1110000000000000000000000000000000000000000000000000L
+        // The exponent is 3, so we need to check the third bit.
+        // It is a one (1), so 15 is odd.
+        // 14   --> 0b0_10000000010_1100000000000000000000000000000000000000000000000000L
+        // The exponent is also 3, so we need to check the third bit.
+        // It is a zero (0), so 14 is even.
+        // PS: This test unsets all the bits before where the exponent aims, maintaining only the one bit it is
+        // checking.
+        return  (unsignedBits & mask) == 0L;
     }
     
     
