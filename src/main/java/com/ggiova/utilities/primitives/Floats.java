@@ -11,7 +11,7 @@ package com.ggiova.utilities.primitives;
  *
  * @see Float
  */
-public class Floats {
+public final class Floats {
     /**
      * Displays the bits that represent {@code 0.0f}.
      */
