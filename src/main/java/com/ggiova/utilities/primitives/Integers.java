@@ -10,7 +10,7 @@ package com.ggiova.utilities.primitives;
 public final class Integers {
     /**
      * Creates a String that contains the bits of an {@code int} starting with '0b'. Underscores are utilized to group
-     * bytes. For example {@code 100} is transformed into {@code 0b00000000_00000000_00000000_01100100}.
+     * bits into bytes. For example {@code 100} is transformed into {@code 0b00000000_00000000_00000000_01100100}.
      *
      * @param num Number whose bits will be formatted.
      * @return A String of the binary representation of {@code num}.
@@ -40,7 +40,7 @@ public final class Integers {
     
     /**
      * Creates a String that contains the bits of an {@code int} in hexadecimal starting with '0b'. Underscores are
-     * utilized to group bytes. For example {@code 100} is transformed into {@code 0x00_00_00_64}.
+     * utilized to separate bytes. For example {@code 100} is transformed into {@code 0x00_00_00_64}.
      *
      * @param num Number whose bits will be formatted.
      * @return A String of the binary representation of {@code num}.
