@@ -785,6 +785,348 @@ public class MathsTest {
     }
     
     @Nested
+    @DisplayName("-1 ^ n")
+    class MinusOnePowTests {
+        @Nested
+        @DisplayName("Integer")
+        class IntegerTests {
+            @Test
+            void number_0() {
+                final int EXPECTED = 1;
+                final int TESTED = 0;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_1() {
+                final int EXPECTED = -1;
+                final int TESTED = 1;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_n1() {
+                final int EXPECTED = -1;
+                final int TESTED = -1;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_2() {
+                final int EXPECTED = 1;
+                final int TESTED = 2;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_n2() {
+                final int EXPECTED = 1;
+                final int TESTED = -2;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_max_value() {
+                final int EXPECTED = -1;
+                final int TESTED = Integer.MAX_VALUE;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_min_value() {
+                final int EXPECTED = 1;
+                final int TESTED = Integer.MIN_VALUE;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+        }
+        
+        @Nested
+        @DisplayName("Long")
+        class LongTests {
+            @Test
+            void number_0() {
+                final long EXPECTED = 1L;
+                final long TESTED = 0L;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_1() {
+                final long EXPECTED = -1L;
+                final long TESTED = 1L;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_n1() {
+                final long EXPECTED = -1L;
+                final long TESTED = -1L;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_2() {
+                final long EXPECTED = 1L;
+                final long TESTED = 2L;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_n2() {
+                final long EXPECTED = 1L;
+                final long TESTED = -2L;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_max_value() {
+                final long EXPECTED = -1L;
+                final long TESTED = Long.MAX_VALUE;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_min_value() {
+                final long EXPECTED = 1L;
+                final long TESTED = Long.MIN_VALUE;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+        }
+        
+        @Nested
+        @DisplayName("Float")
+        class FloatTests {
+            @Test
+            void number_0() {
+                final float EXPECTED = 1.0f;
+                final float TESTED = 0.0f;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_1() {
+                final float EXPECTED = -1.0f;
+                final float TESTED = 1.0f;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_n1() {
+                final float EXPECTED = -1.0f;
+                final float TESTED = -1.0f;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_2() {
+                final float EXPECTED = 1.0f;
+                final float TESTED = 2.0f;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_n2() {
+                final float EXPECTED = 1.0f;
+                final float TESTED = -2.0f;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_0_d_2() {
+                final float EXPECTED = Float.NaN;
+                final float TESTED = 0.2f;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_n1_d_5() {
+                final float EXPECTED = Float.NaN;
+                final float TESTED = -1.5f;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_decimal_precision() {
+                final float EXPECTED = 1.0f;
+                final float TESTED = Floats.LOSS_DECIMAL_PRECISION;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_decimal_precision_p_1() {
+                final float EXPECTED = -1.0f;
+                final float TESTED = Floats.LOSS_DECIMAL_PRECISION + 1;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_two_times_decimal_precision() {
+                final float EXPECTED = 1.0f;
+                final float TESTED = Floats.LOSS_DECIMAL_PRECISION * 2;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_two_times_decimal_precision_p_1() {
+                final float EXPECTED = 1.0f;
+                final float TESTED = Floats.LOSS_DECIMAL_PRECISION * 2 + 1;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_positive_infinity() {
+                final float EXPECTED = Float.NaN;
+                final float TESTED = Float.POSITIVE_INFINITY;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_negative_infinity() {
+                final float EXPECTED = Float.NaN;
+                final float TESTED = Float.NEGATIVE_INFINITY;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_nan() {
+                final float EXPECTED = Float.NaN;
+                final float TESTED = Float.NaN;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_max_value() {
+                final float EXPECTED = 1.0f;
+                final float TESTED = Float.MAX_VALUE;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_min_value() {
+                final float EXPECTED = Float.NaN;
+                final float TESTED = Float.MIN_VALUE;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+        }
+        
+        @Nested
+        @DisplayName("Double")
+        class DoubleTests {
+            @Test
+            void number_0() {
+                final double EXPECTED = 1.0d;
+                final double TESTED = 0.0d;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_1() {
+                final double EXPECTED = -1.0d;
+                final double TESTED = 1.0d;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_n1() {
+                final double EXPECTED = -1.0d;
+                final double TESTED = -1.0d;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_2() {
+                final double EXPECTED = 1.0d;
+                final double TESTED = 2.0d;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_n2() {
+                final double EXPECTED = 1.0d;
+                final double TESTED = -2.0d;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_0_d_2() {
+                final double EXPECTED = Double.NaN;
+                final double TESTED = 0.2d;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_n1_d_5() {
+                final double EXPECTED = Double.NaN;
+                final double TESTED = -1.5d;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_decimal_precision() {
+                final double EXPECTED = 1.0d;
+                final double TESTED = Doubles.LOSS_DECIMAL_PRECISION;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_decimal_precision_p_1() {
+                final double EXPECTED = -1.0d;
+                final double TESTED = Doubles.LOSS_DECIMAL_PRECISION + 1;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_two_times_decimal_precision() {
+                final double EXPECTED = 1.0d;
+                final double TESTED = Doubles.LOSS_DECIMAL_PRECISION * 2;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_two_times_decimal_precision_p_1() {
+                final double EXPECTED = 1.0d;
+                final double TESTED = Doubles.LOSS_DECIMAL_PRECISION * 2 + 1;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_positive_infinity() {
+                final double EXPECTED = Double.NaN;
+                final double TESTED = Double.POSITIVE_INFINITY;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_negative_infinity() {
+                final double EXPECTED = Double.NaN;
+                final double TESTED = Double.NEGATIVE_INFINITY;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_nan() {
+                final double EXPECTED = Double.NaN;
+                final double TESTED = Double.NaN;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_max_value() {
+                final double EXPECTED = 1.0d;
+                final double TESTED = Double.MAX_VALUE;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_min_value() {
+                final double EXPECTED = Double.NaN;
+                final double TESTED = Double.MIN_VALUE;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+        }
+    }
+    
+    @Nested
     @DisplayName("Least Common Multiple (LCM)")
     class LCMTests {
         @Nested

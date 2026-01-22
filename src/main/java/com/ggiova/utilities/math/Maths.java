@@ -454,6 +454,79 @@ public final class Maths {
         return (unsignedBits & mask) != 0L;
     }
     
+    //  ---------------------------------- MINUS ONE POW ---------------------------------------------------------------
+    /**
+     * Calculates the {@code n}th power of {@code -1}. If {@code n} is even then it returns {@code 1} and if it is odd,
+     * it returns {@code -1}.
+     *
+     * @param n Power of {@code -1}.
+     * @return The {@code n}th power of {@code -1}.
+     * @see Maths#isEven(int)
+     */
+    public static int minusOnePow(final int n) {
+        return isEven(n) ? 1 : -1;
+    }
+    
+    /**
+     * Calculates the {@code n}th power of {@code -1}. If {@code n} is even then it returns {@code 1} and if it is odd,
+     * it returns {@code -1}.
+     *
+     * @param n Power of {@code -1}.
+     * @return The {@code n}th power of {@code -1}.
+     * @see Maths#isEven(long)
+     */
+    public static long minusOnePow(final long n) {
+        return isEven(n) ? 1L : -1L;
+    }
+    
+    /**
+     * Calculates the {@code n}th the power of {@code -1.0f}. Since the exponent can have a myriad of possible values,
+     * some cases need to be addressed:
+     * <ul>
+     *     <li>If {@code n} is {@link Float#NaN NaN} or infinite, either {@link Float#POSITIVE_INFINITY positive} or
+     *     {@link Float#NEGATIVE_INFINITY negative}, the result will be {@link Float#NaN NaN}.</li>
+     *     <li>If the absolute value of {@code n} is greater than or equal to <u>twice
+     *     {@link Floats#LOSS_DECIMAL_PRECISION}</u>, then the result will be {@code 1.0f} since all those numbers are
+     *     even.</li>
+     *     <li>If {@code n} has a decimal part, then, the result will be {@link Float#NaN NaN}.</li>
+     * </ul>
+     * Otherwise, if the number is even, it returns {@code 1.0f}, if it's odd, it returns {@code -1.0f}.
+     *
+     * @param n Power of {@code -1.0f}.
+     * @return The {@code n}th power of {@code -1.0f}.
+     * @see Maths#isEven(float)
+     */
+    public static float minusOnePow(final float n) {
+        if (isWholeNumber(n)) {
+            return isEven(n) ? 1.0f : -1.0f;
+        }
+        return Float.NaN;
+    }
+    
+    /**
+     * Calculates the {@code n}th the power of {@code -1.0d}. Since the exponent can have a myriad of possible values,
+     * some cases need to be addressed:
+     * <ul>
+     *     <li>If {@code n} is {@link Double#NaN NaN} or infinite, either {@link Double#POSITIVE_INFINITY positive} or
+     *     {@link Double#NEGATIVE_INFINITY negative}, the result will be {@link Double#NaN NaN}.</li>
+     *     <li>If the absolute value of {@code n} is greater than or equal to twice
+     *     {@link Doubles#LOSS_DECIMAL_PRECISION}, then the result will be {@code 1.0d} since all those numbers are
+     *     even.</li>
+     *     <li>If {@code n} has a decimal part, then, the result will be {@link Double#NaN NaN}.</li>
+     * </ul>
+     * Otherwise, if the number is even, it returns {@code 1.0d}, if it's odd, it returns {@code -1.0d}.
+     *
+     * @param n Power of {@code -1.0d}.
+     * @return The {@code n}th power of {@code -1.0d}.
+     * @see Maths#isEven(double)
+     */
+    public static double minusOnePow(final double n) {
+        if (isWholeNumber(n)) {
+            return isEven(n) ? 1.0d : -1.0d;
+        }
+        return Double.NaN;
+    }
+    
     //  ----------------------------------- FRACTIONS ------------------------------------------------------------------
     /**
      * Calculates the
