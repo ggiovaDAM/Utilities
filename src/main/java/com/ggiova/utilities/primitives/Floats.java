@@ -100,9 +100,9 @@ public final class Floats {
      * 2<sup>23</sup> has no decimal part.
      * <br>
      * Computable as:
-     * {@code
+     * <pre>{@code
      *     Float.intBitsToFloat(LOSS_DECIMAL_PRECISION_MASK)
-     * }
+     * }</pre>
      */
     public static final float LOSS_DECIMAL_PRECISION = 0x1.0p23f;
     

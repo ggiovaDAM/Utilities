@@ -98,10 +98,11 @@ public final class Doubles {
      * Upper bound of {@code double} floating-point numbers where they lose all decimal precision. This is due to the
      * fact that the decimal part is stored in {@code 52} bits which means that any number that is more than or equal to
      * 2<sup>52</sup> has no decimal part.
-     * <br>Computable as:
-     * {@code
+     * <br>
+     * Computable as:
+     * <pre>{@code
      *     Double.longBitsToDouble(LOSS_DECIMAL_PRECISION_MASK)
-     * }
+     * }</pre>
      */
     public static final double LOSS_DECIMAL_PRECISION = 0x1.0p52d;
     
