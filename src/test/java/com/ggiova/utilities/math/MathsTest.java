@@ -6,6 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigInteger;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -511,6 +513,50 @@ public class MathsTest {
                 assertFalse(Maths.isEven(Double.NaN));
             }
         }
+        
+        @Nested
+        @DisplayName("BigInteger")
+        class BigIntegerTests {
+            @Test
+            void number_0() {
+                assertTrue(Maths.isEven(BigInteger.ZERO));
+            }
+            
+            @Test
+            void number_1() {
+                assertFalse(Maths.isEven(BigInteger.ONE));
+            }
+            
+            @Test
+            void number_n1() {
+                assertFalse(Maths.isEven(BigInteger.valueOf(-1L)));
+            }
+            
+            @Test
+            void number_2() {
+                assertTrue(Maths.isEven(BigInteger.TWO));
+            }
+            
+            @Test
+            void number_n2() {
+                assertTrue(Maths.isEven(BigInteger.valueOf(-2L)));
+            }
+            
+            @Test
+            void number_1_000_000() {
+                assertTrue(Maths.isEven(BigInteger.valueOf(1_000_000L)));
+            }
+            
+            @Test
+            void number_1_000_001() {
+                assertFalse(Maths.isEven(BigInteger.valueOf(1_000_001L)));
+            }
+            
+            @Test
+            void number_null() {
+                assertFalse(Maths.isEven(null));
+            }
+        }
     }
     
     @Nested
@@ -780,6 +826,50 @@ public class MathsTest {
             @Test
             void number_nan() {
                 assertFalse(Maths.isOdd(Double.NaN));
+            }
+        }
+        
+        @Nested
+        @DisplayName("BigInteger")
+        class BigIntegerTests {
+            @Test
+            void number_0() {
+                assertFalse(Maths.isOdd(BigInteger.ZERO));
+            }
+            
+            @Test
+            void number_1() {
+                assertTrue(Maths.isOdd(BigInteger.ONE));
+            }
+            
+            @Test
+            void number_n1() {
+                assertTrue(Maths.isOdd(BigInteger.valueOf(-1L)));
+            }
+            
+            @Test
+            void number_2() {
+                assertFalse(Maths.isOdd(BigInteger.TWO));
+            }
+            
+            @Test
+            void number_n2() {
+                assertFalse(Maths.isOdd(BigInteger.valueOf(-2L)));
+            }
+            
+            @Test
+            void number_1_000_000() {
+                assertFalse(Maths.isOdd(BigInteger.valueOf(1_000_000L)));
+            }
+            
+            @Test
+            void number_1_000_001() {
+                assertTrue(Maths.isOdd(BigInteger.valueOf(1_000_001L)));
+            }
+            
+            @Test
+            void number_null() {
+                assertFalse(Maths.isOdd(null));
             }
         }
     }
@@ -1122,6 +1212,50 @@ public class MathsTest {
                 final double EXPECTED = Double.NaN;
                 final double TESTED = Double.MIN_VALUE;
                 assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+        }
+        
+        @Nested
+        @DisplayName("BigInteger")
+        class BigIntegerTests {
+            @Test
+            void number_0() {
+                final BigInteger EXPECTED = BigInteger.ONE;
+                final BigInteger TESTED = BigInteger.ZERO;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_1() {
+                final BigInteger EXPECTED = Maths.BIG_INTEGER_MINUS_ONE;
+                final BigInteger TESTED = BigInteger.ONE;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_n1() {
+                final BigInteger EXPECTED = Maths.BIG_INTEGER_MINUS_ONE;
+                final BigInteger TESTED = Maths.BIG_INTEGER_MINUS_ONE;
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_2() {
+                final BigInteger EXPECTED = BigInteger.ONE;
+                final BigInteger TESTED = BigInteger.valueOf(2L);
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_n2() {
+                final BigInteger EXPECTED = BigInteger.ONE;
+                final BigInteger TESTED = BigInteger.valueOf(-2L);
+                assertEquals(EXPECTED, Maths.minusOnePow(TESTED));
+            }
+            
+            @Test
+            void number_null() {
+                assertNull(Maths.minusOnePow(null));
             }
         }
     }

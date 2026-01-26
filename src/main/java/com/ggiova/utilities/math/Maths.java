@@ -3,6 +3,8 @@ package com.ggiova.utilities.math;
 import com.ggiova.utilities.primitives.Doubles;
 import com.ggiova.utilities.primitives.Floats;
 
+import java.math.BigInteger;
+
 /**
  * Utility class providing mathematical operations and predicates for primitive types.
  * <br>
@@ -16,6 +18,11 @@ import com.ggiova.utilities.primitives.Floats;
  * @see com.ggiova.utilities.primitives.Floats
  */
 public final class Maths {
+    /**
+     * BigInteger constant of {@code -1}.
+     */
+    public static final BigInteger BIG_INTEGER_MINUS_ONE = BigInteger.valueOf(-1L);
+    
     // -------------------------------------- WHOLE NUMBER -------------------------------------------------------------
     
     /**
@@ -286,6 +293,25 @@ public final class Maths {
         return  (unsignedBits & mask) == 0L;
     }
     
+    /**
+     * Returns {@code true} if {@code number} is even &amp; {@code false} if {@code number} is odd. A number is even if
+     * it can be expressed as {@code number = 2×k, k ∈ ℤ}.
+     *
+     * <p>If {@code number} is {@code null} then it returns {@code false}.
+     *
+     * <p>Binary-wise, the least-significant digit indicates if a number is even or odd. So, if it is {@code 0} then
+     * it's even and if it is {@code 1} then is odd.
+     *
+     * @param number Number that will be checked.
+     * @return {@code true} if {@code number} is even &amp; {@code false} if {@code number} is odd.
+     * @see BigInteger
+     */
+    public static boolean isEven(final BigInteger number) {
+        if (number == null) return false;
+        // Checks if the least-significant bit is a one or a zero. All even numbers have a zero as their
+        // least-significant bit.
+        return number.mod(BigInteger.TWO).equals(BigInteger.ZERO);
+    }
     
     // -------------------------------------- ODD-NESS -----------------------------------------------------------------
     
@@ -454,6 +480,26 @@ public final class Maths {
         return (unsignedBits & mask) != 0L;
     }
     
+    /**
+     * Returns {@code true} if {@code number} is odd &amp; {@code false} if {@code number} is even. A number is odd if
+     * it can be expressed as {@code number = 2×k+1, k ∈ ℤ}.
+     *
+     * <p>If {@code number} is {@code null} then it returns {@code false}.
+     *
+     * <p>Binary-wise, the least-significant digit indicates if a number is even or odd. So, if it is {@code 0} then
+     * it's even and if it is {@code 1} then is odd.
+     *
+     * @param number Number that will be checked.
+     * @return {@code true} if {@code number} is odd &amp; {@code false} if {@code number} is even.
+     * @see BigInteger
+     */
+    public static boolean isOdd(final BigInteger number) {
+        if (number == null) return false;
+        // Checks if the least-significant bit is a one or a zero. All even numbers have a zero as their
+        // least-significant bit.
+        return number.mod(BigInteger.TWO).equals(BigInteger.ONE);
+    }
+    
     //  ---------------------------------- MINUS ONE POW ---------------------------------------------------------------
     /**
      * Calculates the {@code n}th power of {@code -1}. If {@code n} is even then it returns {@code 1} and if it is odd,
@@ -525,6 +571,22 @@ public final class Maths {
             return isEven(n) ? 1.0d : -1.0d;
         }
         return Double.NaN;
+    }
+    
+    /**
+     * Calculates the {@code n}th power of {@code -1}. If {@code n} is even then it returns {@code 1} and if it is odd,
+     * it returns {@code -1}.
+     *
+     * <p>If {@code n} is {@code null}, then it returns {@code null}.
+     *
+     * @param n Power of {@code -1}.
+     * @return The {@code n}th power of {@code -1}.
+     * @see BigInteger
+     * @see Maths#BIG_INTEGER_MINUS_ONE
+     */
+    public static BigInteger minusOnePow(final BigInteger n) {
+        if (n == null) return null;
+        return isEven(n) ? BigInteger.ONE : BIG_INTEGER_MINUS_ONE;
     }
     
     //  ----------------------------------- FRACTIONS ------------------------------------------------------------------
