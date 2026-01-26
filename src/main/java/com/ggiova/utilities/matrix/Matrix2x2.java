@@ -134,10 +134,11 @@ public final class Matrix2x2<T>
     /** {@inheritDoc} */
     @Override
     public int hashCode() {
-        int result = Objects.hashCode(this.e00);
-        result = 31 * result + Objects.hashCode(this.e01);
-        result = 31 * result + Objects.hashCode(this.e10);
-        result = 31 * result + Objects.hashCode(this.e11);
+        int    result = 2;
+               result = 31 * result + Objects.hashCode(this.e00);
+               result = 31 * result + Objects.hashCode(this.e01);
+               result = 31 * result + Objects.hashCode(this.e10);
+               result = 31 * result + Objects.hashCode(this.e11);
         return result;
     }
     
