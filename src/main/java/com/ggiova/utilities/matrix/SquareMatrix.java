@@ -2,7 +2,6 @@ package com.ggiova.utilities.matrix;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * A generic square matrix implementation that stores elements in a two-dimensional grid where the number of rows equals
@@ -25,12 +24,8 @@ import java.util.Objects;
  *
  * @param <T> the type of elements stored in this matrix
  */
-public class SquareMatrix<T> {
-    /**
-     * The length of each side of this square matrix (number of rows and columns).
-     */
-    private final int size;
-    
+public final class SquareMatrix<T>
+        extends AbstractSquareMatrix<T> {
     /**
      * The internal two-dimensional array storing the matrix elements.
      */
@@ -43,8 +38,7 @@ public class SquareMatrix<T> {
      * @throws IllegalArgumentException if {@code size} is less than 1.
      */
     public SquareMatrix(final int size) {
-        if (size <= 0) throw new IllegalArgumentException("Size length must be at least 1.");
-        this.size = size;
+        super(size);
         this.matrix = new Object[size][size];
     }
     
@@ -67,7 +61,7 @@ public class SquareMatrix<T> {
         if (sqrt * sqrt != size)
             throw new IllegalArgumentException("Cannot form a square matrix with the given elements");
         
-        this.size = sqrt;
+        super(sqrt);
         this.matrix = new Object[sqrt][sqrt];
         
         for (int index = 0; index < size; index++) {
@@ -96,7 +90,7 @@ public class SquareMatrix<T> {
         if (sqrt * sqrt != size)
             throw new IllegalArgumentException("Cannot form a square matrix with the given elements");
         
-        this.size = sqrt;
+        super(sqrt);
         this.matrix = new Object[sqrt][sqrt];
         
         for (int index = 0; index < size; index++) {
@@ -117,7 +111,7 @@ public class SquareMatrix<T> {
         if (matrix == null)
             throw new NullPointerException("Element 'matrix' cannot be null.");
         
-        this.size = matrix.length;
+        super(matrix.length);
         if (this.size == 0)
             throw new IllegalArgumentException("Matrix must have at least one row.");
         
@@ -137,43 +131,6 @@ public class SquareMatrix<T> {
         }
     }
     
-    /**
-     * Gets the size of the matrix. The size is the number of rows and columns.
-     *
-     * @return the matrix's size
-     */
-    public int size() {
-        return this.size;
-    }
-    
-    /**
-     * Compares this matrix to another object for equality.
-     *
-     * <p>Two matrices are considered equal if they have the same dimensions and all corresponding elements are equal
-     * according to {@link Objects#equals(Object, Object)}.
-     *
-     * @param o the object to compare with
-     * @return {@code true} if the matrices are equal, {@code false} otherwise
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof SquareMatrix<?> m)) return false;
-        if (this.size != m.size) return false;
-        for (int row = 0; row < this.size; row++) {
-            for (int col = 0; col < this.size; col++) {
-                if (!Objects.equals(this.matrix[row][col], m.matrix[row][col])) return false;
-            }
-        }
-        return true;
-    }
-    
-    /**
-     * Returns a hash code value for this matrix.
-     *
-     * <p>The hash code is computed based on the matrix dimensions and all contained elements.
-     *
-     * @return a hash code value for this matrix
-     */
     @Override
     public int hashCode() {
         int currentHash = this.size;
@@ -186,21 +143,6 @@ public class SquareMatrix<T> {
         return currentHash;
     }
     
-    /**
-     * Returns a string representation of this matrix.
-     *
-     * <p>The string representation shows the matrix dimensions followed by all elements
-     * in row-major order. Each element is enclosed in single quotes, and rows are represented as nested braces.
-     *
-     * <p>Format: {@code Matrix<>[NxN]{{e11, e12, ...}, {e21, e22, ...}, ...}}
-     *
-     * <p>Example for a 2x2 matrix:
-     * <pre>{@code
-     * Matrix<>[2x2]{{A, B}, {C, D}}
-     * }</pre>
-     *
-     * @return a string representation of this matrix
-     */
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -222,53 +164,18 @@ public class SquareMatrix<T> {
         return stringBuilder.append('}').toString();
     }
     
-    /**
-     * Verifies that the given {@code row} and {@code col} are inside the bounds of the matrix.
-     *
-     * @param row row index (0-based)
-     * @param col column index (0-based)
-     * @throws MatrixIndexOutOfBoundsException if either {@code row} or {@code col} is smaller than {@code 0} or bigger
-     *                                         or equal to {@code this.size}
-     */
-    private void verifyBounds(final int row, final int col) {
-        if (row < 0 || col < 0 || row >= this.size || col >= this.size)
-            throw new MatrixIndexOutOfBoundsException(row, col, this.size);
-    }
-    
-    /**
-     * Sets an element into the specified position.
-     *
-     * @param row   row index (0-based)
-     * @param col   column index (0-based)
-     * @param value element that will be placed at (row, col)
-     * @throws MatrixIndexOutOfBoundsException if row or column are outside the range {@code [0, size)}
-     */
-    public void set(final int row, final int col, final T value) {
-        verifyBounds(row, col);
+    @Override
+    public void setUnchecked(final int row, final int col, final T value) {
         this.matrix[row][col] = value;
     }
     
-    /**
-     * Returns the element at the specified position.
-     *
-     * @param row row index (0-based)
-     * @param col column index (0-based)
-     * @return the element at (row, col)
-     * @throws MatrixIndexOutOfBoundsException if row or column are outside the range {@code [0, size)}
-     */
+    @Override
     @SuppressWarnings("unchecked")
-    public T get(final int row, final int col) {
-        verifyBounds(row, col);
+    public T getUnchecked(final int row, final int col) {
         return (T) matrix[row][col];
     }
     
-    /**
-     * Converts this matrix to a one-dimensional array in row-major order.
-     *
-     * <p>The returned array contains all elements of the matrix, reading from left to right, top to bottom.
-     *
-     * @return an array containing all matrix elements in row-major order
-     */
+    @Override
     public Object[] toArray() {
         Object[] array = new Object[this.size * this.size];
         int index = 0;
@@ -280,14 +187,7 @@ public class SquareMatrix<T> {
         return array;
     }
     
-    /**
-     * Converts this matrix to an immutable list in row-major order.
-     *
-     * <p>The returned list contains all elements of the matrix, reading from left to right, top to bottom. The list is
-     * unmodifiable.
-     *
-     * @return an immutable list containing all matrix elements in row-major order
-     */
+    @Override
     @SuppressWarnings("unchecked")
     public List<T> toList() {
         List<T> list = new ArrayList<>(size * size);
