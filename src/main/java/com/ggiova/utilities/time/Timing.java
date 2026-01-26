@@ -28,7 +28,7 @@ public final class Timing {
      * <br>
      * Example code:
      * <pre>{@code
-     * double result = Utils.timeMillis(
+     * double result = Timing.timeMillis(
      *     "SQRT",
      *     () -> Math.sqrt(100)
      * );
@@ -58,7 +58,7 @@ public final class Timing {
      * <br>
      * Example code:
      * <pre>{@code
-     * double result = Utils.timeMillis(
+     * double result = Timing.timeMillis(
      *     () -> Math.sqrt(100)
      * );
      * }</pre>
@@ -85,7 +85,7 @@ public final class Timing {
      * <br>
      * Example code:
      * <pre>{@code
-     * double result = Utils.timeMillis(
+     * double result = Timing.timeMillis(
      *     "Print operation",
      *     () -> System.out.println("Hello, world!")
      * );
@@ -111,7 +111,7 @@ public final class Timing {
      * <br>
      * Example code:
      * <pre>{@code
-     * double result = Utils.timeMillis(
+     * double result = Timing.timeMillis(
      *     () -> System.out.println("Hello, world!")
      * );
      * }</pre>
