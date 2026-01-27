@@ -25,8 +25,8 @@ public final class Timing {
     /**
      * Times the execution of the given function. Prints the time taken in milliseconds. Returns the result of the
      * operation.
-     * <br>
-     * Example code:
+     *
+     * <p>Example code:
      * <pre>{@code
      * double result = Timing.timeMillis(
      *     "SQRT",
@@ -55,8 +55,8 @@ public final class Timing {
     /**
      * Times the execution of the given function. Prints the time taken in milliseconds. Returns the result of the
      * operation.
-     * <br>
-     * Example code:
+     *
+     * <p>Example code:
      * <pre>{@code
      * double result = Timing.timeMillis(
      *     () -> Math.sqrt(100)
@@ -82,10 +82,10 @@ public final class Timing {
     
     /**
      * Times the execution of the given function. Prints the time taken in milliseconds. Does not return anything.
-     * <br>
-     * Example code:
+     *
+     * <p>Example code:
      * <pre>{@code
-     * double result = Timing.timeMillis(
+     * Timing.timeMillis(
      *     "Print operation",
      *     () -> System.out.println("Hello, world!")
      * );
@@ -108,10 +108,10 @@ public final class Timing {
     
     /**
      * Times the execution of the given function. Prints the time taken in milliseconds. Does not return anything.
-     * <br>
-     * Example code:
+     *
+     * <p>Example code:
      * <pre>{@code
-     * double result = Timing.timeMillis(
+     * Timing.timeMillis(
      *     () -> System.out.println("Hello, world!")
      * );
      * }</pre>
