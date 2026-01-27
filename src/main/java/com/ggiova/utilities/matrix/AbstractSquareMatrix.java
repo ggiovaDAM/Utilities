@@ -42,7 +42,7 @@ import java.util.Objects;
  * @see SquareMatrix
  */
 abstract sealed class AbstractSquareMatrix<T>
-        permits Matrix2x2, SquareMatrix {
+        permits Matrix2x2, Matrix3x3, SquareMatrix {
     /**
      * The length of each side of this square matrix (number of rows and columns).
      */
