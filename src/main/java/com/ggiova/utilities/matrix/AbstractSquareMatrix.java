@@ -147,6 +147,16 @@ abstract sealed class AbstractSquareMatrix<T>
         setUnchecked(row, col, value);
     }
     
+    /**
+     * Sets the element at the specified position without bounds checking.
+     *
+     * <p>This method is intended for internal use where bounds are already verified.
+     * Using this method with invalid indices results in undefined behavior.
+     *
+     * @param row   row index (0-based)
+     * @param col   column index (0-based)
+     * @param value element that will be placed at (row, col)
+     */
     protected abstract void setUnchecked(final int row, final int col, final T value);
     
     /**
