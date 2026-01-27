@@ -288,4 +288,14 @@ public final class Complex {
     public Complex divide(final double real) {
         return new Complex(this.real / real, this.imaginary / real);
     }
+    
+    /**
+     * Returns the complex conjugate of {@code this} element.
+     *
+     * <p>The complex conjugate for {@code a + bi} is {@code a - bi}.
+     * @return the complex conjugate.
+     */
+    public Complex conjugate() {
+        return new Complex(this.real, 0.0d - this.imaginary);
+    }
 }
