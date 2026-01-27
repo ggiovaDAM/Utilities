@@ -4,6 +4,26 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * A specialized 3x3 matrix implementation optimized for performance.
+ *
+ * <p>This class stores elements as a 1D array. Elements are mutable after construction.
+ *
+ * <p>Matrix layout:
+ * <pre>
+ * | e00  e01  e02 |
+ * | e10  e11  e12 |
+ * | e20  e21  e22 |
+ * </pre>
+ *
+ * <p>Example usage:
+ * <pre>{@code
+ * Matrix3x3<Integer> matrix = new Matrix3x3<>(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9});
+ * Integer value = matrix.get(1, 2); // Returns 6
+ * }</pre>
+ *
+ * @param <T> the type of elements stored in this matrix
+ */
 public final class Matrix3x3<T>
         extends AbstractSquareMatrix<T> {
     @SuppressWarnings("unchecked")
