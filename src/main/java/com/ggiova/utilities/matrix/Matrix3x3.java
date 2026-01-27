@@ -9,6 +9,9 @@ public final class Matrix3x3<T>
     @SuppressWarnings("unchecked")
     private final T[] elements = (T[]) new Object[9];
     
+    /**
+     * Constructs a 3x3 matrix with all elements as {@code null}.
+     */
     public Matrix3x3() {
         super(3);
     }
