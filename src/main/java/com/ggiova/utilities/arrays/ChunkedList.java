@@ -43,7 +43,7 @@ public final class ChunkedList<E> {
         return sb.append("\n)").toString();
     }
     
-    private void verifyBounds(int index) throws IndexOutOfBoundsException {
+    private void verifyBounds(int index) {
         if (index <  0          ) throw new IndexOutOfBoundsException("Index " + index + " too small.");
         if (index >= this.length) throw new IndexOutOfBoundsException("Index " + index + " too big.");
     }
@@ -123,7 +123,7 @@ public final class ChunkedList<E> {
      * @return the object at position {@code index}.
      * @throws IndexOutOfBoundsException if {@code index} is out of bounds.
      */
-    public E get(int index) throws IndexOutOfBoundsException {
+    public E get(int index) {
         verifyBounds(index);
         
         final int chunk = index / CHUNK_SIZE;
@@ -139,7 +139,7 @@ public final class ChunkedList<E> {
      * @throws NoSuchElementException If the ChunkedList is empty.
      */
     @SuppressWarnings("unchecked")
-    public E getFirst() throws NoSuchElementException {
+    public E getFirst() {
         if (this.length == 0) throw new NoSuchElementException();
         return (E) this.first.item[0];
     }
@@ -163,7 +163,7 @@ public final class ChunkedList<E> {
      * @return the removed object.
      * @throws IndexOutOfBoundsException if {@code index} is out of bounds.
      */
-    public E remove(int index) throws IndexOutOfBoundsException {
+    public E remove(int index) {
         verifyBounds(index);
         
         final int chunk = index / CHUNK_SIZE;
