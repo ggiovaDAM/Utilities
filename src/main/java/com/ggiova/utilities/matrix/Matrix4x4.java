@@ -11,6 +11,9 @@ public final class Matrix4x4<T>
     @SuppressWarnings("unchecked")
     private final T[] elements = (T[]) new Object[area];
     
+    /**
+     * Constructs a 4x4 matrix with all elements as {@code null}.
+     */
     public Matrix4x4() {
         super(4);
     }
