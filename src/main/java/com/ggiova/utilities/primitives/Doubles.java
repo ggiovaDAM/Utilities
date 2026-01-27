@@ -98,10 +98,11 @@ public final class Doubles {
      * Upper bound of {@code double} floating-point numbers where they lose all decimal precision. This is due to the
      * fact that the decimal part is stored in {@code 52} bits which means that any number that is more than or equal to
      * 2<sup>52</sup> has no decimal part.
-     * <br>Computable as:
-     * {@code
+     * <br>
+     * Computable as:
+     * <pre>{@code
      *     Double.longBitsToDouble(LOSS_DECIMAL_PRECISION_MASK)
-     * }
+     * }</pre>
      */
     public static final double LOSS_DECIMAL_PRECISION = 0x1.0p52d;
     
@@ -207,15 +208,15 @@ public final class Doubles {
     }
     
     /**
-     * Creates a String that contains the bits of a {@code double} in hexadecimal starting with '0x' and ending with 'L'.
-     * Underscores are utilized to separate bytes in pairs. For example {@code 1.5d} is transformed into
+     * Creates a String that contains the bits of a {@code double} in hexadecimal starting with '0x' and ending with
+     * 'L'. Underscores are utilized to separate bytes. For example {@code 1.5d} is transformed into
      * {@code 0x3f_f8_00_00_00_00_00_00L}
      *
      * @param num Number whose bits will be formatted.
      * @return A String of the hexadecimal binary representation of {@code num}.
      */
     public static String toBinaryHexString(final double num) {
-        final int  MAIN_SECTION      = Long.SIZE / 4; // Divides the bits into groups of four two transform into hexadecimal
+        final int  MAIN_SECTION      = Long.SIZE / 4; // Divides the bits into groups of four to transform into hexadecimal
         final int  HEX_SYMBOL_LENGTH = 2;             // +2 for '0x'
         final int  LONG_L_EXTRA      = 1;             // +1 for L at end
         final int  UNDERSCORES       = MAIN_SECTION / 2 - 1;
@@ -245,14 +246,14 @@ public final class Doubles {
     
     /**
      * Creates a String that contains the raw bits of a {@code double} starting with '0x' and ending with 'L'. "Raw"
-     * means that the different {@code NaN}s's bits are shown. Underscores are utilized to separate bytes in pairs. For
-     * example {@code 1.5d} is transformed into {@code 0x3f_f8_00_00_00_00_00_00L}
+     * means that the different {@code NaN}s's bits are shown. Underscores are utilized to separate bytes. For example
+     * {@code 1.5d} is transformed into {@code 0x3f_f8_00_00_00_00_00_00L}
      *
      * @param num Number whose bits will be formatted.
      * @return A String of the hexadecimal binary representation of {@code num}.
      */
     public static String toRawBinaryHexString(final double num) {
-        final int  MAIN_SECTION      = Long.SIZE / 4; // Divides the bits into groups of four two transform into hexadecimal
+        final int  MAIN_SECTION      = Long.SIZE / 4; // Divides the bits into groups of four to transform into hexadecimal
         final int  HEX_SYMBOL_LENGTH = 2;             // +2 for '0x'
         final int  LONG_L_EXTRA      = 1;             // +1 for L at end
         final int  UNDERSCORES       = MAIN_SECTION / 2 - 1;

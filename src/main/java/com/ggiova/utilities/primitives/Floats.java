@@ -11,7 +11,7 @@ package com.ggiova.utilities.primitives;
  *
  * @see Float
  */
-public class Floats {
+public final class Floats {
     /**
      * Displays the bits that represent {@code 0.0f}.
      */
@@ -100,9 +100,9 @@ public class Floats {
      * 2<sup>23</sup> has no decimal part.
      * <br>
      * Computable as:
-     * {@code
+     * <pre>{@code
      *     Float.intBitsToFloat(LOSS_DECIMAL_PRECISION_MASK)
-     * }
+     * }</pre>
      */
     public static final float LOSS_DECIMAL_PRECISION = 0x1.0p23f;
     
@@ -204,13 +204,13 @@ public class Floats {
     
     /**
      * Creates a String that contains the bits of a {@code float} in hexadecimal starting with '0x'. Underscores are
-     * utilized to separate bytes in pairs. For example {@code 1.5f} is transformed into {@code 0x3f_c0_00_00}.
+     * utilized to separate bytes. For example {@code 1.5f} is transformed into {@code 0x3f_c0_00_00}.
      *
      * @param num Number whose bits will be formatted.
      * @return A String of the hexadecimal binary representation of {@code num}.
      */
     public static String toBinaryHexString(final float num) {
-        final int MAIN_SECTION      = Integer.SIZE / 4; // Divides the bits into groups of four two transform into hexadecimal
+        final int MAIN_SECTION      = Integer.SIZE / 4; // Divides the bits into groups of four to transform into hexadecimal
         final int HEX_SYMBOL_LENGTH = 2;             // +2 for '0x'
         final int UNDERSCORES       = MAIN_SECTION / 2 - 1;
         final int LENGTH            = MAIN_SECTION + UNDERSCORES + HEX_SYMBOL_LENGTH;
@@ -238,14 +238,14 @@ public class Floats {
     
     /**
      * Creates a String that contains the raw bits of a {@code float} starting with '0x'. "Raw" means that the different
-     * {@code NaN}s's bits are shown. Underscores are utilized to separate bytes in pairs. For example {@code 1.5f} is
+     * {@code NaN}s's bits are shown. Underscores are utilized to separate bytes. For example {@code 1.5f} is
      * transformed into {@code 0x3f_c0_00_00}.
      *
      * @param num Number whose bits will be formatted.
      * @return A String of the hexadecimal binary representation of {@code num}.
      */
     public static String toRawBinaryHexString(final float num) {
-        final int MAIN_SECTION      = Integer.SIZE / 4; // Divides the bits into groups of four two transform into hexadecimal
+        final int MAIN_SECTION      = Integer.SIZE / 4; // Divides the bits into groups of four to transform into hexadecimal
         final int HEX_SYMBOL_LENGTH = 2;                // +2 for '0x'
         final int UNDERSCORES       = MAIN_SECTION / 2 - 1;
         final int LENGTH            = MAIN_SECTION + UNDERSCORES + HEX_SYMBOL_LENGTH;
