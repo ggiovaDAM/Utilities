@@ -4,6 +4,28 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * A specialized 4x4 matrix implementation optimized for performance.
+ *
+ * <p>This class stores elements in a 1D array of {@code 16} elements allowing for faster access and optimized
+ * operations. Elements are mutable after construction.
+ *
+ * <p>Matrix layout:
+ * <pre>
+ * | e00  e01  e02  e03 |
+ * | e10  e11  e12  e13 |
+ * | e20  e21  e22  e23 |
+ * | e30  e31  e32  e33 |
+ * </pre>
+ *
+ * <p>Example usage:
+ * <pre>{@code
+ * Matrix4x4<Integer> matrix = new Matrix4x4<>(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16});
+ * Integer value = matrix.get(3, 2); // Returns 15
+ * }</pre>
+ *
+ * @param <T> the type of elements stored in this matrix
+ */
 public final class Matrix4x4<T>
         extends AbstractSquareMatrix<T> {
     private final int area = 16;
