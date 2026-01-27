@@ -13,6 +13,67 @@ public final class Matrix3x3<T>
         super(3);
     }
     
+    /**
+     * Constructs a 3x3 matrix from a list of elements in row-major order.
+     *
+     * @param list list of exactly 9 elements
+     * @throws NullPointerException     if list is {@code null}
+     * @throws IllegalArgumentException if list size is not {@code 9}
+     */
+    public Matrix3x3(List<T> list) {
+        super(3);
+        if (list == null)
+            throw new NullPointerException("Element 'list' cannot be null.");
+        if (list.size() != 9)
+            throw new IllegalArgumentException("List must contain exactly 9 elements for a 4x4 matrix.");
+        
+        for (int index = 0; index < 9; index++) {
+            this.elements[index] = list.get(index);
+        }
+    }
+    
+    /**
+     * Constructs a 3x3 matrix from an array of elements in row-major order.
+     *
+     * @param array array of exactly 9 elements
+     * @throws NullPointerException     if array is {@code null}
+     * @throws IllegalArgumentException if array length is not {@code 9}
+     */
+    public Matrix3x3(T[] array) {
+        super(3);
+        if (array == null)
+            throw new NullPointerException("Element 'array' cannot be null.");
+        if (array.length != 9)
+            throw new IllegalArgumentException("Array must contain exactly 9 elements for a 3x3 matrix.");
+        
+        System.arraycopy(array, 0, this.elements, 0, 9);
+    }
+    
+    /**
+     * Constructs a 3x3 matrix by copying a 2D array.
+     *
+     * @param matrix a 3x3 2D array
+     * @throws NullPointerException     if matrix or any row is {@code null}
+     * @throws IllegalArgumentException if matrix is not 3x3
+     */
+    public Matrix3x3(T[][] matrix) {
+        super(2);
+        if (matrix == null)
+            throw new NullPointerException("Element 'matrix' cannot be null.");
+        if (matrix.length != 3)
+            throw new IllegalArgumentException("Matrix must be 3x3.");
+        if (matrix[0] == null || matrix[1] == null || matrix[2] == null)
+            throw new NullPointerException("Matrix rows cannot be null.");
+        if (matrix[0].length != 3 || matrix[1].length != 3 || matrix[2].length != 3)
+            throw new IllegalArgumentException("Matrix must be 3x3.");
+        
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                this.elements[row * 3 + col] = matrix[row][col];
+            }
+        }
+    }
+    
     @Override
     public int hashCode() {
         int result = this.size;
