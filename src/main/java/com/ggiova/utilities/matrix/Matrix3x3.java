@@ -91,6 +91,7 @@ public final class Matrix3x3<T>
             throw new IllegalArgumentException("Matrix must be 3x3.");
         
         for (int row = 0; row < 3; row++) {
+            //noinspection ManualArrayCopy
             for (int col = 0; col < 3; col++) {
                 this.elements[row * 3 + col] = matrix[row][col];
             }
