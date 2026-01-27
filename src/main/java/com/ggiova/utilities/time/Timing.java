@@ -5,12 +5,12 @@ import java.util.function.Supplier;
 
 /**
  * Utility class for measuring the execution time of operations.
- * <p>
- * Provides methods to measure the time taken by operations expressed as {@link java.util.function.Supplier Suppliers}
- * (returning a value) or {@link java.lang.Runnable Runnables} (void operations). Execution time is measured and printed
- * to the standard output.
- * <p>
- * Example usage:
+ *
+ * <p>Provides methods to measure the time taken by operations expressed as
+ * {@link java.util.function.Supplier Suppliers} (returning a value) or {@link java.lang.Runnable Runnables}
+ * (void operations). Execution time is measured and printed to the standard output.
+ *
+ * <p>Example usage:
  * <pre>{@code
  * // Timing a Supplier that returns a result
  * double result = Timing.timeMillis("Square root", () -> Math.sqrt(100));
@@ -131,14 +131,14 @@ public final class Timing {
     }
     
     /**
-     * Times the execution of the given function. Prints the time taken in milliseconds. Returns the result of the
+     * Times the execution of the given function. Prints the time taken in nanoseconds. Returns the result of the
      * operation.
      *
      * <p>Example code:
      * <pre>{@code
      * double result = Timing.timeNanos(
-     *         "SQRT",
-     *         () -> Math.sqrt(100)
+     *     "SQRT",
+     *     () -> Math.sqrt(100)
      * );
      * }</pre>
      * printing:
@@ -159,11 +159,11 @@ public final class Timing {
     }
     
     /**
-     * Times the execution of the given function. Prints the time taken in milliseconds. Returns the result of the
+     * Times the execution of the given function. Prints the time taken in nanoseconds. Returns the result of the
      * operation.
      * <p>Example code:
      * <pre>{@code
-     * double result = Timing.timeMillis(
+     * double result = Timing.timeNanos(
      *     () -> Math.sqrt(100)
      * );
      * }</pre>
@@ -184,11 +184,11 @@ public final class Timing {
     }
     
     /**
-     * Times the execution of the given function. Prints the time taken in milliseconds. Does not return anything.
+     * Times the execution of the given function. Prints the time taken in nanoseconds. Does not return anything.
      *
      * <p>Example code:
      * <pre>{@code
-     * Timing.timeMillis(
+     * Timing.timeNanos(
      *     "Print operation",
      *     () -> System.out.println("Hello, world!")
      * );
@@ -210,12 +210,12 @@ public final class Timing {
     }
     
     /**
-     * Times the execution of the given function. Prints the time taken in milliseconds. Does not return anything.
+     * Times the execution of the given function. Prints the time taken in nanoseconds. Does not return anything.
      *
      * <p>Example code:
      * <pre>{@code
-     * Timing.timeMillis(
-     *         () -> System.out.println("Hello, world!")
+     * Timing.timeNanos(
+     *     () -> System.out.println("Hello, world!")
      * );
      * }</pre>
      * printing:
