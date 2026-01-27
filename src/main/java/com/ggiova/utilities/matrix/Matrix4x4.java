@@ -108,6 +108,7 @@ public final class Matrix4x4<T>
         }
     }
     
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         int result = this.size;
@@ -116,6 +117,7 @@ public final class Matrix4x4<T>
         return result;
     }
     
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("Matrix<>[4x4]{");
@@ -131,21 +133,25 @@ public final class Matrix4x4<T>
         return stringBuilder.append('}').toString();
     }
     
+    /** {@inheritDoc} */
     @Override
     protected void setUnchecked(int row, int col, T value) {
         this.elements[row * 4 + col] = value;                       // this.size
     }
     
+    /** {@inheritDoc} */
     @Override
     protected T getUnchecked(int row, int col) {
         return this.elements[row * 4 + col];                        // this.size
     }
     
+    /** {@inheritDoc} */
     @Override
     public Object[] toArray() {
         return Arrays.copyOf(this.elements, area);                  // this.size * this.size
     }
     
+    /** {@inheritDoc} */
     @Override
     public List<T> toList() {
         List<T> data = new ArrayList<>(area);                       // this.size * this.size
