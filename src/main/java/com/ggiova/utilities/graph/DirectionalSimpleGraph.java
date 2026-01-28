@@ -11,6 +11,23 @@ import java.util.Set;
  * This graph supports basic operations such as adding/removing vertices, connecting/disconnecting vertices with
  * directed edges, and querying the graph structure. All vertices must be non-null and are stored using their natural
  * equality.
+ * <p>
+ * Example usage:
+ * <pre>{@code
+ * DirectionalSimpleGraph<String> graph = new DirectionalSimpleGraph<>();
+ * graph.addVertex("A")
+ *      .addVertex("B")
+ *      .addVertex("C")
+ *      .addVertex("D")
+ *      .connect("A", "B")
+ *      .connect("B", "C")
+ *      .connect("B", "D")
+ *      .connect("D", "A")
+ *      .connect("B", "A");
+ *
+ * boolean hasPath = graph.hasEdge("A", "B");          // true
+ * System.out.println( graph.neighborsOf("B")); // contains "[A, C, D]"
+ * }</pre>
  *
  * @param <T> the type of vertices in this graph
  */
