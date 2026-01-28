@@ -22,7 +22,7 @@ public final class DirectionalSimpleGraph<T> {
     public DirectionalSimpleGraph<T> removeVertex(T vertex) {
         if (! adjacency.containsKey(vertex)) return this;
         adjacency.remove(vertex);
-        adjacency.forEach((_, k) -> k.remove(vertex));
+        adjacency.forEach((_, neighbours) -> neighbours.remove(vertex));
         return this;
     }
     
