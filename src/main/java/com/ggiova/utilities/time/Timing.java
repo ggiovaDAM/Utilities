@@ -7,8 +7,8 @@ import java.util.function.Supplier;
  * Utility class for measuring the execution time of operations.
  *
  * <p>Provides methods to measure the time taken by operations expressed as
- * {@link java.util.function.Supplier Suppliers} (returning a value) or {@link java.lang.Runnable Runnables}
- * (void operations). Execution time is measured and printed to the standard output.
+ * {@link java.util.function.Supplier Suppliers} (returning a value) or {@link java.lang.Runnable Runnables} (void
+ * operations). Execution time is measured and printed to the standard output.
  *
  * <p>Example usage:
  * <pre>{@code
@@ -21,6 +21,8 @@ import java.util.function.Supplier;
  */
 public final class Timing {
     private static final long NANOS_PER_MILLI = ChronoUnit.MILLIS.getDuration().toNanos();
+    
+    private static final long NANOS_PER_MICRO = ChronoUnit.MICROS.getDuration().toNanos();
     
     /**
      * Times the execution of the given function. Prints the time taken in milliseconds. Returns the result of the
@@ -125,6 +127,113 @@ public final class Timing {
      */
     public static void timeMillis(Runnable action) {
         timeMillis(() -> {
+            action.run();
+            return null;
+        });
+    }
+    
+    /**
+     * Times the execution of the given function. Prints the time taken in microseconds. Returns the result of the
+     * operation.
+     *
+     * <p>Example code:
+     * <pre>{@code
+     * double result = Timing.timeMicros(
+     *     "SQRT",
+     *     () -> Math.sqrt(100)
+     * );
+     * }</pre>
+     * printing:
+     * <pre>{@code SQRT took 15,00 μs}</pre>
+     *
+     * @param label  Name given to the operation being performed
+     * @param action Action to be measured
+     * @param <T>    Result of the operation
+     * @return The result of running the operation
+     */
+    @SuppressWarnings("UseOfSystemOutOrSystemErr")
+    public static <T> T timeMicros(String label, Supplier<T> action) {
+        long start = System.nanoTime();
+        T result = action.get();
+        long end = System.nanoTime();
+        // Conversion from nanoseconds to microseconds
+        double ms = (double) (end - start) / NANOS_PER_MICRO;
+        System.out.printf("%s took %.2f μs%n", label, ms);
+        return result;
+    }
+    
+    /**
+     * Times the execution of the given function. Prints the time taken in microseconds. Returns the result of the
+     * operation.
+     * <p>Example code:
+     * <pre>{@code
+     * double result = Timing.timeMicros(
+     *     () -> Math.sqrt(100)
+     * );
+     * }</pre>
+     * printing:
+     * <pre>{@code Took 12,20 μs}</pre>
+     *
+     * @param action Action to be measured
+     * @param <T>    Result of the operation
+     * @return The result of running the operation
+     */
+    @SuppressWarnings("UseOfSystemOutOrSystemErr")
+    public static <T> T timeMicros(Supplier<T> action) {
+        long start = System.nanoTime();
+        T result = action.get();
+        long end = System.nanoTime();
+        // Conversion from nanoseconds to microseconds
+        double ms = (double) (end - start) / NANOS_PER_MICRO;
+        System.out.printf("Took %.2f μs%n", ms);
+        return result;
+    }
+    
+    /**
+     * Times the execution of the given function. Prints the time taken in microseconds. Does not return anything.
+     *
+     * <p>Example code:
+     * <pre>{@code
+     * Timing.timeMicros(
+     *     "Print operation",
+     *     () -> System.out.println("Hello, world!")
+     * );
+     * }</pre>
+     * printing:
+     * <pre>{@code
+     * Hello, world!
+     * Print operation took 166,50 μs
+     * }</pre>
+     *
+     * @param label  Name given to the operation being performed
+     * @param action Action to be measured
+     */
+    public static void timeMicros(String label, Runnable action) {
+        timeMicros(label, () -> {
+            action.run();
+            return null;
+        });
+    }
+    
+    /**
+     * Times the execution of the given function. Prints the time taken in microseconds. Does not return anything.
+     *
+     * <p>Example code:
+     * <pre>{@code
+     * Timing.timeMicros(
+     *     () -> System.out.println("Hello, world!")
+     * );
+     * }</pre>
+     * printing:
+     * <pre>{@code
+     * Hello, world!
+     * Took 150,80 μs
+     * }</pre>
+     *
+     * @param action Action to be measured
+     */
+    public static void timeMicros(Runnable action) {
+        timeMicros(() -> {
             action.run();
             return null;
         });
