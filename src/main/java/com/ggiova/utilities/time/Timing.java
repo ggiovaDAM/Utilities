@@ -24,6 +24,15 @@ public final class Timing {
     
     private static final long NANOS_PER_MICRO = ChronoUnit.MICROS.getDuration().toNanos();
     
+    private static <T> Calculation<T> calculateTime(Supplier<T> action) {
+        long start = System.nanoTime();
+        T result = action.get();
+        long end = System.nanoTime();
+        return new Calculation<>(result, (double) end - start);
+    }
+    
+    private record Calculation<T>(T result, double time) {}
+    
     /**
      * Times the execution of the given function. Prints the time taken in milliseconds. Returns the result of the
      * operation.
@@ -45,13 +54,11 @@ public final class Timing {
      */
     @SuppressWarnings("UseOfSystemOutOrSystemErr")
     public static <T> T timeMillis(String label, Supplier<T> action) {
-        long start = System.nanoTime();
-        T result = action.get();
-        long end = System.nanoTime();
+        Calculation<T> calculation = calculateTime(action);
         // Conversion from nanoseconds to milliseconds
-        double ms = (double) (end - start) / NANOS_PER_MILLI;
-        System.out.println(label + " took " + ms + " ms");
-        return result;
+        double ms = calculation.time() / NANOS_PER_MILLI;
+        System.out.printf("%s took %.2f ms%n", label, ms);
+        return calculation.result();
     }
     
     /**
@@ -73,13 +80,11 @@ public final class Timing {
      */
     @SuppressWarnings("UseOfSystemOutOrSystemErr")
     public static <T> T timeMillis(Supplier<T> action) {
-        long start = System.nanoTime();
-        T result = action.get();
-        long end = System.nanoTime();
+        Calculation<T> calculation = calculateTime(action);
         // Conversion from nanoseconds to milliseconds
-        double ms = (double) (end - start) / NANOS_PER_MILLI;
-        System.out.println("Took " + ms + " ms");
-        return result;
+        double ms = calculation.time() / NANOS_PER_MILLI;
+        System.out.printf("Took %.2f ms%n", ms);
+        return calculation.result();
     }
     
     /**
@@ -153,13 +158,11 @@ public final class Timing {
      */
     @SuppressWarnings("UseOfSystemOutOrSystemErr")
     public static <T> T timeMicros(String label, Supplier<T> action) {
-        long start = System.nanoTime();
-        T result = action.get();
-        long end = System.nanoTime();
+        Calculation<T> calculation = calculateTime(action);
         // Conversion from nanoseconds to microseconds
-        double ms = (double) (end - start) / NANOS_PER_MICRO;
+        double ms = calculation.time() / NANOS_PER_MICRO;
         System.out.printf("%s took %.2f μs%n", label, ms);
-        return result;
+        return calculation.result();
     }
     
     /**
@@ -180,13 +183,11 @@ public final class Timing {
      */
     @SuppressWarnings("UseOfSystemOutOrSystemErr")
     public static <T> T timeMicros(Supplier<T> action) {
-        long start = System.nanoTime();
-        T result = action.get();
-        long end = System.nanoTime();
+        Calculation<T> calculation = calculateTime(action);
         // Conversion from nanoseconds to microseconds
-        double ms = (double) (end - start) / NANOS_PER_MICRO;
+        double ms = calculation.time() / NANOS_PER_MICRO;
         System.out.printf("Took %.2f μs%n", ms);
-        return result;
+        return calculation.result();
     }
     
     /**
@@ -260,11 +261,9 @@ public final class Timing {
      */
     @SuppressWarnings("UseOfSystemOutOrSystemErr")
     public static <T> T timeNanos(String label, Supplier<T> action) {
-        long start = System.nanoTime();
-        T result = action.get();
-        long end = System.nanoTime();
-        System.out.printf("%s took %d ns%n", label, end - start);
-        return result;
+        Calculation<T> calculation = calculateTime(action);
+        System.out.printf("%s took %.0f ns%n", label, calculation.time());
+        return calculation.result();
     }
     
     /**
@@ -285,11 +284,9 @@ public final class Timing {
      */
     @SuppressWarnings("UseOfSystemOutOrSystemErr")
     public static <T> T timeNanos(Supplier<T> action) {
-        long start = System.nanoTime();
-        T result = action.get();
-        long end = System.nanoTime();
-        System.out.printf("Took %d ns%n", end - start);
-        return result;
+        Calculation<T> calculation = calculateTime(action);
+        System.out.printf("Took %.0f ns%n", calculation.time());
+        return calculation.result();
     }
     
     /**
