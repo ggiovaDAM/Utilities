@@ -20,7 +20,5 @@
  * boolean hasPath = graph.hasEdge("A", "B"); // true
  * Set<String> neighbors = graph.neighborsOf("B"); // contains "C"
  * }</pre>
- *
- * @since 1.0
  */
 package com.ggiova.utilities.graph;
