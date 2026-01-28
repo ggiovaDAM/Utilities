@@ -39,6 +39,26 @@ public final class DirectionalSimpleGraph<T> {
     }
     
     /**
+     * Adds the given vertices to the graph if they don't exist, then creates a directed edge from {@code from} to
+     * {@code to}.
+     *
+     * @param from origin vertex
+     * @param to   destination vertex
+     * @return {@code this}
+     * @throws IllegalArgumentException if {@code from} or {@code to} are {@code null}
+     */
+    public DirectionalSimpleGraph<T> addAndConnect(T from, T to) {
+        if (from == null) throw new IllegalArgumentException("Vertex 'from' cannot be null!");
+        if (to   == null) throw new IllegalArgumentException("Vertex 'to' cannot be null!");
+        
+        addVertex(from);
+        addVertex(to);
+        adjacency.get(from).add(to);
+        
+        return this;
+    }
+    
+    /**
      * Removes the given vertex from the graph and all edges connected to it. This includes both outgoing edges from
      * this vertex and incoming edges to this vertex. If the vertex does not exist in the graph, this operation has no
      * effect.
