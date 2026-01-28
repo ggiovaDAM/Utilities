@@ -19,6 +19,13 @@ public final class DirectionalSimpleGraph<T> {
         return this;
     }
     
+    public DirectionalSimpleGraph<T> removeVertex(T vertex) {
+        if (! adjacency.containsKey(vertex)) return this;
+        adjacency.remove(vertex);
+        adjacency.forEach((_, k) -> k.remove(vertex));
+        return this;
+    }
+    
     public DirectionalSimpleGraph<T> connect(T from, T to) {
         if (! adjacency.containsKey(from)) throw new IllegalArgumentException("Vertex 'from' is not in this graph!");
         if (! adjacency.containsKey(to  )) throw new IllegalArgumentException("Vertex 'to' is not in this graph!");
