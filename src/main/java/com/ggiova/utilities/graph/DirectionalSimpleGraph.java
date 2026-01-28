@@ -33,6 +33,11 @@ public final class DirectionalSimpleGraph<T> {
         return this;
     }
     
+    public DirectionalSimpleGraph<T> disconnect(T from, T to) {
+        if (adjacency.containsKey(from)) adjacency.get(from).remove(to);
+        return this;
+    }
+    
     public boolean hasVertex(T vertex) {
         return adjacency.containsKey(vertex);
     }
