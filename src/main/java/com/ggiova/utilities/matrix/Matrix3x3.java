@@ -80,7 +80,7 @@ public final class Matrix3x3<T>
      * @throws IllegalArgumentException if matrix is not 3x3
      */
     public Matrix3x3(T[][] matrix) {
-        super(2);
+        super(3);
         if (matrix == null)
             throw new NullPointerException("Element 'matrix' cannot be null.");
         if (matrix.length != 3)
