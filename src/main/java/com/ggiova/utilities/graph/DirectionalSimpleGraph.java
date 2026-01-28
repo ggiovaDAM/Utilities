@@ -20,6 +20,7 @@ public final class DirectionalSimpleGraph<T> {
     }
     
     public DirectionalSimpleGraph<T> removeVertex(T vertex) {
+        if (vertex == null) throw new IllegalArgumentException("Vertex 'vertex' cannot be null!");
         if (! adjacency.containsKey(vertex)) return this;
         adjacency.remove(vertex);
         adjacency.forEach((_, neighbours) -> neighbours.remove(vertex));
@@ -27,6 +28,8 @@ public final class DirectionalSimpleGraph<T> {
     }
     
     public DirectionalSimpleGraph<T> connect(T from, T to) {
+        if (from == null) throw new IllegalArgumentException("Vertex 'from' cannot be null!");
+        if (to   == null) throw new IllegalArgumentException("Vertex 'to' cannot be null!");
         if (! adjacency.containsKey(from)) throw new IllegalArgumentException("Vertex 'from' is not in this graph!");
         if (! adjacency.containsKey(to  )) throw new IllegalArgumentException("Vertex 'to' is not in this graph!");
         adjacency.get(from).add(to);
@@ -34,17 +37,27 @@ public final class DirectionalSimpleGraph<T> {
     }
     
     public DirectionalSimpleGraph<T> disconnect(T from, T to) {
-        if (adjacency.containsKey(from)) adjacency.get(from).remove(to);
+        if (from == null) throw new IllegalArgumentException("Vertex 'from' cannot be null!");
+        if (to   == null) throw new IllegalArgumentException("Vertex 'to' cannot be null!");
+        if (! adjacency.containsKey(from)) throw new IllegalArgumentException("Vertex 'from' is not in this graph!");
+        if (! adjacency.containsKey(to  )) throw new IllegalArgumentException("Vertex 'to' is not in this graph!");
+        
+        adjacency.get(from).remove(to);
         return this;
     }
     
     public boolean hasVertex(T vertex) {
+        if (vertex == null) throw new IllegalArgumentException("Vertex 'vertex' cannot be null!");
         return adjacency.containsKey(vertex);
     }
     
     public boolean hasEdge(T from, T to) {
-        return adjacency.containsKey(from) &&
-               adjacency.get(from).contains(to);
+        if (from == null) throw new IllegalArgumentException("Vertex 'from' cannot be null!");
+        if (to   == null) throw new IllegalArgumentException("Vertex 'to' cannot be null!");
+        if (! adjacency.containsKey(from)) throw new IllegalArgumentException("Vertex 'from' is not in this graph!");
+        if (! adjacency.containsKey(to  )) throw new IllegalArgumentException("Vertex 'to' is not in this graph!");
+        
+        return adjacency.get(from).contains(to);
     }
     
     public Set<T> vertices() {
@@ -53,5 +66,8 @@ public final class DirectionalSimpleGraph<T> {
     
     public Set<T> neighborsOf(T v) {
         return Set.copyOf(adjacency.getOrDefault(v, Set.of()));
+    public Set<T> neighborsOf(T vertex) {
+        if (vertex == null) throw new IllegalArgumentException("Vertex 'vertex' cannot be null!");
+        return Set.copyOf(adjacency.getOrDefault(vertex, Set.of()));
     }
 }
