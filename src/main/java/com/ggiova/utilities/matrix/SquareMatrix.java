@@ -131,6 +131,7 @@ public final class SquareMatrix<T>
         }
     }
     
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         int currentHash = this.size;
@@ -143,6 +144,7 @@ public final class SquareMatrix<T>
         return currentHash;
     }
     
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -164,17 +166,20 @@ public final class SquareMatrix<T>
         return stringBuilder.append('}').toString();
     }
     
+    /** {@inheritDoc} */
     @Override
     public void setUnchecked(final int row, final int col, final T value) {
         this.matrix[row][col] = value;
     }
     
+    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("unchecked")
     public T getUnchecked(final int row, final int col) {
         return (T) matrix[row][col];
     }
     
+    /** {@inheritDoc} */
     @Override
     public Object[] toArray() {
         Object[] array = new Object[this.size * this.size];
@@ -187,6 +192,7 @@ public final class SquareMatrix<T>
         return array;
     }
     
+    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("unchecked")
     public List<T> toList() {
