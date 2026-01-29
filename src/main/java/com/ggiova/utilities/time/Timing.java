@@ -10,13 +10,25 @@ import java.util.function.Supplier;
  * {@link java.util.function.Supplier Suppliers} (returning a value) or {@link java.lang.Runnable Runnables} (void
  * operations). Execution time is measured and printed to the standard output.
  *
+ * <p>Can measure in milliseconds, microseconds, and nanoseconds. Milliseconds and microseconds show up to two decimal
+ * places.
+ *
  * <p>Example usage:
  * <pre>{@code
  * // Timing a Supplier that returns a result
- * double result = Timing.timeMillis("Square root", () -> Math.sqrt(100));
+ * double result = Timing.timeMillis(
+ *         "SQRT Sum",
+ *         () -> {
+ *             double val = 0;
+ *             for (int ii = 0; ii < 1_000_000; ii++) {
+ *                 val += Math.sqrt(ii);
+ *             }
+ *             return val;
+ *         }
+ * );
  *
  * // Timing a Runnable with no return value
- * Timing.timeNanos("Print operation", () -> System.out.println("Hello, world!"));
+ * Timing.timeNanos("Print operation", () -> System.out.println("Hello, time nanos!"));
  * }</pre>
  */
 public final class Timing {
@@ -24,6 +36,13 @@ public final class Timing {
     
     private static final long NANOS_PER_MICRO = ChronoUnit.MICROS.getDuration().toNanos();
     
+    /**
+     * Calculates the amount of time taken to perform the action given.
+     *
+     * @param action action that will be measured
+     * @param <T>    type of result of the Supplier
+     * @return a record with the result of the Supplier and the amount of time taken
+     */
     private static <T> Calculation<T> calculateTime(Supplier<T> action) {
         long start = System.nanoTime();
         T result = action.get();
@@ -31,6 +50,14 @@ public final class Timing {
         return new Calculation<>(result, (double) end - start);
     }
     
+    /**
+     * Stores the result of the Supplier and the amount of time taken.
+     *
+     * @param result the result of the Supplier
+     * @param time   amount of time taken
+     * @param <T>    type of result of the Supplier
+     * @see Supplier
+     */
     private record Calculation<T>(T result, double time) {}
     
     /**
@@ -40,12 +67,18 @@ public final class Timing {
      * <p>Example code:
      * <pre>{@code
      * double result = Timing.timeMillis(
-     *     "SQRT",
-     *     () -> Math.sqrt(100)
+     *         "SQRT Sum",
+     *         () -> {
+     *             double val = 0;
+     *             for (int ii = 0; ii < 1_000_000; ii++) {
+     *                 val += Math.sqrt(ii);
+     *             }
+     *             return val;
+     *         }
      * );
      * }</pre>
      * printing:
-     * <pre>{@code SQRT took 0.0294 ms}</pre>
+     * <pre>{@code SQRT Sum took 3.93 ms}</pre>
      *
      * @param label  Name given to the operation being performed
      * @param action Action to be measured
@@ -68,11 +101,17 @@ public final class Timing {
      * <p>Example code:
      * <pre>{@code
      * double result = Timing.timeMillis(
-     *     () -> Math.sqrt(100)
+     *         () -> {
+     *             double val = 0;
+     *             for (int ii = 0; ii < 1_000_000; ii++) {
+     *                 val += Math.sqrt(ii);
+     *             }
+     *             return val;
+     *         }
      * );
      * }</pre>
      * printing:
-     * <pre>{@code Took 0.0294 ms}</pre>
+     * <pre>{@code Took 4.30 ms}</pre>
      *
      * @param action Action to be measured
      * @param <T>    Result of the operation
@@ -93,14 +132,14 @@ public final class Timing {
      * <p>Example code:
      * <pre>{@code
      * Timing.timeMillis(
-     *     "Print operation",
-     *     () -> System.out.println("Hello, world!")
+     *         "Print operation",
+     *         () -> System.out.println("Hello, time millis!")
      * );
      * }</pre>
      * printing:
      * <pre>{@code
-     * Hello, world!
-     * Print operation took 0.1217 ms
+     * Hello, time millis!
+     * Print operation took 0.04 ms
      * }</pre>
      *
      * @param label  Name given to the operation being performed
@@ -119,13 +158,13 @@ public final class Timing {
      * <p>Example code:
      * <pre>{@code
      * Timing.timeMillis(
-     *     () -> System.out.println("Hello, world!")
+     *         () -> System.out.println("Hello, time millis!")
      * );
      * }</pre>
      * printing:
      * <pre>{@code
-     * Hello, world!
-     * Took 0.0633 ms
+     * Hello, time millis!
+     * Took 0.04 ms
      * }</pre>
      *
      * @param action Action to be measured
@@ -144,12 +183,12 @@ public final class Timing {
      * <p>Example code:
      * <pre>{@code
      * double result = Timing.timeMicros(
-     *     "SQRT",
-     *     () -> Math.sqrt(100)
+     *         "SQRT",
+     *         () -> Math.sqrt(100)
      * );
      * }</pre>
      * printing:
-     * <pre>{@code SQRT took 15,00 μs}</pre>
+     * <pre>{@code SQRT took 5.50 μs}</pre>
      *
      * @param label  Name given to the operation being performed
      * @param action Action to be measured
@@ -171,11 +210,11 @@ public final class Timing {
      * <p>Example code:
      * <pre>{@code
      * double result = Timing.timeMicros(
-     *     () -> Math.sqrt(100)
+     *         () -> Math.sqrt(100)
      * );
      * }</pre>
      * printing:
-     * <pre>{@code Took 12,20 μs}</pre>
+     * <pre>{@code Took 2.90 μs}</pre>
      *
      * @param action Action to be measured
      * @param <T>    Result of the operation
@@ -196,14 +235,14 @@ public final class Timing {
      * <p>Example code:
      * <pre>{@code
      * Timing.timeMicros(
-     *     "Print operation",
-     *     () -> System.out.println("Hello, world!")
+     *         "Print operation",
+     *         () -> System.out.println("Hello, time micros!")
      * );
      * }</pre>
      * printing:
      * <pre>{@code
-     * Hello, world!
-     * Print operation took 166,50 μs
+     * Hello, time micros!
+     * Print operation took 39.70 μs
      * }</pre>
      *
      * @param label  Name given to the operation being performed
@@ -222,13 +261,13 @@ public final class Timing {
      * <p>Example code:
      * <pre>{@code
      * Timing.timeMicros(
-     *     () -> System.out.println("Hello, world!")
+     *         () -> System.out.println("Hello, time micros!")
      * );
      * }</pre>
      * printing:
      * <pre>{@code
-     * Hello, world!
-     * Took 150,80 μs
+     * Hello, time micros!
+     * Took 27.60 μs
      * }</pre>
      *
      * @param action Action to be measured
@@ -247,12 +286,12 @@ public final class Timing {
      * <p>Example code:
      * <pre>{@code
      * double result = Timing.timeNanos(
-     *     "SQRT",
-     *     () -> Math.sqrt(100)
+     *         "SQRT",
+     *         () -> Math.sqrt(100)
      * );
      * }</pre>
      * printing:
-     * <pre>{@code SQRT took 15800 ns}</pre>
+     * <pre>{@code SQRT took 3600 ns}</pre>
      *
      * @param label  Name given to the operation being performed
      * @param action Action to be measured
@@ -272,11 +311,11 @@ public final class Timing {
      * <p>Example code:
      * <pre>{@code
      * double result = Timing.timeNanos(
-     *     () -> Math.sqrt(100)
+     *         () -> Math.sqrt(100)
      * );
      * }</pre>
      * printing:
-     * <pre>{@code Took 26500 ns}</pre>
+     * <pre>{@code Took 1600 ns}</pre>
      *
      * @param action Action to be measured
      * @param <T>    Result of the operation
@@ -295,14 +334,14 @@ public final class Timing {
      * <p>Example code:
      * <pre>{@code
      * Timing.timeNanos(
-     *     "Print operation",
-     *     () -> System.out.println("Hello, world!")
+     *         "Print operation",
+     *         () -> System.out.println("Hello, time nanos!")
      * );
      * }</pre>
      * printing:
      * <pre>{@code
-     * Hello, world!
-     * Print operation took 227200 ns
+     * Hello, time nanos!
+     * Print operation took 83300 ns
      * }</pre>
      *
      * @param label  Name given to the operation being performed
@@ -321,13 +360,13 @@ public final class Timing {
      * <p>Example code:
      * <pre>{@code
      * Timing.timeNanos(
-     *     () -> System.out.println("Hello, world!")
+     *         () -> System.out.println("Hello, time nanos!")
      * );
      * }</pre>
      * printing:
      * <pre>{@code
-     * Hello, world!
-     * Took 186000 ns
+     * Hello, time nanos!
+     * Took 28200 ns
      * }</pre>
      *
      * @param action Action to be measured
