@@ -18,6 +18,16 @@ import java.math.BigInteger;
  * @see com.ggiova.utilities.primitives.Floats
  */
 public final class Maths {
+    
+    /**
+     * Constructor. Do <u><b>NOT</b></u> use.
+     *
+     * @throws UnsupportedOperationException If the constructor is used.
+     */
+    private Maths() throws UnsupportedOperationException {
+        throw new UnsupportedOperationException();
+    }
+    
     /**
      * BigInteger constant of {@code -1}.
      */
