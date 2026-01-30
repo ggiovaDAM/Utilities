@@ -142,6 +142,71 @@ public class Fibonacci implements Comparable<Fibonacci> {
     }
     
     /**
+     * Calculates the sum of the Fibonacci Numbers from {@code 0} up to {@code index}.
+     *
+     * <p>This method uses the identity: ∑(F_i) from i=0 to n = F_(n+2) - 1
+     *
+     * <p>Derivation: Since Fibonacci numbers can be represented using matrix exponentiation:
+     * <pre>
+     * ⌈ 1 1 ⌉ ^ n  =  ⌈ F_(n+1) F_n     ⌉
+     * ⌊ 1 0 ⌋         ⌊ F_n     F_(n-1) ⌋
+     * </pre>
+     *
+     * We replace F_n with X ^ n. The sum can be expressed as a geometric series:
+     * <pre>
+     * index          index
+     *   Σ  F_n  =      Σ  X ^ n   =  ( X^(index + 1) - I ) × ( X - I )^-1
+     * n = 0          n = 0
+     * </pre>
+     *
+     * Computing ( X - I )^-1:
+     * <pre>
+     * ( ⌈ 1 1 ⌉ - ⌈ 1 0 ⌉ ) ^ -1  =  ( ⌈ 0  1 ⌉ ) ^ -1
+     *   ⌊ 1 0 ⌋   ⌊ 0 1 ⌋              ⌊ 1 -1 ⌋
+     * </pre>
+     *
+     * We'll define Q to be:
+     * <pre>
+     *     ( ⌈ 0  1 ⌉ ) ^ -1 = Q ^ - 1
+     *       ⌊ 1 -1 ⌋
+     * </pre>
+     *
+     * We'll try to solve for Q.
+     * <p>Since Q ^ -1 = V   &rarr;   I = V × Q
+     * <p>If we try replacing V with X, we get:
+     * <pre>
+     *   ⌈ 0  1 ⌉  *  ⌈ 1 1 ⌉  = ⌈ 0×1 + 1× 1  0×1 + 1× 0  ⌉  =  ⌈ 1 0 ⌉  =  I
+     *   ⌊ 1 -1 ⌋     ⌊ 1 0 ⌋    ⌊ 1×1 + 1×-1  1×1 + 0×-1  ⌋     ⌊ 0 1 ⌋
+     * </pre>
+     *
+     * So ( X - I )^-1 = X
+     * <p>Resulting in:
+     * <pre>
+     *  index
+     *   Σ  F_n   =    ( X^(index + 1) - I ) × X   =    X^(index + 2) - X
+     * n = 0
+     * </pre>
+     *
+     * Replacing X ^ n with F_n, we get:
+     * <pre>
+     * index
+     *   Σ  F_n   =   F_(index + 2) - F_1  =   F_(index + 2) - 1
+     * n = 0
+     * </pre>
+     *
+     * @param index Index (must be non-negative)
+     * @return The sum of the Fibonacci Numbers from F(0) to F(index)
+     * @throws IllegalArgumentException if index is negative
+     * @see <a href="https://en.wikipedia.org/wiki/Generalizations_of_Fibonacci_numbers" target="_blank">Generalizations
+     * of Fibonacci numbers</a>
+     */
+    public static BigInteger sumOfFibonacci(final int index) {
+        if (index < 0)
+            throw new IllegalArgumentException("Index must be non-negative");
+        return Fibonacci.of(index + 2).toBigInteger().subtract(BigInteger.ONE);
+    }
+    
+    /**
      * Returns the next Fibonacci number in the sequence (index + 1). This is efficient as it reuses the cached value of
      * the current number.
      *
