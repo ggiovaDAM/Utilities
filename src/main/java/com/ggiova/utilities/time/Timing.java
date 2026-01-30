@@ -86,7 +86,7 @@ public final class Timing {
      * @param <T>    Result of the operation
      * @return The result of running the operation
      */
-    @SuppressWarnings("UseOfSystemOutOrSystemErr")
+    @SuppressWarnings({"UseOfSystemOutOrSystemErr", "UnusedReturnValue"})
     public static <T> T timeSeconds(String label, Supplier<T> action) {
         Calculation<T> calculation = calculateTime(action);
         // Conversion from nanoseconds to seconds
@@ -117,7 +117,7 @@ public final class Timing {
      * @param <T>    Result of the operation
      * @return The result of running the operation
      */
-    @SuppressWarnings("UseOfSystemOutOrSystemErr")
+    @SuppressWarnings({"UseOfSystemOutOrSystemErr", "UnusedReturnValue"})
     public static <T> T timeSeconds(Supplier<T> action) {
         Calculation<T> calculation = calculateTime(action);
         // Conversion from nanoseconds to seconds
@@ -213,7 +213,7 @@ public final class Timing {
      * @param <T>    Result of the operation
      * @return The result of running the operation
      */
-    @SuppressWarnings("UseOfSystemOutOrSystemErr")
+    @SuppressWarnings({"UseOfSystemOutOrSystemErr", "UnusedReturnValue"})
     public static <T> T timeMillis(String label, Supplier<T> action) {
         Calculation<T> calculation = calculateTime(action);
         // Conversion from nanoseconds to milliseconds
@@ -245,7 +245,7 @@ public final class Timing {
      * @param <T>    Result of the operation
      * @return The result of running the operation
      */
-    @SuppressWarnings("UseOfSystemOutOrSystemErr")
+    @SuppressWarnings({"UseOfSystemOutOrSystemErr", "UnusedReturnValue"})
     public static <T> T timeMillis(Supplier<T> action) {
         Calculation<T> calculation = calculateTime(action);
         // Conversion from nanoseconds to milliseconds
@@ -323,7 +323,7 @@ public final class Timing {
      * @param <T>    Result of the operation
      * @return The result of running the operation
      */
-    @SuppressWarnings("UseOfSystemOutOrSystemErr")
+    @SuppressWarnings({"UseOfSystemOutOrSystemErr", "UnusedReturnValue"})
     public static <T> T timeMicros(String label, Supplier<T> action) {
         Calculation<T> calculation = calculateTime(action);
         // Conversion from nanoseconds to microseconds
@@ -348,7 +348,7 @@ public final class Timing {
      * @param <T>    Result of the operation
      * @return The result of running the operation
      */
-    @SuppressWarnings("UseOfSystemOutOrSystemErr")
+    @SuppressWarnings({"UseOfSystemOutOrSystemErr", "UnusedReturnValue"})
     public static <T> T timeMicros(Supplier<T> action) {
         Calculation<T> calculation = calculateTime(action);
         // Conversion from nanoseconds to microseconds
@@ -426,7 +426,7 @@ public final class Timing {
      * @param <T>    Result of the operation
      * @return The result of running the operation
      */
-    @SuppressWarnings("UseOfSystemOutOrSystemErr")
+    @SuppressWarnings({"UseOfSystemOutOrSystemErr", "UnusedReturnValue"})
     public static <T> T timeNanos(String label, Supplier<T> action) {
         Calculation<T> calculation = calculateTime(action);
         System.out.printf("%s took %.0f ns%n", label, calculation.time());
@@ -449,7 +449,7 @@ public final class Timing {
      * @param <T>    Result of the operation
      * @return The result of running the operation
      */
-    @SuppressWarnings("UseOfSystemOutOrSystemErr")
+    @SuppressWarnings({"UseOfSystemOutOrSystemErr", "UnusedReturnValue"})
     public static <T> T timeNanos(Supplier<T> action) {
         Calculation<T> calculation = calculateTime(action);
         System.out.printf("Took %.0f ns%n", calculation.time());
