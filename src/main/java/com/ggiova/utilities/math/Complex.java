@@ -293,9 +293,46 @@ public final class Complex {
      * Returns the complex conjugate of {@code this} element.
      *
      * <p>The complex conjugate for {@code a + bi} is {@code a - bi}.
+     *
      * @return the complex conjugate.
      */
     public Complex conjugate() {
         return new Complex(this.real, 0.0d - this.imaginary);
+    }
+    
+    public Complex square() {
+        return new Complex(
+                this.real * this.real - this.imaginary * this.imaginary,
+                2 * this.real * this.imaginary
+        );
+    }
+    
+    public Complex exp() {
+        double exp = Math.exp(this.real);
+        double newReal = Math.cos(this.imaginary) * exp;
+        double newImaginary = Math.sin(this.imaginary) * exp;
+        return new Complex(newReal, newImaginary);
+    }
+    
+    public Complex sin() {
+        double expB = Math.exp(this.imaginary);
+        double expMB = Math.exp(-this.imaginary);
+        double sin = Math.sin(this.real);
+        double cos = Math.cos(this.real);
+        
+        double newReal = 0.5d * sin * (expB + expMB);
+        double newImaginary = 0.5d * cos * (expB - expMB);
+        return new Complex(newReal, newImaginary);
+    }
+    
+    public Complex cos() {
+        double expB = Math.exp(this.imaginary);
+        double expMB = Math.exp(-this.imaginary);
+        double sin = Math.sin(this.real);
+        double cos = Math.cos(this.real);
+        
+        double newReal = 0.5d * cos * (expMB + expB);
+        double newImaginary = 0.5d * sin * (expMB - expB);
+        return new Complex(newReal, newImaginary);
     }
 }
