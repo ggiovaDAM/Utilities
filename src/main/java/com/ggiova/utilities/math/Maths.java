@@ -33,6 +33,262 @@ public final class Maths {
      */
     public static final BigInteger BIG_INTEGER_MINUS_ONE = BigInteger.valueOf(-1L);
     
+    // -------------------------------------- CONSTANTS ----------------------------------------------------------------
+    /**
+     * Closest floating-point number that approximates &pi; (pi). &pi; is the ratio between a disk's circumference to
+     * its diameter.
+     *
+     * <p>&pi; &asymp; 3.141592653589793238462643383279502884
+     *
+     * @see <a href="https://en.wikipedia.org/wiki/Pi" target="_blank">Wikipedia on Pi</a>
+     * @see <a href="https://oeis.org/A000796" target="_blank">OEIS (A000796)</a>
+     * @see Math#PI
+     */
+    public static final double PI = Math.PI;
+    
+    /**
+     * Closest floating-point number that approximates &tau; (tau). &tau; is the ratio between a disk's circumference to
+     * its radius. Equal to 2&pi;.
+     *
+     * <p>&tau; = 2&pi; &asymp; 6.283185307179586476925286766559005768
+     *
+     * @see <a href="https://oeis.org/A019692" target="_blank">OEIS (A019692)</a>
+     * @see Math#TAU
+     */
+    public static final double TAU = Math.TAU;
+    
+    /**
+     * Closes floating-point number that approximates half of &pi;. It is the ratio between the semi-circumference of a
+     * disk to its diameter.
+     *
+     * <p>&pi;/2 &asymp; 1.570796326794896619231321691639751442
+     *
+     * @see <a href="https://oeis.org/A019669" target="_blank">OEIS (A019669)</a>
+     */
+    public static final double PI_HALF = PI / 2.0d;
+    
+    /**
+     * Closest floating-point approximation of a third of &pi;.
+     *
+     * <p>&pi;/3 &asymp; 1.047197551196597746154214461093167628
+     */
+    public static final double PI_THIRD = PI / 3.0d;
+    
+    /**
+     * Closest floating-point approximation of a fourth of &pi;.
+     *
+     * <p>&pi;/4 &asymp; 0.785398163397448309615660845819875721
+     *
+     * @see <a href="https://oeis.org/A003881" target="_blank">OEIS (A003881)</a>
+     */
+    public static final double PI_FOURTH = PI / 4.0d;
+    
+    /**
+     * Closest floating-point approximation to &pi; squared.
+     *
+     * <p>&pi; ^ 2 &asymp; 9.869604401089358618834490999876151135
+     *
+     * @see <a href="https://oeis.org/A002388" target="_blank">OEIS (A002388)</a>
+     */
+    public static final double PI_SQUARE = PI * PI;
+    
+    /**
+     * Closest floating-point approximation of the number e. e is the base of natural logarithms, as well as, the limit
+     * of (1 + 1/n)^n as n approaches &infin;.
+     *
+     * <p>e &asymp; 2.718281828459045235360287471352662497
+     *
+     * @see <a href="https://en.wikipedia.org/wiki/E_(mathematical_constant)" target="_blank">Wikipedia on E</a>
+     * @see <a href="https://oeis.org/A001113" target="_blank">OEIS (A001113)</a>
+     * @see Math#E
+     */
+    public static final double E = Math.E;
+    
+    /**
+     * Closest floating-point approximation of the reciprocal of the number e. That is, dividing 1 by e.
+     *
+     * <p>1/e &asymp; 0.367879441171442321595523770161460867
+     *
+     * @see <a href="https://oeis.org/A068985" target="_blank">OEIS (A068985)</a>
+     */
+    public static final double E_RECIPROCAL = 1.0d / E;
+    
+    /**
+     * Closest floating-point approximation to &radic;2 (square root of 2). The square root of 2 is the length of a
+     * diagonal across a square with sides of one unit of length.
+     *
+     * <p>&radic;2 &asymp; 1.414213562373095048801688724209698078
+     *
+     * @see <a href="https://en.wikipedia.org/wiki/Square_root_of_2" target="_blank">Wikipedia on &radic;2</a>
+     * @see <a href="https://oeis.org/A002193" target="_blank">OEIS (A002193)</a>
+     */
+    public static final double SQUARE_ROOT_TWO = 1.414213562373095048801688724209698078d;
+    
+    /**
+     * Closest floating-point approximation to 1/&radic;2 (reciprocal square root of 2).
+     *
+     * <p>1 / &radic;2 &asymp; 0.707106781186547524400844362104849039
+     *
+     * @see <a href="https://oeis.org/A010503" target="_blank">OEIS (A010503)</a>
+     */
+    public static final double SQUARE_ROOT_TWO_RECIPROCAL = 0.707106781186547524400844362104849039d;
+    
+    /**
+     * Closest floating-point approximation to &radic;3 (square root of 3). The square root of 3 is the height of an
+     * equilateral triangle whose sides are of length 2. Also known as Theodorus's constant.
+     *
+     * <p>&radic;3 &asymp; 1.732050807568877293527446341505872366
+     *
+     * @see <a href="https://en.wikipedia.org/wiki/Square_root_of_3" target="_blank">Wikipedia on &radic;3</a>
+     * @see <a href="https://oeis.org/A002194" target="_blank">OEIS (A002194)</a>
+     */
+    public static final double SQUARE_ROOT_THREE = 1.732050807568877293527446341505872366d;
+    
+    /**
+     * Closest floating-point approximation to &radic;5 (square root of 5). Equal to the hypotenuse of the rectangle
+     * triangle with sides of 1 &amp; 2.
+     *
+     * <p>&radic;5 &asymp; 2.236067977499789696409173668731276235
+     *
+     * @see <a href="https://en.wikipedia.org/wiki/Square_root_of_5" target="_blank">Wikipedia on &radic;5</a>
+     * @see <a href="https://oeis.org/A002194" target="_blank">OEIS (A002194)</a>
+     */
+    public static final double SQUARE_ROOT_FIVE = 2.236067977499789696409173668731276235d;
+    
+    /**
+     * Closest floating-point approximation to &radic;6 (square root of 6). Equal to the product of &radic;2 &amp;
+     * &radic;3.
+     *
+     * <p>&radic;6 &asymp; 2.449489742783178098197284074705891391
+     *
+     * @see <a href="https://en.wikipedia.org/wiki/Square_root_of_6" target="_blank">Wikipedia on &radic;6</a>
+     * @see <a href="https://oeis.org/A010464" target="_blank">OEIS (A010464)</a>
+     */
+    public static final double SQUARE_ROOT_SIX = 2.449489742783178098197284074705891391d;
+    
+    /**
+     * Closest floating-point approximation to &radic;7 (square root of 7).
+     *
+     * <p>&radic;7 &asymp; 2.645751311064590590501615753639260425
+     *
+     * @see <a href="https://en.wikipedia.org/wiki/Square_root_of_7" target="_blank">Wikipedia on &radic;7</a>
+     * @see <a href="https://oeis.org/A010465" target="_blank">OEIS (A01465)</a>
+     */
+    public static final double SQUARE_ROOT_SEVEN = 2.645751311064590590501615753639260425d;
+    
+    /**
+     * Closest floating-point approximation of the golden ratio.
+     *
+     * <p>&phi;=(1 + &radic;5)/2 &approx; 1.61803398874989484820458683436563811772
+     *
+     * @see <a href="https://oeis.org/A001622" target="_blank">OEIS (A001622)</a>
+     */
+    public static final double GOLDEN_RATIO = 1.61803398874989484820458683436563811772d;
+    
+    /**
+     * Closest floating-point approximation to &radic;3 / 2 (Half of the square root of 3). Equal to the side opposite
+     * to the 60º angle of a 30º-60º-90º-triangle that has the unit length as the hypotenuse.
+     *
+     * <p>&radic;3  / 2 &asymp; 0.8660254037844386467637231707529361834
+     *
+     * @see <a href="https://oeis.org/A010527" target="_blank">OEIS (A010527)</a>
+     */
+    public static final double HALF_SQUARE_ROOT_THREE = SQUARE_ROOT_THREE / 2.0d;
+    
+    /**
+     * Closest floating-point approximation to &radic;&pi; (square root of pi).
+     *
+     * <p>&radic;&pi; &asymp; 1.77245385090551602729816748334114518279
+     *
+     * @see <a href="https://oeis.org/A002161">OEIS (A002161)</a>
+     */
+    public static final double SQUARE_ROOT_PI = 1.77245385090551602729816748334114518279d;
+    
+    /**
+     * Closest floating-point approximation to &radic;&tau; (square root of tau).
+     *
+     * <p>&radic;&tau; &asymp; 2.50662827463100050241576528481104525300
+     *
+     * @see <a href="https://oeis.org/A019727" target="_blank">OEIS (A019727)</a>
+     */
+    public static final double SQUARE_ROOT_TAU = SQUARE_ROOT_PI * SQUARE_ROOT_TWO;
+    
+    /**
+     * Closest floating-point approximation of ln(2) (natural logarithm of 2).
+     *
+     * <p>ln(2) &asymp; 0.6931471805599453094172321214581765680
+     *
+     * @see <a href="https://en.wikipedia.org/wiki/Natural_logarithm_of_2" target="_blank">Wikipeida on ln(2)</a>
+     * @see <a href="https://oeis.org/A002162" target="_blank">OEIS (A002162)</a>
+     */
+    public static final double LN2 = 0.6931471805599453094172321214581765680d;
+    
+    /**
+     * Closest floating-point approximation of ln(5) (natural logarithm of 5).
+     *
+     * <p>ln(5) &asymp; 1.60943791243410037460075933322618763952
+     *
+     * @see <a href="https://oeis.org/A016628" target="_blank">OEIS (A016628)</a>
+     */
+    public static final double LN5 = 1.60943791243410037460075933322618763952d;
+    
+    /**
+     * Closest floating-point approximation of ln(10) (natural logarithm of 10).
+     *
+     * <p>ln(10) &asymp; 2.302585092994045684017991454684364207
+     *
+     * @see <a href="https://oeis.org/A002392" target="_blank">OEIS (A002392)</a>
+     */
+    public static final double LN10 = 2.302585092994045684017991454684364207d;
+    
+    /**
+     * Closest floating-point approximation to ln(&tau;)/2.
+     *
+     * <p>ln(&tau;)/2 = &zeta;'(0) &asymp; 0.91893853320467274178032973640561763986
+     *
+     * @see <a href="https://oeis.org/A075700" target="_blank">OEIS (A075700)</a>
+     */
+    public static final double HALF_LN_TAU = 0.91893853320467274178032973640561763986d;
+    
+    /**
+     * Closest floating-point approximation to &gamma; (Euler-Mascheroni constant). It is the difference between the
+     * harmonic series and the natural logarithm.
+     *
+     * <p>&gamma; &asymp; 0.57721566490153286060651209008240243104
+     *
+     * @see <a href="https://en.wikipedia.org/wiki/Euler%27s_constant" target="_blank">Wikipedia on Eurler-Maschroni
+     * constant</a>
+     * @see <a href="https://oeis.org/A001620" target="_blank">OEIS (A001620)</a>
+     */
+    public static final double EULER_MASCHERONI = 0.57721566490153286060651209008240243104d;
+    
+    /**
+     * Closest floating-point approximation to &Omega; also represented as W(1) (Lambert W of 1). This is the solution
+     * of <i>&Omega; × e ^ &Omega; = 1 </i>, it is as well, infinite exponentiations of -e, that is
+     * <i>W(1) = e ^ -e ^ -e ^ &hellip;</i>.
+     *
+     * <p>Irrational &amp; Transcendental.
+     *
+     * <p>&Omega; &asymp; 0.56714329040978387299996866221035554975
+     *
+     * @see <a href="https://en.wikipedia.org/wiki/Omega_constant" target="_blank">Wikipedia on omega constant</a>
+     * @see <a href="https://oeis.org/A030178" target="_blank">OEIS (A030178)</a>
+     */
+    public static final double OMEGA = 0.56714329040978387299996866221035554975d;
+    
+    /**
+     * Closest floating-point approximation to &zeta;(3) (Apéry's constant). It represents the sum of the reciprocals of
+     * the cubes of the natural numbers (excluding 0).
+     *
+     * <p>Irrational. Unknown if it's transcendental.
+     *
+     * <p>&zeta;(3) &asymp; 1.20205690315959428539973816151144999076
+     *
+     * @see <a href="https://en.wikipedia.org/wiki/Apéry's_constant" target="_blank">Wikipedia on Apéry's constant</a>
+     * @see <a href="https://oeis.org/A002117" target="_blank">OEIS (A002117)</a>
+     */
+    public static final double APERY = 1.20205690315959428539973816151144999076d;
+    
     // -------------------------------------- WHOLE NUMBER -------------------------------------------------------------
     
     /**
