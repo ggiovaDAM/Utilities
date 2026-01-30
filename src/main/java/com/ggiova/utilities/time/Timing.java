@@ -63,6 +63,252 @@ public final class Timing {
     private record Calculation<T>(T result, double time) {}
     
     /**
+     * Times the execution of the given function. Automatically selects and prints the time taken in the most appropriate
+     * unit (seconds, milliseconds, microseconds, or nanoseconds). Returns the result of the operation.
+     *
+     * <p>Example code:
+     * <pre>{@code
+     * double result = Timing.timeAuto(
+     *         "SQRT Sum",
+     *         () -> 1
+     * );
+     * }</pre>
+     * printing:
+     * <pre>{@code SQRT Sum took 5.70 μs}</pre>
+     *
+     * <p>Example code:
+     * <pre>{@code
+     * double result = Timing.timeAuto(
+     *         "SQRT Sum",
+     *         () -> {
+     *             double val = 0;
+     *             for (int ii = 0; ii < 1_000_000; ii++) {
+     *                 val += Math.sqrt(ii);
+     *             }
+     *             return val;
+     *         }
+     * );
+     * }</pre>
+     * printing:
+     * <pre>{@code SQRT Sum took 5.53 ms}</pre>
+     *
+     * <p>Example code:
+     * <pre>{@code
+     * double result = Timing.timeAuto(
+     *         "SQRT Sum",
+     *         () -> {
+     *             double val = 0;
+     *             for (int ii = 0; ii < 1_000_000_000; ii++) {
+     *                 val += Math.sqrt(ii);
+     *             }
+     *             return val;
+     *         }
+     * );
+     * }</pre>
+     * printing:
+     * <pre>{@code SQRT Sum took 2.50 s}</pre>
+     *
+     * @param label  Name given to the operation being performed
+     * @param action Action to be measured
+     * @param <T>    Result of the operation
+     * @return The result of running the operation
+     */
+    @SuppressWarnings({"UseOfSystemOutOrSystemErr", "UnusedReturnValue"})
+    public static <T> T timeAuto(String label, Supplier<T> action) {
+        Calculation<T> calculation = calculateTime(action);
+        double ns = calculation.time();
+        String unit = "ns";
+        if (ns > NANOS_PER_SECOND) {
+            ns /= NANOS_PER_SECOND;
+            unit = "s";
+        } else if (ns > NANOS_PER_MILLI) {
+            ns /= NANOS_PER_MILLI;
+            unit = "ms";
+        } else if (ns > NANOS_PER_MICRO) {
+            ns /= NANOS_PER_MICRO;
+            unit = "μs";
+        }
+        System.out.printf("%s took %.2f %s%n", label, ns, unit);
+        return calculation.result();
+    }
+    
+    /**
+     * Times the execution of the given function. Automatically selects and prints the time taken in the most appropriate
+     * unit (seconds, milliseconds, microseconds, or nanoseconds). Returns the result of the operation.
+     *
+     * <p>Example code:
+     * <pre>{@code
+     * double result = Timing.timeAuto(
+     *         () -> 1
+     * );
+     * }</pre>
+     * printing:
+     * <pre>{@code Took 2.60 μs}</pre>
+     *
+     * <p>Example code:
+     * <pre>{@code
+     * double result = Timing.timeAuto(
+     *         () -> {
+     *             double val = 0;
+     *             for (int ii = 0; ii < 1_000_000; ii++) {
+     *                 val += Math.sqrt(ii);
+     *             }
+     *             return val;
+     *         }
+     * );
+     * }</pre>
+     * printing:
+     * <pre>{@code Took 4.82 ms}</pre>
+     *
+     * <p>Example code:
+     * <pre>{@code
+     * double result = Timing.timeAuto(
+     *         () -> {
+     *             double val = 0;
+     *             for (int ii = 0; ii < 1_000_000_000; ii++) {
+     *                 val += Math.sqrt(ii);
+     *             }
+     *             return val;
+     *         }
+     * );
+     * }</pre>
+     * printing:
+     * <pre>{@code Took 2.36 s}</pre>
+     *
+     * @param action Action to be measured
+     * @param <T>    Result of the operation
+     * @return The result of running the operation
+     */
+    @SuppressWarnings({"UseOfSystemOutOrSystemErr", "UnusedReturnValue"})
+    public static <T> T timeAuto(Supplier<T> action) {
+        Calculation<T> calculation = calculateTime(action);
+        double ns = calculation.time();
+        String unit = "ns";
+        if (ns > NANOS_PER_SECOND) {
+            ns /= NANOS_PER_SECOND;
+            unit = "s";
+        } else if (ns > NANOS_PER_MILLI) {
+            ns /= NANOS_PER_MILLI;
+            unit = "ms";
+        } else if (ns > NANOS_PER_MICRO) {
+            ns /= NANOS_PER_MICRO;
+            unit = "μs";
+        }
+        System.out.printf("Took %.2f %s%n", ns, unit);
+        return calculation.result();
+    }
+    
+    /**
+     * Times the execution of the given function. Automatically selects and prints the time taken in the most appropriate
+     * unit (seconds, milliseconds, microseconds, or nanoseconds). Does not return anything.
+     *
+     * <p>Example code:
+     * <pre>{@code
+     * Timing.timeAuto(
+     *         "Variable creation",
+     *         () -> {
+     *             double val = 0;
+     *         }
+     * );
+     * }</pre>
+     * printing:
+     * <pre>{@code Variable creation took 7.00 μs}</pre>
+     *
+     * <p>Example code:
+     * <pre>{@code
+     * Timing.timeAuto(
+     *         "SQRT Sum",
+     *         () -> {
+     *             double val = 0;
+     *             for (int ii = 0; ii < 1_000_000; ii++) {
+     *                 val += Math.sqrt(ii);
+     *             }
+     *         }
+     * );
+     * }</pre>
+     * printing:
+     * <pre>{@code SQRT Sum took 2.75 ms}</pre>
+     *
+     * <p>Example code:
+     * <pre>{@code
+     * Timing.timeAuto(
+     *         "SQRT Sum",
+     *         () -> {
+     *             double val = 0;
+     *             for (int ii = 0; ii < 1_000_000_000; ii++) {
+     *                 val += Math.sqrt(ii);
+     *             }
+     *             val *= 2;
+     *         }
+     * );
+     * }</pre>
+     * printing:
+     * <pre>{@code SQRT Sum took 2.41 s}</pre>
+     *
+     * @param label  Name given to the operation being performed
+     * @param action Action to be measured
+     */
+    public static void timeAuto(String label, Runnable action) {
+        timeAuto(label, () -> {
+            action.run();
+            return null;
+        });
+    }
+    
+    /**
+     * Times the execution of the given function. Automatically selects and prints the time taken in the most appropriate
+     * unit (seconds, milliseconds, microseconds, or nanoseconds). Does not return anything.
+     *
+     * <p>Example code:
+     * <pre>{@code
+     * Timing.timeAuto(
+     *         () -> {
+     *             double val = 0;
+     *         }
+     * );
+     * }</pre>
+     * printing:
+     * <pre>{@code Took 8.30 μs}</pre>
+     *
+     * <p>Example code:
+     * <pre>{@code
+     * Timing.timeAuto(
+     *         () -> {
+     *             double val = 0;
+     *             for (int ii = 0; ii < 1_000_000; ii++) {
+     *                 val += Math.sqrt(ii);
+     *             }
+     *         }
+     * );
+     * }</pre>
+     * printing:
+     * <pre>{@code Took 2.93 ms}</pre>
+     *
+     * <p>Example code:
+     * <pre>{@code
+     * Timing.timeAuto(
+     *         () -> {
+     *             double val = 0;
+     *             for (int ii = 0; ii < 1_000_000_000; ii++) {
+     *                 val += Math.sqrt(ii);
+     *             }
+     *             val *= 2;
+     *         }
+     * );
+     * }</pre>
+     * printing:
+     * <pre>{@code Took 2.26 s}</pre>
+     *
+     * @param action Action to be measured
+     */
+    public static void timeAuto(Runnable action) {
+        timeAuto(() -> {
+            action.run();
+            return null;
+        });
+    }
+    
+    /**
      * Times the execution of the given function. Prints the time taken in seconds. Returns the result of the operation.
      *
      * <p>Example code:
