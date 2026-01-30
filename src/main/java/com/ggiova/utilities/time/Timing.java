@@ -10,25 +10,39 @@ import java.util.function.Supplier;
  * {@link java.util.function.Supplier Suppliers} (returning a value) or {@link java.lang.Runnable Runnables} (void
  * operations). Execution time is measured and printed to the standard output.
  *
- * <p>Can measure in milliseconds, microseconds, and nanoseconds. Milliseconds and microseconds show up to two decimal
- * places.
+ * <p>Supports multiple time units:
+ * <ul>
+ *   <li>{@link #timeAuto(String, Supplier)} - Automatically selects the most appropriate unit (s, ms, μs, or ns)</li>
+ *   <li>{@link #timeSeconds(String, Supplier)} - Measures in seconds with 2 decimal places</li>
+ *   <li>{@link #timeMillis(String, Supplier)} - Measures in milliseconds with 2 decimal places</li>
+ *   <li>{@link #timeMicros(String, Supplier)} - Measures in microseconds with 2 decimal places</li>
+ *   <li>{@link #timeNanos(String, Supplier)} - Measures in nanoseconds (whole numbers)</li>
+ * </ul>
+ *
+ * <p>Each timing method has four variants:
+ * <ul>
+ *   <li>With label, returning result: {@code timeXxx(String label, Supplier<T> action)}</li>
+ *   <li>Without label, returning result: {@code timeXxx(Supplier<T> action)}</li>
+ *   <li>With label, no return: {@code timeXxx(String label, Runnable action)}</li>
+ *   <li>Without label, no return: {@code timeXxx(Runnable action)}</li>
+ * </ul>
  *
  * <p>Example usage:
  * <pre>{@code
- * // Timing a Supplier that returns a result
- * double result = Timing.timeMillis(
- *         "SQRT Sum",
- *         () -> {
- *             double val = 0;
- *             for (int ii = 0; ii < 1_000_000; ii++) {
- *                 val += Math.sqrt(ii);
- *             }
- *             return val;
- *         }
- * );
+ * // Automatically select appropriate unit
+ * double result = Timing.timeAuto("Calculate sum", () -> {
+ *     double sum = 0;
+ *     for (int i = 0; i < 1_000_000; i++) {
+ *         sum += Math.sqrt(i);
+ *     }
+ *     return sum;
+ * });
+ * // Output: Calculate sum took 4.25 ms
  *
- * // Timing a Runnable with no return value
- * Timing.timeNanos("Print operation", () -> System.out.println("Hello, time nanos!"));
+ * // Time a void operation
+ * Timing.timeNanos("Print", () -> System.out.println("Hello!"));
+ * // Output: Hello!
+ * // Print took 85000 ns
  * }</pre>
  */
 public final class Timing {
