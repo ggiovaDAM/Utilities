@@ -36,6 +36,8 @@ public final class Timing {
     
     private static final long NANOS_PER_MICRO = ChronoUnit.MICROS.getDuration().toNanos();
     
+    private static final long NANOS_PER_SECOND = ChronoUnit.SECONDS.getDuration().toNanos();
+    
     /**
      * Calculates the amount of time taken to perform the action given.
      *
@@ -59,6 +61,132 @@ public final class Timing {
      * @see Supplier
      */
     private record Calculation<T>(T result, double time) {}
+    
+    /**
+     * Times the execution of the given function. Prints the time taken in seconds. Returns the result of the operation.
+     *
+     * <p>Example code:
+     * <pre>{@code
+     * double result = Timing.timeSeconds(
+     *         "SQRT Sum",
+     *         () -> {
+     *             double val = 0;
+     *             for (int ii = 0; ii < 1_000_000_000; ii++) {
+     *                 val += Math.sqrt(ii);
+     *             }
+     *             return val;
+     *         }
+     * );
+     * }</pre>
+     * printing:
+     * <pre>{@code SQRT Sum took 2.33 s}</pre>
+     *
+     * @param label  Name given to the operation being performed
+     * @param action Action to be measured
+     * @param <T>    Result of the operation
+     * @return The result of running the operation
+     */
+    @SuppressWarnings("UseOfSystemOutOrSystemErr")
+    public static <T> T timeSeconds(String label, Supplier<T> action) {
+        Calculation<T> calculation = calculateTime(action);
+        // Conversion from nanoseconds to seconds
+        double s = calculation.time() / NANOS_PER_SECOND;
+        System.out.printf("%s took %.2f s%n", label, s);
+        return calculation.result();
+    }
+    
+    /**
+     * Times the execution of the given function. Prints the time taken in seconds. Returns the result of the operation.
+     *
+     * <p>Example code:
+     * <pre>{@code
+     * double result = Timing.timeSeconds(
+     *         () -> {
+     *             double val = 0;
+     *             for (int ii = 0; ii < 1_000_000_000; ii++) {
+     *                 val += Math.sqrt(ii);
+     *             }
+     *             return val;
+     *         }
+     * );
+     * }</pre>
+     * printing:
+     * <pre>{@code Took 2.11 s}</pre>
+     *
+     * @param action Action to be measured
+     * @param <T>    Result of the operation
+     * @return The result of running the operation
+     */
+    @SuppressWarnings("UseOfSystemOutOrSystemErr")
+    public static <T> T timeSeconds(Supplier<T> action) {
+        Calculation<T> calculation = calculateTime(action);
+        // Conversion from nanoseconds to seconds
+        double s = calculation.time() / NANOS_PER_SECOND;
+        System.out.printf("Took %.2f s%n", s);
+        return calculation.result();
+    }
+    
+    /**
+     * Times the execution of the given function. Prints the time taken in seconds. Does not return anything.
+     *
+     * <p>Example code:
+     * <pre>{@code
+     * Timing.timeSeconds(
+     *         "Print operation",
+     *         () -> {
+     *             double val = 0;
+     *             for (int ii = 0; ii < 1_000_000_000; ii++) {
+     *                 val += Math.sqrt(ii);
+     *             }
+     *             System.out.println(val);
+     *         }
+     * );
+     * }</pre>
+     * printing:
+     * <pre>{@code
+     * 2.108185105197778E13
+     * Print operation took 2.26 s
+     * }</pre>
+     *
+     * @param label  Name given to the operation being performed
+     * @param action Action to be measured
+     */
+    public static void timeSeconds(String label, Runnable action) {
+        timeSeconds(label, () -> {
+            action.run();
+            return null;
+        });
+    }
+    
+    /**
+     * Times the execution of the given function. Prints the time taken in seconds. Does not return anything.
+     *
+     * <p>Example code:
+     * <pre>{@code
+     * Timing.timeSeconds(
+     *         () -> {
+     *             double val = 0;
+     *             for (int ii = 0; ii < 1_000_000_000; ii++) {
+     *                 val += Math.sqrt(ii);
+     *             }
+     *             System.out.println(val);
+     *         }
+     * );
+     * }</pre>
+     * printing:
+     * <pre>{@code
+     * 2.108185105197778E13
+     * Took 2.13 s
+     * }</pre>
+     *
+     * @param action Action to be measured
+     */
+    public static void timeSeconds(Runnable action) {
+        timeSeconds(() -> {
+            action.run();
+            return null;
+        });
+    }
     
     /**
      * Times the execution of the given function. Prints the time taken in milliseconds. Returns the result of the
