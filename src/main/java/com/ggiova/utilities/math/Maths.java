@@ -389,7 +389,7 @@ public final class Maths {
         // 15.1 --> 0b0_10000000010_1110001100110011001100110011001100110011001100110011L
         // The exponent is also 3, so we need to check after the next three bits if there are any one's.
         // There are, so this number is not an integer, because 15.1's bits masked are not equal 15.1's bits.
-        return  (unsignedBits & -mask) == unsignedBits;
+        return (unsignedBits & -mask) == unsignedBits;
     }
     
     // -------------------------------------- EVEN-NESS ----------------------------------------------------------------
@@ -561,7 +561,7 @@ public final class Maths {
         // It is a zero (0), so 14 is even.
         // PS: This test unsets all the bits before where the exponent aims, maintaining only the one bit it is
         // checking.
-        return  (unsignedBits & mask) == 0L;
+        return (unsignedBits & mask) == 0L;
     }
     
     /**
