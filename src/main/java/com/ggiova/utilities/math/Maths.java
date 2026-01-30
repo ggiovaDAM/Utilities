@@ -364,6 +364,7 @@ public final class Maths {
      * @return {@code true} if {@code number} is an integer, {@code false} otherwise.
      * @see <a href="https://en.wikipedia.org/wiki/Integer" target="_blank">Integer Wikipedia Page</a>
      */
+    @SuppressWarnings("IfCanBeSwitch")
     public static boolean isWholeNumber(final double number) {
         // Takes the number's bits removing the sign.
         final long unsignedBits = Double.doubleToLongBits(number) & ~Doubles.SIGN_MASK;
@@ -524,6 +525,7 @@ public final class Maths {
      * @return {@code true} if {@code number} is even &amp; {@code false} otherwise.
      * @see Doubles#LOSS_DECIMAL_PRECISION
      */
+    @SuppressWarnings("IfCanBeSwitch")
     public static boolean isEven(final double number) {
         // Takes the number's bits removing the sign.
         long unsignedBits = Double.doubleToLongBits(number) & ~Doubles.SIGN_MASK;
