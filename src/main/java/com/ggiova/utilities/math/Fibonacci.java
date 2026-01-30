@@ -66,6 +66,13 @@ public class Fibonacci implements Comparable<Fibonacci> {
             return computed;
         }
         
+        // Check if both neighbors are cached (optimization)
+        if (CACHE.containsKey(index - 1) && CACHE.containsKey(index - 2)) {
+            BigInteger result = CACHE.get(index - 1).add(CACHE.get(index - 2));
+            CACHE.put(index, result);
+            return result;
+        }
+        
         // Fast doubling algorithm: O(log n)
         int halfIndex = index >>> 1;
         BigInteger fHalfPlus1 = compute(halfIndex + 1);
