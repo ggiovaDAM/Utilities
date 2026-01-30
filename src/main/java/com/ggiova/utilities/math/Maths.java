@@ -18,7 +18,6 @@ import java.math.BigInteger;
  * @see com.ggiova.utilities.primitives.Floats
  */
 public final class Maths {
-    
     /**
      * Constructor. Do <u><b>NOT</b></u> use.
      *
@@ -34,6 +33,7 @@ public final class Maths {
     public static final BigInteger BIG_INTEGER_MINUS_ONE = BigInteger.valueOf(-1L);
     
     // -------------------------------------- CONSTANTS ----------------------------------------------------------------
+    
     /**
      * Closest floating-point number that approximates &pi; (pi). &pi; is the ratio between a disk's circumference to
      * its diameter.
@@ -924,7 +924,8 @@ public final class Maths {
      * Calculates the
      * <a href="https://en.wikipedia.org/wiki/Greatest_common_divisor" target="_blank">greatest common divisor</a> of
      * {@code a} &amp; {@code b}. That is, the largest positive integer that is divides both of the integers {@code a}
-     * &amp; {@code b}. If either {@code a} or {@code b} are equal to {@code 0}, then the resulting number is the other one.
+     * &amp; {@code b}. If either {@code a} or {@code b} are equal to {@code 0}, then the resulting number is the other
+     * one.
      *
      * <p>All the results will be bound by: {@code [1; 2_147_483_647]}
      *
@@ -977,7 +978,8 @@ public final class Maths {
      * @param a First parameter.
      * @param b Second Parameter.
      * @return The greatest common divisor of {@code a} &amp; {@code b}.
-     * @see <a href="https://en.wikipedia.org/wiki/Greatest_common_divisor#Euclid's_algorithm" target="_blank">Euclid's Algorithm</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Greatest_common_divisor#Euclid's_algorithm" target="_blank">Euclid's
+     * Algorithm</a>
      */
     private static int gcdLoop(int a, int b) {
         while (a != 0 && b != 0) {
@@ -993,7 +995,8 @@ public final class Maths {
      * @param a First parameter.
      * @param b Second Parameter.
      * @return The greatest common divisor of {@code a} &amp; {@code b}.
-     * @see <a href="https://en.wikipedia.org/wiki/Greatest_common_divisor#Euclid's_algorithm" target="_blank">Euclid's Algorithm</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Greatest_common_divisor#Euclid's_algorithm" target="_blank">Euclid's
+     * Algorithm</a>
      */
     private static long gcdLoop(long a, long b) {
         while (a != 0L && b != 0L) {
@@ -1102,6 +1105,6 @@ public final class Maths {
         BigInteger first = fibonacciBigInteger(halfs + 1);
         BigInteger second = fibonacciBigInteger(halfs);
         if (isEven(index)) return second.multiply(first.multiply(BigInteger.TWO).subtract(second));
-        return                    first.multiply(first).add(second.multiply(second));
+        return first.multiply(first).add(second.multiply(second));
     }
 }
