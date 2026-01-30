@@ -294,8 +294,8 @@ public final class Maths {
     /**
      * Determines if {@code number} is a whole number. A whole number (Z) is a number in the set {@code N ∪ {0} ∪ -N}
      * or, more simply, any number in the set: {@code {…, -3, -2, -1, 0, 1, 2, 3, …}}.
-     * <br>
-     * Since {@code float}s have a wide range of number representation, some especial cases pop up:
+     *
+     * <p>Since {@code float}s have a wide range of number representation, some especial cases pop up:
      * <ul>
      *     <li>If {@code number} is {@link Float#NaN NaN}, returns {@code false}.</li>
      *     <li>If {@code number} is infinite, either {@link Float#POSITIVE_INFINITY positive} or
@@ -345,7 +345,8 @@ public final class Maths {
     /**
      * Determines if {@code number} is a whole number. A whole number (Z) is a number in the set {@code N ∪ {0} ∪ -N}
      * or, more simply, any number in the set: {@code {…, -3, -2, -1, 0, 1, 2, 3, …}}.
-     * <br>Since {@code double}s have a wide range of number representation, some especial cases pop up:
+     *
+     * <p>Since {@code double}s have a wide range of number representation, some especial cases pop up:
      * <ul>
      *     <li>If {@code number} is {@link Double#NaN NaN}, returns {@code false}.</li>
      *     <li>If {@code number} is infinite, either {@link Double#POSITIVE_INFINITY positive} or
@@ -397,7 +398,8 @@ public final class Maths {
     /**
      * Returns {@code true} if {@code number} is even &amp; {@code false} if {@code number} is odd. A number is even if
      * it can be expressed as {@code number = 2×k, k ∈ ℤ}.
-     * <br>Binary-wise, the least-significant digit indicates if a number is even or odd. So, if it is {@code 0} then
+     *
+     * <p>Binary-wise, the least-significant digit indicates if a number is even or odd. So, if it is {@code 0} then
      * it's even and if it is {@code 1} then is odd.
      *
      * @param number Number that will be checked.
@@ -412,7 +414,8 @@ public final class Maths {
     /**
      * Returns {@code true} if {@code number} is even &amp; {@code false} if {@code number} is odd. A number is even if
      * it can be expressed as {@code number = 2×k, k ∈ ℤ}.
-     * <br>Binary-wise, the least-significant digit indicates if a number is even or odd. So, if it is {@code 0} then
+     *
+     * <p>Binary-wise, the least-significant digit indicates if a number is even or odd. So, if it is {@code 0} then
      * it's even and if it is {@code 1} then is odd.
      *
      * @param number Number that will be checked.
@@ -425,9 +428,10 @@ public final class Maths {
     }
     
     /**
-     * Returns {@code true} if {@code number} is even &amp; {@code false} if {@code number} is odd. A number is even if it
-     * can be expressed as {@code number = 2×k, k ∈ ℤ}.
-     * <br>
+     * Returns {@code true} if {@code number} is even &amp; {@code false} if {@code number} is odd. A number is even if
+     * it can be expressed as {@code number = 2×k, k ∈ ℤ}.
+     *
+     * <p>
      * Since {@code float}s can still represent whole numbers there are a few edge-cases to contemplate:
      * <ul>
      *     <li>If {@code number} is {@link Float#NaN NaN}, returns {@code false}.</li>
@@ -441,7 +445,8 @@ public final class Maths {
      * While for {@code int} and {@code long}, a number that is even is not odd and a number that is odd is not even,
      * for {@code float} it does not always happen. Since {@code float} can have {@link Float#NaN NaN}, infinities, and
      * decimals, a number can sometimes be neither even nor odd.
-     * <br>
+     *
+     * <p>
      * As stated before, all numbers bigger than or equal to <i>2<sup>24</sup></i> will always be even, this is due to
      * the length of the mantissa. The mantissa of a {@code float} can only store 23 bits, meaning that if a
      * {@code float} stores a number with an {@link Floats#LOSS_DECIMAL_PRECISION exponent (base 2) of 23}, then, the
@@ -495,20 +500,22 @@ public final class Maths {
     /**
      * Returns {@code true} if {@code number} is even &amp; {@code false} if {@code number} is odd. A number is even if
      * it can be expressed as {@code number = 2×k, k ∈ ℤ}.
-     * <br>Since {@code double}s can still represent whole numbers there are a few edge-cases to contemplate:
+     *
+     * <p>Since {@code double}s can still represent whole numbers there are a few edge-cases to contemplate:
      * <ul>
      *     <li>If {@code number} is {@link Double#NaN NaN}, returns {@code false}.</li>
      *     <li>If {@code number} is infinite, either {@link Double#POSITIVE_INFINITY positive} or
      *     {@link Double#NEGATIVE_INFINITY negative} it returns {@code false}.</li>
      *     <li>If {@code number} is a decimal number, then it returns {@code false}.</li>
      *     <li>If the absolute value of {@code number} is more than or equal to <i>2<sup>53</sup></i> or
-     *     {@code 9_007_199_254_740_992.0} then it returns {@code true} since, due to loss of precision, all numbers above
-     *     it will be multiples of two, and therefore, even.</li>
+     *     {@code 9_007_199_254_740_992.0} then it returns {@code true} since, due to loss of precision, all numbers
+     *     above it will be multiples of two, and therefore, even.</li>
      * </ul>
      * While for {@code int} and {@code long}, a number that is even is not odd and a number that is odd is
      * not even, for {@code double} it does not always happen. Since {@code double} can have {@link Double#NaN NaN},
      * infinities, and decimals, a number can sometimes be neither even nor odd.
-     * <br>As stated before, all numbers bigger than or equal to <i>2<sup>53</sup></i> will always be even, this is due
+     *
+     * <p>As stated before, all numbers bigger than or equal to <i>2<sup>53</sup></i> will always be even, this is due
      * to the length of the mantissa. The mantissa of a {@code double} can only store 52 bits, meaning that if a
      * {@code double} stores a number with an
      * {@link Doubles#LOSS_DECIMAL_PRECISION exponent (base 2) of 52}, then, the least-significant bit of
@@ -584,7 +591,8 @@ public final class Maths {
     /**
      * Returns {@code true} if {@code number} is odd &amp; {@code false} if {@code number} is even. A number is odd if
      * it can be expressed as {@code number = 2×k+1, k ∈ ℤ}.
-     * <br>Binary-wise, the least-significant digit indicates if a number is even or odd. So, if it is {@code 0} then
+     *
+     * <p>Binary-wise, the least-significant digit indicates if a number is even or odd. So, if it is {@code 0} then
      * it's even and if it is {@code 1} then is odd.
      *
      * @param number Number that will be checked.
@@ -599,7 +607,8 @@ public final class Maths {
     /**
      * Returns {@code true} if {@code number} is odd &amp; {@code false} if {@code number} is even. A number is odd if
      * it can be expressed as {@code number = 2×k+1, k ∈ ℤ}.
-     * <br>Binary-wise, the least-significant digit indicates if a number is even or odd. So, if it is {@code 0} then
+     *
+     * <p>Binary-wise, the least-significant digit indicates if a number is even or odd. So, if it is {@code 0} then
      * it's even and if it is {@code 1} then is odd.
      *
      * @param number Number that will be checked.
@@ -614,7 +623,8 @@ public final class Maths {
     /**
      * Returns {@code true} if {@code number} is odd &amp; {@code false} if {@code number} is even. A number is odd if
      * it can be expressed as {@code number = 2×k+1, k ∈ ℤ}.
-     * <br>
+     *
+     * <p>
      * Since {@code float}s can still represent whole numbers there are a few edge-cases to contemplate:
      * <ul>
      *     <li>If {@code number} is {@link Float#NaN NaN}, returns {@code false}.</li>
@@ -628,7 +638,8 @@ public final class Maths {
      * While for {@code int} and {@code long}, a number that is even is not odd and a number that is odd is not even,
      * for {@code float} it does not always happen. Since {@code float} can have {@link Float#NaN NaN}, infinities, and
      * decimals, a number can sometimes be neither even nor odd.
-     * <br>
+     *
+     * <p>
      * As stated before, all numbers bigger than or equal to <i>2<sup>24</sup></i> will always be even, this is due to
      * the length of the mantissa. The mantissa of a {@code float} can only store 23 bits, meaning that if a
      * {@code float} stores a number with an {@link Floats#LOSS_DECIMAL_PRECISION exponent (base 2) of 23}, then, the
@@ -682,20 +693,22 @@ public final class Maths {
     /**
      * Returns {@code true} if {@code number} is odd &amp; {@code false} if {@code number} is even. A number is odd if
      * it can be expressed as {@code number = 2×k+1, k ∈ ℤ}.
-     * <br>Since {@code double}s can still represent whole numbers there are a few edge-cases to contemplate:
+     *
+     * <p>Since {@code double}s can still represent whole numbers there are a few edge-cases to contemplate:
      * <ul>
      *     <li>If {@code number} is {@link Double#NaN NaN}, returns {@code false}.</li>
      *     <li>If {@code number} is infinite, either {@link Double#POSITIVE_INFINITY positive} or
      *     {@link Double#NEGATIVE_INFINITY negative} it returns {@code false}.</li>
      *     <li>If {@code number} is a decimal number, then it returns {@code false}.</li>
      *     <li>If the absolute value of {@code number} is more than or equal to <i>2<sup>53</sup></i> or
-     *     {@code 9_007_199_254_740_992.0} then it returns {@code false} since, due to loss of precision, all numbers above
-     *     it will be multiples of two, and therefore, not odd.</li>
+     *     {@code 9_007_199_254_740_992.0} then it returns {@code false} since, due to loss of precision, all numbers
+     *     above it will be multiples of two, and therefore, not odd.</li>
      * </ul>
      * While for {@code int} and {@code long}, a number that is even is not odd and a number that is odd is
      * not even, for {@code double} it does not always happen. Since {@code double} can have {@link Double#NaN NaN},
      * infinities, and decimals, a number can sometimes be neither even nor odd.
-     * <br>As stated before, all numbers bigger than or equal to <i>2<sup>53</sup></i> will always be even, this is due
+     *
+     * <p>As stated before, all numbers bigger than or equal to <i>2<sup>53</sup></i> will always be even, this is due
      * to the length of the mantissa. The mantissa of a {@code double} can only store 52 bits, meaning that if a
      * {@code double} stores a number with an
      * {@link Doubles#LOSS_DECIMAL_PRECISION exponent (base 2) of 52}, then, the least-significant bit of
@@ -861,8 +874,8 @@ public final class Maths {
      * <a href="https://en.wikipedia.org/wiki/Least_common_multiple" target="_blank">least common multiple</a> of
      * {@code a} &amp; {@code b}. That is, the smallest positive integer that is divisible by both {@code a} &amp;
      * {@code b}. If either {@code a} or {@code b} are equal to {@code 0}, then the resulting number is {@code 0}.
-     * <br>
-     * All the results will be bound by: {@code [0; 2_147_483_647]}
+     *
+     * <p>All the results will be bound by: {@code [0; 2_147_483_647]}
      *
      * @param a First parameter.
      * @param b Second Parameter.
@@ -888,8 +901,8 @@ public final class Maths {
      * <a href="https://en.wikipedia.org/wiki/Least_common_multiple" target="_blank">least common multiple</a> of
      * {@code a} &amp; {@code b}. That is, the smallest positive integer that is divisible by both {@code a} &amp;
      * {@code b}. If either {@code a} or {@code b} are equal to {@code 0}, then the resulting number is {@code 0}.
-     * <br>
-     * All the results will be bound by: {@code [0; 9_223_372_036_854_775_807L]}
+     *
+     * <p>All the results will be bound by: {@code [0; 9_223_372_036_854_775_807L]}
      *
      * @param a First parameter.
      * @param b Second Parameter.
@@ -915,8 +928,8 @@ public final class Maths {
      * <a href="https://en.wikipedia.org/wiki/Greatest_common_divisor" target="_blank">greatest common divisor</a> of
      * {@code a} &amp; {@code b}. That is, the largest positive integer that is divides both of the integers {@code a}
      * &amp; {@code b}. If either {@code a} or {@code b} are equal to {@code 0}, then the resulting number is the other one.
-     * <br>
-     * All the results will be bound by: {@code [1; 2_147_483_647]}
+     *
+     * <p>All the results will be bound by: {@code [1; 2_147_483_647]}
      *
      * @param a First parameter.
      * @param b Second Parameter.
@@ -941,8 +954,8 @@ public final class Maths {
      * {@code a} &amp; {@code b}. That is, the largest positive integer that is divides both of the integers {@code a}
      * &amp; {@code b}. If either {@code a} or {@code b} are equal to {@code 0}, then the resulting number is the other
      * one.
-     * <br>
-     * All the results will be bound by: {@code [1; 9_223_372_036_854_775_807L]}
+     *
+     * <p>All the results will be bound by: {@code [1; 9_223_372_036_854_775_807L]}
      *
      * @param a First parameter.
      * @param b Second Parameter.
