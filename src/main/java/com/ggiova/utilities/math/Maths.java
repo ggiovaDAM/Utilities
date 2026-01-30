@@ -18,7 +18,6 @@ import java.math.BigInteger;
  * @see com.ggiova.utilities.primitives.Floats
  */
 public final class Maths {
-    
     /**
      * Constructor. Do <u><b>NOT</b></u> use.
      *
@@ -34,6 +33,7 @@ public final class Maths {
     public static final BigInteger BIG_INTEGER_MINUS_ONE = BigInteger.valueOf(-1L);
     
     // -------------------------------------- CONSTANTS ----------------------------------------------------------------
+    
     /**
      * Closest floating-point number that approximates &pi; (pi). &pi; is the ratio between a disk's circumference to
      * its diameter.
@@ -1008,9 +1008,9 @@ public final class Maths {
     /**
      * Calculates the {@code index}th Fibonacci Number. The Fibonacci sequence is a sequence in which each number is the
      * sum of the two preceding numbers. The common notation is <i><b>F</b><sub>{@code index}</sub></i>. This sequence
-     * requires two values to be determined, usually in the indices {@code 0} &amp; {@code 1}. For the Fibonacci sequence,
-     * these are: <i><b>F</b><sub>0</sub>=0</i> &amp; <i><b>F</b><sub>1</sub>=1</i>. With this two values, and the
-     * recurrence relation implied: (<i><b>F</b><sub>n</sub>=<b>F</b><sub>n-1</sub>+<b>F</b><sub>n-2</sub></i>) all
+     * requires two values to be determined, usually in the indices {@code 0} &amp; {@code 1}. For the Fibonacci
+     * sequence, these are: <i><b>F</b><sub>0</sub>=0</i> &amp; <i><b>F</b><sub>1</sub>=1</i>. With this two values, and
+     * the recurrence relation implied: (<i><b>F</b><sub>n</sub>=<b>F</b><sub>n-1</sub>+<b>F</b><sub>n-2</sub></i>) all
      * indices can be computed.
      *
      * <p>Furthermore, with the recurrence relation, one can compute negative indices
@@ -1023,60 +1023,48 @@ public final class Maths {
      *
      * @param index Index of the Fibonacci Number.
      * @return The {@code index}th Fibonacci Number.
+     * @throws ValueOverflowException if the value exceeds the int range
      * @see <a href="https://en.wikipedia.org/wiki/Fibonacci_sequence" target="_blank">Fibonacci Sequence</a>
      * @see <a href="https://en.wikipedia.org/wiki/Generalizations_of_Fibonacci_numbers" target="_blank">Generalizations
      * of Fibonacci numbers</a>
      */
     public static int fibonacciInt(final int index) {
-        if (index < 0) return minusOnePow(index + 1) * fibonacciInt(-index);
-        if (index == 0) return 0;
-        if (index == 1 || index == 2) return 1;
-        int halfs = index >>> 1;
-        int first = fibonacciInt(halfs + 1);
-        int second = fibonacciInt(halfs);
-        if (isEven(index)) return second * (2 * first - second);
-        return first * first + second * second;
+        return Fibonacci.of(index).toInt();
     }
     
     /**
      * Calculates the {@code index}th Fibonacci Number. The Fibonacci sequence is a sequence in which each number is the
      * sum of the two preceding numbers. The common notation is <i><b>F</b><sub>{@code index}</sub></i>. This sequence
-     * requires two values to be determined, usually in the indices {@code 0} &amp; {@code 1}. For the Fibonacci sequence,
-     * these are: <i><b>F</b><sub>0</sub>=0</i> &amp; <i><b>F</b><sub>1</sub>=1</i>. With this two values, and the
-     * recurrence relation implied: (<i><b>F</b><sub>n</sub>=<b>F</b><sub>n-1</sub>+<b>F</b><sub>n-2</sub></i>) all
+     * requires two values to be determined, usually in the indices {@code 0} &amp; {@code 1}. For the Fibonacci
+     * sequence, these are: <i><b>F</b><sub>0</sub>=0</i> &amp; <i><b>F</b><sub>1</sub>=1</i>. With this two values, and
+     * the recurrence relation implied: (<i><b>F</b><sub>n</sub>=<b>F</b><sub>n-1</sub>+<b>F</b><sub>n-2</sub></i>) all
      * indices can be computed.
      *
      * <p>Furthermore, with the recurrence relation, one can compute negative indices
      * (<i><b>F</b><sub>n</sub>=<b>F</b><sub>n+2</sub>-<b>F</b><sub>n+1</sub></i>), this can be transformed into:
      * <i><b>F</b><sub>-n</sub>=(-1)<sup>n</sup>×<b>F</b><sub>n</sub></i>.
      *
-     * <p>Since {@code int}'s {@link Integer#SIZE size is 32 bits}, the biggest index of a Fibonacci number without
+     * <p>Since {@code long}'s {@link Long#SIZE size is 64 bits}, the biggest index of a Fibonacci number without
      * overflow is {@code 92} equaling {@code 7_540_113_804_746_346_429L}, and, in consequence, the negative limit is
      * {@code -92} equaling {@code -7_540_113_804_746_346_429L}.
      *
      * @param index Index of the Fibonacci Number.
      * @return The {@code index}th Fibonacci Number.
+     * @throws ValueOverflowException if the value exceeds the long range
      * @see <a href="https://en.wikipedia.org/wiki/Fibonacci_sequence" target="_blank">Fibonacci Sequence</a>
      * @see <a href="https://en.wikipedia.org/wiki/Generalizations_of_Fibonacci_numbers" target="_blank">Generalizations
      * of Fibonacci numbers</a>
      */
     public static long fibonacciLong(final int index) {
-        if (index < 0) return minusOnePow(index + 1) * fibonacciLong(-index);
-        if (index == 0) return 0L;
-        if (index == 1 || index == 2) return 1L;
-        int halfs = index >> 1;
-        long first = fibonacciLong(halfs + 1);
-        long second = fibonacciLong(halfs);
-        if (isEven(index)) return second * (2L * first - second);
-        return first * first + second * second;
+        return Fibonacci.of(index).toLong();
     }
     
     /**
      * Calculates the {@code index}th Fibonacci Number. The Fibonacci sequence is a sequence in which each number is the
      * sum of the two preceding numbers. The common notation is <i><b>F</b><sub>{@code index}</sub></i>. This sequence
-     * requires two values to be determined, usually in the indices {@code 0} &amp; {@code 1}. For the Fibonacci sequence,
-     * these are: <i><b>F</b><sub>0</sub>=0</i> &amp; <i><b>F</b><sub>1</sub>=1</i>. With this two values, and the
-     * recurrence relation implied: (<i><b>F</b><sub>n</sub>=<b>F</b><sub>n-1</sub>+<b>F</b><sub>n-2</sub></i>) all
+     * requires two values to be determined, usually in the indices {@code 0} &amp; {@code 1}. For the Fibonacci
+     * sequence, these are: <i><b>F</b><sub>0</sub>=0</i> &amp; <i><b>F</b><sub>1</sub>=1</i>. With this two values, and
+     * the recurrence relation implied: (<i><b>F</b><sub>n</sub>=<b>F</b><sub>n-1</sub>+<b>F</b><sub>n-2</sub></i>) all
      * indices can be computed.
      *
      * <p>Furthermore, with the recurrence relation, one can compute negative indices
@@ -1092,16 +1080,6 @@ public final class Maths {
      * of Fibonacci numbers</a>
      */
     public static BigInteger fibonacciBigInteger(final int index) {
-        if (index < 0) {
-            BigInteger result = isEven(index) ? BigInteger.ONE : BIG_INTEGER_MINUS_ONE;
-            return result.multiply(fibonacciBigInteger(-index));
-        }
-        if (index == 0) return BigInteger.ZERO;
-        if (index == 1 || index == 2) return BigInteger.ONE;
-        int halfs = index >>> 1;
-        BigInteger first = fibonacciBigInteger(halfs + 1);
-        BigInteger second = fibonacciBigInteger(halfs);
-        if (isEven(index)) return second.multiply(first.multiply(BigInteger.TWO).subtract(second));
-        return                    first.multiply(first).add(second.multiply(second));
+        return Fibonacci.of(index).toBigInteger();
     }
 }
