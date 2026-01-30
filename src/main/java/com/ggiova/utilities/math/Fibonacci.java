@@ -118,6 +118,30 @@ public class Fibonacci implements Comparable<Fibonacci> {
     }
     
     /**
+     * Creates a Fibonacci number at the specified index.
+     *
+     * @param index the index in the Fibonacci sequence (can be negative)
+     * @return a new Fibonacci object.
+     */
+    public static Fibonacci of(int index) {
+        return new Fibonacci(index);
+    }
+    
+    /**
+     * Creates Fibonacci numbers for multiple indices.
+     *
+     * @param indices the indices to create Fibonacci numbers for
+     * @return an array of Fibonacci objects
+     */
+    public static Fibonacci[] of(int... indices) {
+        Fibonacci[] result = new Fibonacci[indices.length];
+        for (int i = 0; i < indices.length; i++) {
+            result[i] = new Fibonacci(indices[i]);
+        }
+        return result;
+    }
+    
+    /**
      * Returns the next Fibonacci number in the sequence (index + 1). This is efficient as it reuses the cached value of
      * the current number.
      *
