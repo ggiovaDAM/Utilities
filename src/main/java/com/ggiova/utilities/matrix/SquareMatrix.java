@@ -205,4 +205,19 @@ public final class SquareMatrix<T>
         }
         return List.copyOf(list);
     }
+    
+    public Matrix2x2<T> to2x2() {
+        if (this.size != 2) throw new MatrixSizeMismatchException(2, this.size);
+        return new Matrix2x2<>((T[]) this.toArray());
+    }
+    
+    public Matrix3x3<T> to3x3() {
+        if (this.size != 3) throw new MatrixSizeMismatchException(3, this.size);
+        return new Matrix3x3<>((T[]) this.toArray());
+    }
+    
+    public Matrix4x4<T> to4x4() {
+        if (this.size != 4) throw new MatrixSizeMismatchException(4, this.size);
+        return new Matrix4x4<>((T[]) this.toArray());
+    }
 }
