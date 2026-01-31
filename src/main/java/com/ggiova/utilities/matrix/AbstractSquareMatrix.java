@@ -217,4 +217,6 @@ abstract sealed class AbstractSquareMatrix<T>
      * @return an immutable list containing all matrix elements in row-major order
      */
     public abstract List<T> toList();
+    
+    public abstract SquareMatrix<T> toSquareMatrix();
 }

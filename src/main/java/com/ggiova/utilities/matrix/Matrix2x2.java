@@ -184,4 +184,9 @@ public final class Matrix2x2<T>
     public List<T> toList() {
         return List.of(this.e00, this.e01, this.e10, this.e11);
     }
+    
+    @Override
+    public SquareMatrix<T> toSquareMatrix() {
+        return new SquareMatrix<>((T[]) new Object[]{e00, e01, e10, e11});
+    }
 }

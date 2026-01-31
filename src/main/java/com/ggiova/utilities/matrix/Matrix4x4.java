@@ -159,4 +159,9 @@ public final class Matrix4x4<T>
         data.addAll(Arrays.asList(this.elements).subList(0, area));
         return List.copyOf(data);
     }
+    
+    @Override
+    public SquareMatrix<T> toSquareMatrix() {
+        return new SquareMatrix<>(this.elements);
+    }
 }

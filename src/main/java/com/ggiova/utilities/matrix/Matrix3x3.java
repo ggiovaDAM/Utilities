@@ -138,4 +138,9 @@ public final class Matrix3x3<T>
                 this.elements[6], this.elements[7], this.elements[8]
         );
     }
+    
+    @Override
+    public SquareMatrix<T> toSquareMatrix() {
+        return new SquareMatrix<>(this.elements);
+    }
 }

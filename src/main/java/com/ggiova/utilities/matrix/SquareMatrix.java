@@ -206,6 +206,11 @@ public final class SquareMatrix<T>
         return List.copyOf(list);
     }
     
+    @Override
+    public SquareMatrix<T> toSquareMatrix() {
+        return new SquareMatrix<>((T[]) toArray());
+    }
+    
     public Matrix2x2<T> to2x2() {
         if (this.size != 2) throw new MatrixSizeMismatchException(2, this.size);
         return new Matrix2x2<>((T[]) this.toArray());
