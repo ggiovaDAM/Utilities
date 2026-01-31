@@ -48,7 +48,7 @@ public final class Matrix3x3<T>
         if (list == null)
             throw new NullPointerException("Element 'list' cannot be null.");
         if (list.size() != 9)
-            throw new IllegalArgumentException("List must contain exactly 9 elements for a 4x4 matrix.");
+            throw new IllegalArgumentException("List must contain exactly 9 elements for a 3x3 matrix.");
         
         for (int index = 0; index < 9; index++) {
             this.elements[index] = list.get(index);
