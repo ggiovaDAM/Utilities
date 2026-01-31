@@ -583,7 +583,7 @@ public final class Maths {
         if (number == null) return false;
         // Checks if the least-significant bit is a one or a zero. All even numbers have a zero as their
         // least-significant bit.
-        return number.mod(BigInteger.TWO).equals(BigInteger.ZERO);
+        return number.testBit(0);
     }
     
     // -------------------------------------- ODD-NESS -----------------------------------------------------------------
@@ -775,7 +775,7 @@ public final class Maths {
         if (number == null) return false;
         // Checks if the least-significant bit is a one or a zero. All even numbers have a zero as their
         // least-significant bit.
-        return number.mod(BigInteger.TWO).equals(BigInteger.ONE);
+        return ! number.testBit(0);
     }
     
     //  ---------------------------------- MINUS ONE POW ---------------------------------------------------------------
