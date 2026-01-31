@@ -185,6 +185,21 @@ abstract sealed class AbstractSquareMatrix<T>
     protected abstract T getUnchecked(int row, int col);
     
     /**
+     * Transposes the current matrix, meaning that it mirrors along the diagonal that goes from [0,0] to [size, size]
+     */
+    public void transpose() {
+        throw new UnsupportedOperationException();
+    }
+    
+    /**
+     * Rotates the values in the matrix clockwise. Meaning that [0,0] &rarr; [0, size] &amp; [0, size] &rarr; [size,
+     * size]
+     */
+    public void rotate() {
+        throw new UnsupportedOperationException();
+    }
+    
+    /**
      * Converts this matrix to a one-dimensional array in row-major order.
      *
      * <p>The returned array contains all elements of the matrix, reading from left to right, top to bottom.
