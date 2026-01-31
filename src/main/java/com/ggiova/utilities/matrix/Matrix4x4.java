@@ -44,7 +44,7 @@ public final class Matrix4x4<T>
     /**
      * Constructs a 4x4 matrix from a list of elements in row-major order.
      *
-     * @param list list of exactly 9 elements
+     * @param list list of exactly 16 elements
      * @throws NullPointerException     if list is {@code null}
      * @throws IllegalArgumentException if list size is not {@code 16}
      */
@@ -72,7 +72,7 @@ public final class Matrix4x4<T>
         if (array == null)
             throw new NullPointerException("Element 'array' cannot be null.");
         if (array.length != 16)
-            throw new IllegalArgumentException("Array must contain exactly 16 elements for a 3x3 matrix.");
+            throw new IllegalArgumentException("Array must contain exactly 16 elements for a 4x4 matrix.");
         
         System.arraycopy(array, 0, this.elements, 0, 16);
     }
