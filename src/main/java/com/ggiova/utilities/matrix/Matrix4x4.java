@@ -3,6 +3,7 @@ package com.ggiova.utilities.matrix;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A specialized 4x4 matrix implementation optimized for performance.
@@ -113,7 +114,7 @@ public final class Matrix4x4<T>
     public int hashCode() {
         int result = this.size;
         for (T element : elements)
-            result = 31 * result + element.hashCode();
+            result = 31 * result + Objects.hashCode(element);
         return result;
     }
     
